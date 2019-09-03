@@ -1,5 +1,5 @@
 <template>
-  <q-page id="menu">
+  <div id="menu">
     <q-list tag="div" class="bg-secondary text-grey-1">
       <q-item-label header>Menu</q-item-label>
       <q-item clickable>
@@ -9,18 +9,18 @@
         <q-item-section>
           <q-item-label>All Notes</q-item-label>
           <q-item-label class="text-grey-5" caption>
-            <!-- Insert number of notes -->
+            <!-- TODO Insert number of notes -->
           </q-item-label>
         </q-item-section>
       </q-item>
       <q-item clickable>
         <q-item-section avatar>
-          <q-icon name="chat" />
+          <q-icon name="menu_book" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Notebooks</q-item-label>
           <q-item-label class="text-grey-5" caption>
-            <!-- Insert notebooks here -->
+            <!-- TODO Insert notebooks here -->
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -43,7 +43,7 @@
         </q-item-section>
       </q-item>
     </q-list>
-  </q-page>
+  </div>
 </template>
 
 <script>
@@ -52,6 +52,15 @@ export default {
     return {
       leftDrawerOpen: false
     }
+  },
+  mounted () {
+    let menu = document.getElementById('menu')
+    let dragPart = document.createElement('div')
+    dragPart.classList.add('bg-grey')
+    dragPart.width = '1em'
+    dragPart.height = '100vh'
+    dragPart.backgroundColor = 'white'
+    menu.appendChild(dragPart)
   },
   methods: {
   }

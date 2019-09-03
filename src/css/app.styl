@@ -1,5 +1,4 @@
 // app global css
-
 body {
   height: 100vh;
   max-height: 100vh;
@@ -7,7 +6,7 @@ body {
 }
 
 #menu {
-  width: 25em;
+  width: 100%;
   height: 100vh;
   overflow-y: scroll; 
 
@@ -20,18 +19,34 @@ body {
   display: flex;
 }
 
-#main {
-  border: 1px solid black
-  
-  & .q-toolbar {
-    height: 2em
+$header-border = 1px solid $grey-4;
 
-    #searchField {
-      border: 1px solid $grey-5
-      border-radius: 5px
+#main {
+  border-right: $header-border
+  width: 100%;
+
+  .q-item, .q-focus-helper {
+    height: 3em;
+  }
+}
+
+#viewer {
+  width: 100%;
+}
+
+#main, #viewer{
+  & .q-toolbar {
+    min-height: 3em;
+    border-bottom: $header-border
+    
+
+    #search-field {
+      border: $header-border
+      border-radius: 5px;
       overflow: hidden;
-      padding: .1em .2em;
+      padding: .1em .5em;
       margin-right: 1em;
+      background-color: white;
 
       & * {
         border: none;
@@ -40,12 +55,52 @@ body {
       }
     }
 
-    & button {
+      &:active {
+        background-color: $grey-3
+      }
+    }
+
+    & i {
+      font-size: 1.2em;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-toolbar {
       background-color: white;
-      border: 1px solid $grey-5;
+      border: $header-border;
       border-radius: 5px;
       padding: .1em .5em;
       outline: none;
+      transition: .2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+  .q-bar {
+    padding: 0 1em;
+    background-color: white
+    color: #908484
+    max-height: 1.5em;
+    border-bottom: $header-border
+
+    &:hover {
+      cursor: pointer;
+    }
+    
+    & div {
+      font-size: .8em;
+    }
+
+    & .q-icon {
+      transition: .1s ease-in-out;
+    }
+
+    & .titleSort {
+      transform: rotate(180deg);
     }
   }
 }

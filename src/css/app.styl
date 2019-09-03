@@ -1,0 +1,51 @@
+// app global css
+
+body {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+#menu {
+  width: 25em;
+  height: 100vh;
+  overflow-y: scroll; 
+
+  & .q-list {
+    height: 100vh;
+  }
+}
+
+.q-layout {
+  display: flex;
+}
+
+#main {
+  border: 1px solid black
+  
+  & .q-toolbar {
+    height: 2em
+
+    #searchField {
+      border: 1px solid $grey-5
+      border-radius: 5px
+      overflow: hidden;
+      padding: .1em .2em;
+      margin-right: 1em;
+
+      & * {
+        border: none;
+        outline: none;
+        color: black;
+      }
+    }
+
+    & button {
+      background-color: white;
+      border: 1px solid $grey-5;
+      border-radius: 5px;
+      padding: .1em .5em;
+      outline: none;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template>
-  <div id="menu">
-    <q-list tag="div" class="bg-secondary text-grey-1">
+  <div id="drawer">
+    <q-list class="bg-secondary text-grey-1">
       <q-item-label header>Menu</q-item-label>
       <q-item clickable>
         <q-item-section avatar>
@@ -48,21 +48,10 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       leftDrawerOpen: false
-    }
-  },
-  mounted () {
-    let menu = document.getElementById('menu')
-    let dragPart = document.createElement('div')
-    dragPart.classList.add('bg-grey')
-    dragPart.width = '1em'
-    dragPart.height = '100vh'
-    dragPart.backgroundColor = 'white'
-    menu.appendChild(dragPart)
-  },
-  methods: {
+    };
   }
-}
+};
 </script>

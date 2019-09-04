@@ -14,24 +14,28 @@
       <q-space />
       <q-icon name="keyboard_arrow_up" :class="{ titleSort }" />
     </q-bar>
-    <q-list>
-    <!-- TODO List the note here -->
-      <q-item clickable>
+    <div class="list">
+    <div class="dragger" id="dragger-drawer" />
+      <q-list>
+      <!-- TODO List the note here -->
+        <q-item clickable>
+            <q-item-section>
+              <q-item-label>Title here</q-item-label>
+            </q-item-section>
+          </q-item>
+        <q-item clickable>
           <q-item-section>
-            <q-item-label>Title here</q-item-label>
-          </q-item-section>
-        </q-item>
-      <q-item clickable>
-        <q-item-section>
-            <q-item-label>Second here</q-item-label>
-          </q-item-section>
-        </q-item>
-      <q-item clickable>
-        <q-item-section>
-            <q-item-label>Third here</q-item-label>
-          </q-item-section>
-        </q-item>
-    </q-list>
+              <q-item-label>Second here</q-item-label>
+            </q-item-section>
+          </q-item>
+        <q-item clickable>
+          <q-item-section>
+              <q-item-label>Third here</q-item-label>
+            </q-item-section>
+          </q-item>
+      </q-list>
+    </div>
+    <div class="dragger-viewer" id="dragger-viewer"/>
   </div>
 </template>
 
@@ -39,6 +43,31 @@
 export default {
   data: () => ({
     titleSort: true
-  })
-}
+  }),
+  mounted() {
+    let draggerDrawer = document.getElementById('dragger-drawer');
+    // TODO Request animation frame for better look
+    draggerDrawer.addEventListener('mousedown', (event) => {
+      window.addEventListener('mousemove', this.resize);
+    });
+    window.addEventListener('mouseup', (event) => {
+      window.removeEventListener('mousemove', this.resize);
+    });
+
+    let draggerViewer = document.getElementById('dragger-viewer');
+
+    draggerViewer.addEventListener('mousedown', (event) => {
+      window.addEventListener('mousemove', this.resize);
+    });
+  },
+  methods: {
+    resize(event) {
+      let drawer = document.getElementById('drawer');
+      let main = document.getElementById('main');
+      let endX = event.clientX;
+      drawer.style.width = endX + 'px';
+      main.style.width = window.innerWidth - endX + 'px';
+    }
+  }
+};
 </script>

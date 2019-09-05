@@ -11,22 +11,28 @@
       <button class="btn-toolbar">
         <q-icon name="attachment" class="rotate-270" />
       </button>
-      <q-space />
       <button class="btn-toolbar">
         <q-icon name="star_border" />
       </button>
       <button class="btn-toolbar">
         <q-icon name="turned_in_not" />
       </button>
-      <q-space />
       <button class="btn-toolbar">
         <q-icon name="delete" />
       </button>
     </q-toolbar>
+    <div class="fit bg-white">
+      <mdViewer />
+    </div>
   </div>
 </template>
 
 <script>
+import mdViewer from '../components/md_viewer.vue';
+
 export default {
+  components: {
+    mdViewer
+  }
 };
 </script>

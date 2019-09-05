@@ -26,7 +26,7 @@
       </q-item>
       <q-item clickable>
         <q-item-section avatar>
-          <q-icon name="tag" />
+          <q-icon name="local_offer" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Tags</q-item-label>

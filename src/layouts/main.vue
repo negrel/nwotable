@@ -1,9 +1,11 @@
 <template>
   <div class="bg-white" id="main">
     <q-toolbar class="text-primary bg-grey-3">
-      <div id="search-field" class="row">
-        <input class="col-auto" type="text" placeholder="Search..." />
-          <q-icon name="search" />
+      <div id="search-field" class="fit">
+        <input type="text" placeholder="Search..." />
+          <button class="float-right">
+            <q-icon name="search" />
+          </button>
       </div>
       <button class="btn-toolbar">
         <q-icon name="add" />
@@ -15,7 +17,6 @@
       <q-icon name="keyboard_arrow_up" :class="{ titleSort }" />
     </q-bar>
     <div class="list">
-    <div class="dragger" id="dragger-drawer" />
       <q-list>
       <!-- TODO List the note here -->
         <q-item clickable>
@@ -35,7 +36,7 @@
           </q-item>
       </q-list>
     </div>
-    <div class="dragger-viewer" id="dragger-viewer"/>
+    <!-- TODO add bottom button to trigger left drawer -->
   </div>
 </template>
 
@@ -45,28 +46,24 @@ export default {
     titleSort: true
   }),
   mounted() {
-    let draggerDrawer = document.getElementById('dragger-drawer');
+    let dragger = document.getElementById('dragger-viewer');
     // TODO Request animation frame for better look
-    draggerDrawer.addEventListener('mousedown', (event) => {
-      window.addEventListener('mousemove', this.resize);
+
+    dragger.addEventListener('mousedown', (event) => {
+      window.addEventListener('mousemove', this.resizeMain);
     });
+
     window.addEventListener('mouseup', (event) => {
-      window.removeEventListener('mousemove', this.resize);
-    });
-
-    let draggerViewer = document.getElementById('dragger-viewer');
-
-    draggerViewer.addEventListener('mousedown', (event) => {
-      window.addEventListener('mousemove', this.resize);
+      window.removeEventListener('mousemove', this.resizeMain);
     });
   },
   methods: {
-    resize(event) {
-      let drawer = document.getElementById('drawer');
-      let main = document.getElementById('main');
+    resizeMain(event) {
       let endX = event.clientX;
-      drawer.style.width = endX + 'px';
-      main.style.width = window.innerWidth - endX + 'px';
+      let main = document.getElementById('main');
+      // 258px is the size of the drawer
+      let width = endX - 258;
+      main.style.width = width + 'px';
     }
   }
 };

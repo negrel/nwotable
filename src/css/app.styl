@@ -24,8 +24,9 @@ body {
   min-width 250px
   max-width 250px
   height 100vh
-  overflow-y scroll
+  overflow-y auto
   display flex
+  background rgb(32,39,44)
 
   & .q-list {
     height 100vh
@@ -35,6 +36,23 @@ body {
 
   & .q-item__label--header {
     padding: 1em .7em
+  }
+
+  & .q-focus-helper {
+    background transparent
+
+    &:hover {
+      background rgba(0,0,0,1)!important
+    }
+
+    &:active {
+      background rgba(0,0,0,1)
+    }
+
+    &::after {
+      background rgba(0,0,0,1)
+      opacity 1
+    }
   }
 }
 
@@ -48,10 +66,6 @@ $header-border = 1px solid $grey-4
   min-width 285px
   max-width 500px
 
-  .q-item, .q-focus-helper {
-    height 3em
-  }
-
   .list {
     display flex
     border 0
@@ -60,7 +74,7 @@ $header-border = 1px solid $grey-4
   .q-list {
     height 100%
     width 100%
-    overflow-y scroll
+    overflow-y auto
   }
 
   #search-field {
@@ -122,8 +136,12 @@ $header-border = 1px solid $grey-4
       outline none
       transition .2s ease-in-out
 
-      &hover {
+      &:hover {
         cursor pointer
+      }
+
+      &:active {
+        background-color $grey-5
       }
 
     }
@@ -145,10 +163,6 @@ $header-border = 1px solid $grey-4
 
     & .q-icon {
       transition .1s ease-in-out
-    }
-
-    & .titleSort {
-      transform rotate(180deg)
     }
   }
 }

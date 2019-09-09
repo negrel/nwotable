@@ -17,6 +17,9 @@ export default {
     drawer,
     mainSection,
     viewer
+  },
+  mounted() {
+    this.$store.dispatch('initDb');
   }
 };
 </script>

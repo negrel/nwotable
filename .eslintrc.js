@@ -49,7 +49,7 @@ module.exports = {
 
     'semi': [2, 'always'],
     'space-before-function-paren': ['error', 'never'],
-
+    'no-useless-escape': "off",
     // allow console.log during development only
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow debugger during development only

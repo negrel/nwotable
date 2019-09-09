@@ -1,6 +1,6 @@
 <template>
   <div id="drawer">
-    <q-list class="bg-secondary text-grey-1">
+    <q-list class="text-grey-1">
       <q-item-label header>Menu</q-item-label>
       <q-item clickable>
         <q-item-section avatar>

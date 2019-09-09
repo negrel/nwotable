@@ -9,7 +9,8 @@ module.exports = function (ctx) {
     ],
 
     css: [
-      'app.styl'
+      'app.styl',
+      'markd.styl'
     ],
 
     extras: [

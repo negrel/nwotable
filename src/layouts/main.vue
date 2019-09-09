@@ -14,26 +14,16 @@
     <q-bar @click="titleSort = !titleSort">
       <div>Title</div>
       <q-space />
-      <q-icon name="keyboard_arrow_up" :class="{ titleSort }" />
+      <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': titleSort }" />
     </q-bar>
     <div class="list">
       <q-list>
-      <!-- TODO List the note here -->
-        <q-item clickable>
-            <q-item-section>
-              <q-item-label>Title here</q-item-label>
-            </q-item-section>
-          </q-item>
-        <q-item clickable>
+      <!-- TODO Limit size of title and ... end of line -->
+        <q-item v-for="note in noteList" :key="note.body" @click="selectNote(note)" clickable>
           <q-item-section>
-              <q-item-label>Second here</q-item-label>
-            </q-item-section>
-          </q-item>
-        <q-item clickable>
-          <q-item-section>
-              <q-item-label>Third here</q-item-label>
-            </q-item-section>
-          </q-item>
+            <q-item-label>{{ note.body }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </div>
     <!-- TODO add bottom button to trigger left drawer -->
@@ -41,6 +31,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data: () => ({
     titleSort: true
@@ -64,7 +56,15 @@ export default {
       // 258px is the size of the drawer
       let width = endX - 258;
       main.style.width = width + 'px';
+    },
+    selectNote(note) {
+      this.$store.dispatch('setSelectedNote', note);
     }
+  },
+  computed: {
+    ...mapState({
+      noteList: state => state.database.noteList
+    })
   }
 };
 </script>

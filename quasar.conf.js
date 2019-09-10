@@ -1,6 +1,21 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
+const extendTypescriptToWebpack = (config) => {
+  config.resolve
+    .extensions
+    .add('.ts')
+  config.module
+    .rule('typescript')
+    .test(/\.ts$/)
+    .use('typescript')
+    .loader('ts-loader')
+    .options({
+      appendTsSuffixTo: [/\.vue$/],
+      onlyCompileBundledFiles: true
+    })
+}
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -14,20 +29,13 @@ module.exports = function (ctx) {
     ],
 
     extras: [
-      // 'ionicons-v4',
-      // 'mdi-v3',
-      // 'fontawesome-v5',
-      // 'eva-icons',
-      // 'themify',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
       'roboto-font', // optional, you are not bound to it
       'material-icons' // optional, you are not bound to it
     ],
 
     framework: {
       // iconSet: 'ionicons-v4',
-      // lang: 'de', // Quasar language
+      lang: 'en-us', // Quasar language
 
       all: true, // --- includes everything; for dev only!
 
@@ -130,39 +138,6 @@ module.exports = function (ctx) {
             'type': 'image/png'
           }
         ]
-      }
-    },
-
-    cordova: {
-      // id: 'org.cordova.quasar.app',
-      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-    },
-
-    electron: {
-      // bundler: 'builder', // or 'packager'
-
-      extendWebpack (cfg) {
-        // do something with Electron main process Webpack cfg
-        // chainWebpack also available besides this extendWebpack
-      },
-
-      packager: {
-        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
-        // OS X / Mac App Store
-        // appBundleId: '',
-        // appCategoryType: '',
-        // osxSign: '',
-        // protocol: 'myapp://path',
-
-        // Windows only
-        // win32metadata: { ... }
-      },
-
-      builder: {
-        // https://www.electron.build/configuration/configuration
-
-        // appId: 'nwote.md'
       }
     }
   }

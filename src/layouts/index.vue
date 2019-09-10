@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import drawer from '../layouts/drawer.vue';
-import mainSection from '../layouts/main.vue';
-import viewer from '../layouts/viewer.vue';
+import drawer from '../pages/index/drawer.vue';
+import mainSection from '../pages/index/main.vue';
+import viewer from '../pages/index/viewer.vue';
 
 export default {
   components: {

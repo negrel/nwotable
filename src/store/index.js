@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import database from './database.js';
-import editor from './editor.js';
+import editor from './editor.ts';
 
 Vue.use(Vuex);
 

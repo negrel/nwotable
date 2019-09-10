@@ -2,7 +2,7 @@
 const routes = [
   {
     path: '/',
-    component: () => import('pages/index.vue')
+    component: () => import('layouts/index.vue')
   }
 ];
 
@@ -10,7 +10,7 @@ const routes = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: () => import('layouts/Error404.vue')
   });
 }
 

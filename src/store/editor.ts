@@ -1,4 +1,7 @@
-export const state = {
+export const state: {
+  selectedNote: object,
+  editMode: boolean
+} = {
   selectedNote: {},
   editMode: false
 };

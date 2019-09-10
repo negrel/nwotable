@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import mdViewer from '../components/md_viewer.vue';
-import mdEditor from '../components/md_editor.vue';
+import mdViewer from '../../components/md_viewer.vue';
+import mdEditor from '../../components/md_editor.vue';
 import { mapState } from 'vuex';
 
 export default {

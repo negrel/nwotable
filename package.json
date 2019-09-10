@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "awesome-typescript-loader": "^5.2.1",
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "source-map-loader": "^0.2.4"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

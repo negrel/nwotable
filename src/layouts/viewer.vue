@@ -2,8 +2,8 @@
   <div id="viewer">
     <!-- TODO merge some buttons by groups -->
     <q-toolbar class="text-primary bg-grey-3">
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': edit }"
-        @click="edit = inverse(edit)">
+      <button :class="{ 'btn-toolbar': true, 'text-orange-8': editMode }"
+        @click="changeEditMode()">
         <q-icon name="edit"/>
       </button>
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': label }"
@@ -30,7 +30,7 @@
       </button>
     </q-toolbar>
     <div class="fit bg-white">
-      <mdViewer :note="selectedNote" v-if="!edit" />
+      <mdViewer :note="selectedNote" v-if="!editMode" />
       <mdEditor :note="selectedNote" v-else />
     </div>
   </div>
@@ -43,7 +43,6 @@ import { mapState } from 'vuex';
 
 export default {
   data: () => ({
-    edit: false,
     label: false,
     attachment: false,
     favorite: false,
@@ -55,17 +54,16 @@ export default {
     mdEditor
   },
   methods: {
-    editMode() {
-      console.log(this.edit);
-      this.edit = !this.edit;
-      console.log(this.edit);
+    changeEditMode() {
+      this.$store.dispatch('changeEditMode');
     },
     inverse(bool) {
       return !bool;
     }
   },
   computed: mapState({
-    selectedNote: state => state.editor.selectedNote
+    selectedNote: state => state.editor.selectedNote,
+    editMode: state => state.editor.editMode
   })
 };
 </script>

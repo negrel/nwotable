@@ -19,7 +19,7 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="note in noteList" :key="note.body" @click="selectNote(note)" clickable>
+        <q-item v-for="note in noteListFilterd" :key="note.body" @click="selectNote(note)" clickable>
           <q-item-section>
             <q-item-label>{{ note.body }}</q-item-label>
           </q-item-section>
@@ -63,8 +63,19 @@ export default {
   },
   computed: {
     ...mapState({
-      noteList: state => state.database.noteList
-    })
+      noteList: state => {
+        return state.database.noteList;
+      }
+    }),
+    noteListFilterd() {
+      if (this.titleSort) {
+        return this.noteList;
+      } else {
+        // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.
+        // TODO animate the list reverse.
+        return this.noteList.slice(0).reverse();
+      }
+    }
   }
 };
 </script>

@@ -7,19 +7,26 @@
   </q-layout>
 </template>
 
-<script>
+<script lang="ts">
 import drawer from '../pages/index/drawer.vue';
 import mainSection from '../pages/index/main.vue';
 import viewer from '../pages/index/viewer.vue';
 
-export default {
+import Vue from 'vue';
+import Component from 'vue-class-component';
+
+@Component({
   components: {
     drawer,
     mainSection,
     viewer
-  },
+  }
+})
+class Index extends Vue {
   mounted() {
     this.$store.dispatch('initDb');
   }
 };
+
+export default Index;
 </script>

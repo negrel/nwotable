@@ -7,11 +7,12 @@
   "author": "Alexandre Negrel",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue src --fix",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "babel-eslint": "^10.0.3",
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
     "quasar": "^1.0.0",
@@ -19,13 +20,20 @@
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
+    "@quasar/quasar-app-extension-typescript": "^1.0.0-beta.1",
+    "@types/lodash": "^4.14.138",
+    "@types/node": "11.9.5",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^5.0.0",
-    "source-map-loader": "^0.2.4",
-    "typescript": "^3.6.2"
+    "tslint": "^5.20.0",
+    "typescript": "^3.3.3",
+    "vue-property-decorator": "^8.2.2",
+    "vuex-class": "^0.3.2"
   },
   "engines": {
     "node": ">= 8.9.0",

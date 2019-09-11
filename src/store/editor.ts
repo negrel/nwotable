@@ -1,13 +1,19 @@
-export const state: {
-  selectedNote: object,
+import { Note } from '../types'
+import { Module, ActionContext, MutationTree, ActionTree } from 'vuex';
+import { RootState } from './store'
+
+export interface EditorState {
+  selectedNote: Note,
   editMode: boolean
-} = {
-  selectedNote: {},
+}
+
+export const state: EditorState = {
+  selectedNote: {} as Note,
   editMode: false
 };
 
-export const mutations = {
-  SET_SELECTED_NOTE(state, selectedNote) {
+export const mutations: MutationTree<EditorState> = {
+  SET_SELECTED_NOTE(state, selectedNote: Note) {
     state.selectedNote = selectedNote;
   },
   CHANGE_EDIT_MODE(state) {
@@ -15,17 +21,19 @@ export const mutations = {
   }
 };
 
-export const actions = {
-  setSelectedNote({ commit }, selectedNote) {
+export const actions: ActionTree<EditorState, RootState> = {
+  setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note) {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  changeEditMode({ commit }) {
+  changeEditMode({ commit }: ActionContext<EditorState, RootState>) {
     commit('CHANGE_EDIT_MODE');
   }
 };
 
-export default {
+export const Editor: Module<EditorState, RootState> = {
   state,
   mutations,
   actions
 };
+
+export default Editor;

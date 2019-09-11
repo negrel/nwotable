@@ -36,34 +36,40 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import mdViewer from '../../components/md_viewer.vue';
 import mdEditor from '../../components/md_editor.vue';
-import { mapState } from 'vuex';
 
-export default {
-  data: () => ({
-    label: false,
-    attachment: false,
-    favorite: false,
-    pin: false,
-    trash: false
-  }),
+import { Note } from '../../types';
+
+import { Vue, Component } from 'vue-property-decorator';
+import { State } from 'vuex-class';
+
+@Component({
   components: {
     mdViewer,
     mdEditor
-  },
-  methods: {
-    changeEditMode() {
-      this.$store.dispatch('changeEditMode');
-    },
-    inverse(bool) {
-      return !bool;
-    }
-  },
-  computed: mapState({
-    selectedNote: state => state.editor.selectedNote,
-    editMode: state => state.editor.editMode
-  })
+  }
+})
+class Viewer extends Vue {
+  // Property
+  label: boolean = false;
+  attachment: boolean = false;
+  favorite: boolean = false;
+  pin: boolean = false;
+  trash: boolean = false;
+
+  @State(state => state.Editor.selectedNote) selectedNote: Note;
+  @State(state => state.Editor.editMode) editMode: boolean;
+
+  changeEditMode() {
+    this.$store.dispatch('changeEditMode');
+  }
+
+  inverse(bool: boolean) {
+    return !bool;
+  }
 };
+
+export default Viewer;
 </script>

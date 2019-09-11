@@ -30,52 +30,60 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex';
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
-export default {
-  data: () => ({
-    titleSort: true
-  }),
+import { Note } from '../../types';
+
+@Component class Main extends Vue {
+  titleSort: boolean
+
+  constructor() {
+    super();
+    this.titleSort = false;
+  }
+
   mounted() {
     let dragger = document.getElementById('dragger-viewer');
     // TODO Request animation frame for better look
 
-    dragger.addEventListener('mousedown', (event) => {
-      window.addEventListener('mousemove', this.resizeMain);
-    });
+    if (dragger) {
+      dragger.addEventListener('mousedown', () => {
+        window.addEventListener('mousemove', this.resizeMain);
+      });
 
-    window.addEventListener('mouseup', (event) => {
-      window.removeEventListener('mousemove', this.resizeMain);
-    });
-  },
-  methods: {
-    resizeMain(event) {
-      let endX = event.clientX;
-      let main = document.getElementById('main');
-      // 258px is the size of the drawer
-      let width = endX - 258;
-      main.style.width = width + 'px';
-    },
-    selectNote(note) {
-      this.$store.dispatch('setSelectedNote', note);
+      window.addEventListener('mouseup', (event) => {
+        window.removeEventListener('mousemove', this.resizeMain);
+      });
     }
-  },
-  computed: {
-    ...mapState({
-      noteList: state => {
-        return state.database.noteList;
-      }
-    }),
-    noteListFilterd() {
-      if (this.titleSort) {
-        return this.noteList;
-      } else {
-        // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.
-        // TODO animate the list reverse.
-        return this.noteList.slice(0).reverse();
-      }
+  }
+
+  resizeMain(event: MouseEvent) {
+    let endX = event.clientX;
+    let main = document.getElementById('main');
+    // 258px is the size of the drawer
+    let width = endX - 258;
+    if (main) {
+      main.style.width = width + 'px';
+    }
+  }
+  selectNote(note: Note) {
+    this.$store.dispatch('setSelectedNote', note);
+  }
+
+  @State(state => state.Database.noteList) noteList: Array<Note>;
+
+  get noteListFilterd() {
+    if (this.titleSort) {
+      return this.noteList;
+    } else {
+      // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.
+      // TODO animate the list reverse.
+      return this.noteList.slice(0).reverse();
     }
   }
 };
+
+export default Main;
 </script>

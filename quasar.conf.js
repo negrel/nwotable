@@ -1,23 +1,12 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-const extendTypescriptToWebpack = (config) => {
-  config.resolve
-    .extensions
-    .add('.ts')
-  config.module
-    .rule('typescript')
-    .test(/\.ts$/)
-    .use('typescript')
-    .loader('ts-loader')
-    .options({
-      appendTsSuffixTo: [/\.vue$/],
-      onlyCompileBundledFiles: true
-    })
-}
-
 module.exports = function (ctx) {
   return {
+    sourceFiles: {
+      router: 'src/router/index.ts',
+      store: 'src/store/store.ts'
+    },
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
@@ -61,7 +50,7 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
+        // 'Notify'
       ]
     },
 
@@ -75,15 +64,17 @@ module.exports = function (ctx) {
       // analyze: true,
       // extractCSS: false,
       extendWebpack(cfg) {
-        cfg.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-          options: {
-            formatter: require('eslint').CLIEngine.getFormatter('stylish')
+        cfg.module.rules.push(
+          {
+            enforce: 'pre',
+            test: /\.(js|vue)$/,
+            loader: 'eslint-loader',
+            exclude: /node_modules/,
+            options: {
+              formatter: require('eslint').CLIEngine.getFormatter('stylish')
+            }
           }
-        })
+        )
       }
     },
 

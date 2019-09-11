@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
     "allowJs": true,
-    "target": "es5"
+    "sourceMap": true,
+    "target": "es5",
+    "strict": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "strictPropertyInitialization": false
   },
-  "include": [
-    "./src/**/*", "quasar.conf.js"
-  ]
+  "exclude": ["node_modules"]
 }

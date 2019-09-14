@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "sourceMap": true,
-    "target": "es5",
+    "target": "es6",
     "strict": true,
     "experimentalDecorators": true,
     "module": "commonjs",
@@ -10,5 +10,9 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "quasar.conf.js"
+  ]
 }

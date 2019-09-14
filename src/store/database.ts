@@ -1,88 +1,78 @@
-import { Note } from '../types';
+import { Note } from '../class/Note';
 import { ActionContext, MutationTree, ActionTree, Module } from 'vuex';
-import { RootState } from './store'
+import { RootState } from './store';
 
 export interface DatabaseState {
-  noteList: Note[],
-  iDb: any
+  noteList: Note[];
+  iDb: any;
 }
 
 export const state: DatabaseState = {
   noteList: [
-    {
-      body: '### WSH',
-      lastEdit: "a10",
-      label: false,
-      favorite: false,
-      pin: false
-    },
-    {
-      body: '## Ici la seconde.',
-      lastEdit: 'b20',
-      label: false,
-      favorite: false,
-      pin: false
-    },
-    {
-      body: '# Et moi je suis la petite dernière',
-      lastEdit: 'c30',
-      label: false,
-      favorite: false,
-      pin: false
-    } 
+    new Note({
+      title: 'No note saved...',
+      content: '## Start taking note now !',
+      meta: {
+        created: new Date('15-10-2000'),
+        modified: new Date('11-09-2019'),
+        tags: [],
+        favorited: false,
+        pinned: false
+      }
+    })
   ],
   iDb: {}
 };
 
 export const mutations: MutationTree<DatabaseState> = {
-  ADD_DATABASE(state, db: any) {
+  ADD_DATABASE(state, db: any): void {
     state.iDb = db;
   },
-  UPDATE_NOTE(state, { index, note }:{ index: number, note: Note }) {
+  UPDATE_NOTE(state, { index, note }: { index: number; note: Note }): void {
     state.noteList[index] = note;
   }
 };
 
 export const actions: ActionTree<DatabaseState, RootState> = {
-  initDb({ commit, dispatch }: ActionContext<DatabaseState, RootState>) {
+  initDb({ commit, dispatch }: ActionContext<DatabaseState, RootState>): void {
     if (!window.indexedDB) {
       alert('Your browser doesn\'t support IndexedDb. The app may not save your notes');
     } else {
-      let request = window.indexedDB.open('Notes App', 1);
+      const request = window.indexedDB.open('Notes App', 1);
 
-      request.onerror = (event: any) => {
+      request.onerror = (): void => {
         alert('An error occur while using IndexedDb. The app may not save your notes locally.');
       };
 
-      request.onsuccess = (event: any) => {
-        let db = event.target.result;
+      request.onsuccess = (event: any): void => {
+        const db = event.target.result;
 
         // Gestionnaire d'erreur générique pour toutes les erreurs de requêtes de cette db
-        db.onerror = (event: any) => {
+        db.onerror = (event: any): void => {
           alert('Database error: ' + event.target.errorCode);
         };
 
         commit('ADD_DATABASE', db);
 
         // Set notes state with the IndexedDb objectStores
-        let noteObjectStore = db.transaction('notes', 'readonly').objectStore('notes');
+        const noteObjectStore = db.transaction('notes', 'readonly').objectStore('notes');
 
-        let getNotes = noteObjectStore.getAll();
+        const getNotes = noteObjectStore.getAll();
 
-        getNotes.onsuccess = () => {
+        getNotes.onsuccess = (): void => {
           dispatch('setNoteList', event.target.result);
         };
 
-        getNotes.onerror = () => {
+        getNotes.onerror = (): void => {
           alert('Error while getting the notes from IndexedDb.');
         };
       };
 
-      request.onupgradeneeded = (event: any) => {
-        let db = event.target.result;
+      request.onupgradeneeded = (event: any): void => {
+        const db = event.target.result;
 
         // Crée un objet de stockage pour cette base de données
-        let noteObjectStore = db.createObjectStore('notes', { keyPath: 'lastEdit' });
+        const noteObjectStore = db.createObjectStore('notes', { keyPath: 'lastEdit' });
 
         // Créer un index pour rechercher les note par leur titre et leur body.
         noteObjectStore.createIndex('lastEdit', 'lastEdit', { unique: false });
@@ -93,22 +83,22 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
         // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
         // est terminée avant d'ajouter des données dedans.
-        noteObjectStore.transaction.oncomplete = () => {
+        noteObjectStore.transaction.oncomplete = (): void => {
           // Stocker les valeurs dans le nouvel objet de stockage.
           console.log('Indexed DB ready.');
         };
       };
     }
   },
-  setNoteList({ commit, state }: ActionContext<DatabaseState, RootState>) {
+  setNoteList({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
     // Set the selected note to the first in the list.
-    commit('SET_SELECTED_NOTE', state.noteList[0], { root: true });
+    dispatch('setSelectedNote', state.noteList[0], { root: true });
   },
-  getIndex({ state }: ActionContext<DatabaseState, RootState>, note: Note) {
-    return state.noteList.map((data: Note) => data.lastEdit.toString()).indexOf(note.lastEdit.toString());
+  getIndex({ state }: ActionContext<DatabaseState, RootState>, note: Note): number {
+    return state.noteList.map((element: Note): string => element.data.meta.modified.toString()).indexOf(note.data.meta.modified.toString());
   },
-  editNote({ dispatch, commit }: ActionContext<DatabaseState, RootState>, note: Note) {
-    let index = dispatch('getIndex', note);
+  editNote({ dispatch, commit }: ActionContext<DatabaseState, RootState>, note: Note): void {
+    const index = dispatch('getIndex', note);
     commit('UPDATE_NOTE', { index, note });
   }
 };

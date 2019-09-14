@@ -3,33 +3,25 @@
 </template>
 
 <script lang="ts">
-const marked = require('marked');
+// import marked from 'marked';
 
-import { Note } from '../types';
+// import { NoteType } from '../class/Note';
 
-import Vue from 'vue';
-import { Prop, Component } from 'vue-property-decorator';
+// import Vue from 'vue';
+// import { Prop, Component } from 'vue-property-decorator';
 
-@Component
-class MdViewer extends Vue {
-  @Prop({
-    default: {
-      body: '# Default note.',
-      lastEdit: new Date(),
-      label: false,
-      favorite: false,
-      pin: false
-    }
-  })
-  note: Note
+// @Component
+// class MdViewer extends Vue {
+//   @Prop()
+//   note: NoteType
 
-  get parsedNote(): string {
-    if (this.note.body) {
-      return marked(this.note.body);
-    }
-    return '';
-  }
-};
+//   get parsedNote(): string {
+//     if (this.note) {
+//       return marked(this.note.content);
+//     }
+//     return '';
+//   }
+// };
 
-export default MdViewer;
+// export default MdViewer;
 </script>

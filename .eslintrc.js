@@ -2,7 +2,7 @@ module.exports = {
   root: true,
 
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: "@typescript-eslint/parser",
     sourceType: 'module'
   },
 
@@ -13,13 +13,16 @@ module.exports = {
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:vue/essential',
     '@vue/standard'
   ],
 
-  // required to lint *.vue files
+  // required to lint *.vue & *.ts files
   plugins: [
-    'vue'
+    'vue',
+    '@typescript-eslint'
   ],
 
   globals: {
@@ -50,6 +53,7 @@ module.exports = {
     'semi': [2, 'always'],
     'space-before-function-paren': ['error', 'never'],
     'no-useless-escape': "off",
+    "@typescript-eslint/indent": ["error", 2],
     // allow console.log during development only
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow debugger during development only

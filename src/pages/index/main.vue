@@ -19,9 +19,9 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="note in noteListFilterd" :key="note.body" @click="selectNote(note)" clickable>
+        <q-item v-for="note in noteListFilterd" :key="note.created" @click="selectNote(note)" clickable>
           <q-item-section>
-            <q-item-label>{{ note.body }}</q-item-label>
+            <q-item-label>{{ note.title }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -34,14 +34,14 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
-import { Note } from '../../types';
+import { NoteType, Note } from '../../class/Note';
 
 @Component class Main extends Vue {
   titleSort: boolean
 
   constructor() {
     super();
-    this.titleSort = false;
+    this.titleSort = true;
   }
 
   mounted() {
@@ -53,7 +53,7 @@ import { Note } from '../../types';
         window.addEventListener('mousemove', this.resizeMain);
       });
 
-      window.addEventListener('mouseup', (event) => {
+      window.addEventListener('mouseup', () => {
         window.removeEventListener('mousemove', this.resizeMain);
       });
     }
@@ -68,11 +68,11 @@ import { Note } from '../../types';
       main.style.width = width + 'px';
     }
   }
-  selectNote(note: Note) {
+  selectNote(note: NoteType) {
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  @State(state => state.Database.noteList) noteList: Array<Note>;
+  @State(state => state.Database.noteList) noteList: Note[];
 
   get noteListFilterd() {
     if (this.titleSort) {

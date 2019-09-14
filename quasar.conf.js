@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function (ctx) {
+module.exports = function(ctx) {
   return {
     sourceFiles: {
       router: 'src/router/index.ts',
@@ -74,7 +74,7 @@ module.exports = function (ctx) {
               formatter: require('eslint').CLIEngine.getFormatter('stylish')
             }
           }
-        )
+        );
       }
     },
 
@@ -131,5 +131,5 @@ module.exports = function (ctx) {
         ]
       }
     }
-  }
-}
+  };
+};

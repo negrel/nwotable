@@ -52,12 +52,7 @@ import Component from 'vue-class-component';
 
 @Component
 class Drawer extends Vue {
-  leftDrawerOpen: boolean
 
-  constructor() {
-    super();
-    this.leftDrawerOpen = false;
-  }
 };
 
 export default Drawer;

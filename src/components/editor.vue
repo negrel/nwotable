@@ -1,5 +1,5 @@
 <template>
-  <div id="editor" v-html="note">
+  <div id="editor" v-html="note" :contenteditable="editMode">
   </div>
 </template>
 
@@ -16,9 +16,9 @@ class Editor extends Vue {
 
   public get note(): string {
     if (this.editMode) {
-      return this.noteObject.markdown;
+      return this.noteObject.plainNote;
     } else {
-      return this.noteObject.parsedNote;
+      return this.noteObject.markdown;
     }
   }
 };

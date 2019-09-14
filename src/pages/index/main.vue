@@ -7,7 +7,7 @@
             <q-icon name="search" />
           </button>
       </div>
-      <button class="btn-toolbar">
+      <button class="btn-toolbar" @click="addNewNote" >
         <q-icon name="add" />
       </button>
     </q-toolbar>
@@ -19,9 +19,9 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="note in noteListFilterd" :key="note.created" @click="selectNote(note)" clickable>
+        <q-item v-for="noteObj in noteListFilterd" :key="noteObj.data.meta.created" @click="selectNote(noteObj)" clickable>
           <q-item-section>
-            <q-item-label>{{ note.title }}</q-item-label>
+            <q-item-label>{{ noteObj.data.title }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -70,6 +70,10 @@ import { NoteType, Note } from '../../class/Note';
   }
   selectNote(note: NoteType) {
     this.$store.dispatch('setSelectedNote', note);
+  }
+
+  addNewNote(): void {
+    this.$store.dispatch('addNewNote');
   }
 
   @State(state => state.Database.noteList) noteList: Note[];

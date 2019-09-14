@@ -10,11 +10,11 @@ export interface DatabaseState {
 export const state: DatabaseState = {
   noteList: [
     new Note({
-      title: 'No note saved...',
-      content: '## Start taking note now !',
+      title: 'Start taking note now !',
+      content: '# No note saved.',
       meta: {
-        created: new Date('15-10-2000'),
-        modified: new Date('11-09-2019'),
+        created: '15/10/2000',
+        modified: new Date('11/09/2019'),
         tags: [],
         favorited: false,
         pinned: false
@@ -30,6 +30,12 @@ export const mutations: MutationTree<DatabaseState> = {
   },
   UPDATE_NOTE(state, { index, note }: { index: number; note: Note }): void {
     state.noteList[index] = note;
+  },
+  ADD_NOTE(state, payload): void {
+    state.noteList.unshift(payload);
+  },
+  DELETE_NOTE(state, index): void {
+    state.noteList.splice(index, 1);
   }
 };
 
@@ -95,11 +101,19 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     dispatch('setSelectedNote', state.noteList[0], { root: true });
   },
   getIndex({ state }: ActionContext<DatabaseState, RootState>, note: Note): number {
-    return state.noteList.map((element: Note): string => element.data.meta.modified.toString()).indexOf(note.data.meta.modified.toString());
+    return state.noteList.map((element: Note): string => element.data.meta.created.toString()).indexOf(note.data.meta.created.toString());
   },
   editNote({ dispatch, commit }: ActionContext<DatabaseState, RootState>, note: Note): void {
     const index = dispatch('getIndex', note);
     commit('UPDATE_NOTE', { index, note });
+  },
+  addNewNote({ commit }: ActionContext<DatabaseState, RootState>, theNote: Note = new Note()): void {
+    commit('ADD_NOTE', theNote);
+  },
+  deleteNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
+    const index = dispatch('getIndex', theNote);
+    commit('DELETE_NOTE', index);
+    dispatch('setNoteList');
   }
 };
 

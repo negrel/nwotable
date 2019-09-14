@@ -1,7 +1,7 @@
 import * as marked from 'marked';
 
 export interface MetaData {
-  created: Date;
+  created: string;
   modified: Date;
   pinned: boolean;
   favorited: boolean;
@@ -21,16 +21,16 @@ export class Note {
     return this.note;
   }
 
-  public set data(newNote: NoteType) {
-    this.note = newNote;
-  }
-
-  public get parsedNote(): string {
+  public get plainNote(): string {
     return this.note.content;
   }
 
   public get markdown(): string {
     return marked(this.note.content);
+  }
+
+  public set markdown(newMarkdown) {
+    this.note.content = newMarkdown;
   }
 
   public constructor(note?: NoteType) {
@@ -41,11 +41,11 @@ export class Note {
         title: 'New note.',
         content: '# Your title',
         meta: {
-          created: new Date('15-10-2000'),
-          modified: new Date('11-09-2019'),
-          tags: ['example'],
+          created: new Date().toString(),
+          modified: new Date(),
+          tags: [],
           favorited: false,
-          pinned: true
+          pinned: false
         }
       };
     }

@@ -25,7 +25,7 @@
         <q-icon name="turned_in_not" v-else />
       </button>
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': false }"
-        @click="switchBool()">
+        @click="deleteNote">
         <q-icon name="delete" />
       </button>
     </q-toolbar>
@@ -54,17 +54,9 @@ class Viewer extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.Editor.editMode) editMode: boolean;
 
-  get meta(): MetaData {
+  get meta(): MetaData | undefined {
     if (this.selectedNote) {
       return this.selectedNote.data.meta;
-    } else {
-      return {
-        created: new Date(),
-        modified: new Date(),
-        tags: [],
-        favorited: false,
-        pinned: false
-      };
     }
   }
 
@@ -74,6 +66,10 @@ class Viewer extends Vue {
 
   switchBool(): void {
     console.log('switching some bool.');
+  }
+
+  deleteNote(): void {
+    this.$store.dispatch('deleteNote', this.selectedNote);
   }
 };
 

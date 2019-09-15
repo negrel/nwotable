@@ -25,7 +25,10 @@ export const actions: ActionTree<EditorState, RootState> = {
   setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note): void {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  changeEditMode({ commit }: ActionContext<EditorState, RootState>): void {
+  changeEditMode({ commit, dispatch, state }: ActionContext<EditorState, RootState>, newNote?: Note): void {
+    if (state.editMode && newNote) {
+      dispatch('saveNote', newNote, { root: true });
+    }
     commit('CHANGE_EDIT_MODE');
   }
 };

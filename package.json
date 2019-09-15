@@ -14,6 +14,7 @@
     "@quasar/extras": "^1.0.0",
     "babel-eslint": "^10.0.3",
     "lodash": "^4.17.15",
+    "maquette": "^3.3.4",
     "marked": "^0.7.0",
     "quasar": "^1.0.0"
   },

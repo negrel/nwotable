@@ -19,9 +19,16 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="noteObj in noteListFilterd" :key="noteObj.data.meta.created" @click="selectNote(noteObj)" clickable>
+        <q-item v-for="noteObj in noteListFilterd"
+          :key="noteObj.data.meta.created"
+          @click="selectNote(noteObj)"
+          clickable
+        >
           <q-item-section>
             <q-item-label>{{ noteObj.data.title }}</q-item-label>
+            <q-item-label class="text-grey-5" caption>
+              {{ noteObj.data.meta.modified.toLocaleDateString() }}
+            </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -72,7 +79,9 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  addNewNote(): void {
+  addNewNote(event: Event): void {
+    console.log(event);
+    console.log('SALUT');
     this.$store.dispatch('addNewNote');
   }
 
@@ -83,7 +92,7 @@ import { NoteType, Note } from '../../class/Note';
       return this.noteList;
     } else {
       // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.
-      // TODO animate the list reverse.
+      // TODO transition when the list reverse.
       return this.noteList.slice(0).reverse();
     }
   }

@@ -3,10 +3,10 @@
     <!-- TODO merge some buttons by groups -->
     <q-toolbar class="text-primary bg-grey-3">
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': editMode }"
-        @click="changeEditMode()">
+        @click="changeEditMode">
         <q-icon name="edit"/>
       </button>
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.tags }"
+      <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.tags.length }"
         @click="switchBool()">
         <q-icon name="local_offer" />
       </button>
@@ -28,9 +28,11 @@
         @click="deleteNote">
         <q-icon name="delete" />
       </button>
+      <!-- TODO add delete prompt -->
+      <!-- TODO add split button to have the parsed and plain note -->
     </q-toolbar>
     <div class="fit bg-white">
-      <editor :editMode="editMode" :noteObject="selectedNote" />
+      <editor :editMode="editMode" :noteObject="selectedNote" :class="{ 'hack-font': editMode }" />
     </div>
   </div>
 </template>

@@ -36,6 +36,9 @@ export const mutations: MutationTree<DatabaseState> = {
   },
   DELETE_NOTE(state, index): void {
     state.noteList.splice(index, 1);
+  },
+  SAVE_NOTE(state, { index, theNote }: {index: number; theNote: Note}): void {
+    state.noteList[index] = theNote;
   }
 };
 
@@ -66,7 +69,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         const getNotes = noteObjectStore.getAll();
 
         getNotes.onsuccess = (): void => {
-          dispatch('setNoteList', event.target.result);
+          dispatch('selectFirstNote', event.target.result);
         };
 
         getNotes.onerror = (): void => {
@@ -96,7 +99,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
       };
     }
   },
-  setNoteList({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
+  selectFirstNote({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
     // Set the selected note to the first in the list.
     dispatch('setSelectedNote', state.noteList[0], { root: true });
   },
@@ -107,13 +110,23 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     const index = dispatch('getIndex', note);
     commit('UPDATE_NOTE', { index, note });
   },
-  addNewNote({ commit }: ActionContext<DatabaseState, RootState>, theNote: Note = new Note()): void {
+  addNewNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note = new Note()): void {
     commit('ADD_NOTE', theNote);
+    dispatch('selectFirstNote');
+    dispatch('changeEditMode', { root: true });
   },
   deleteNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     const index = dispatch('getIndex', theNote);
     commit('DELETE_NOTE', index);
-    dispatch('setNoteList');
+    dispatch('selectFirstNote');
+  },
+  saveNote({ commit, dispatch, rootState }: ActionContext<DatabaseState, RootState>): void {
+    const theNote = rootState.Editor.selectedNote;
+    const payload = {
+      index: dispatch('getIndex', theNote),
+      theNote
+    };
+    commit('SAVE_NOTE', payload);
   }
 };
 

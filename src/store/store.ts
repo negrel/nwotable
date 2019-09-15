@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import Database from './database';
-import Editor from './editor';
+import { Database, DatabaseState } from './database';
+import { Editor, EditorState } from './editor';
 
-export interface RootState {};
+export interface RootState {
+  Editor: EditorState;
+  Database: DatabaseState;
+};
 
 Vue.use(Vuex);
 
@@ -13,7 +16,7 @@ Vue.use(Vuex);
  * directly export the Store instantiation
  */
 
-export default function(/* { ssrContext } */) {
+export default function(/* { ssrContext } */): any {
   const Store = new Vuex.Store<RootState>({
     modules: {
       Editor,

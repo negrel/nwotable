@@ -14,8 +14,7 @@ module.exports = function(ctx) {
 
     css: [
       'app.styl',
-      'markd.styl',
-      'massilia.styl'
+      'markd.styl'
     ],
 
     extras: [

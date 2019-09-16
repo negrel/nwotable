@@ -3,18 +3,17 @@
   "version": "0.0.1",
   "description": "A note app based on quasar, vue.js and markdown.",
   "productName": "Nwote.MD",
-  "cordovaId": "org.cordova.quasar.app",
   "author": "Alexandre Negrel",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "dev": "quasar dev"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "babel-eslint": "^10.0.3",
     "lodash": "^4.17.15",
-    "maquette": "^3.3.4",
+    "markdown-plus": "^2.5.2",
     "marked": "^0.7.0",
     "quasar": "^1.0.0"
   },

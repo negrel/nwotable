@@ -1,13 +1,10 @@
 <template>
   <div id="editor">
-    <div id="monaco" v-if="editMode" />
-    <!-- <div v-html="noteObject.markdown"/> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Note } from '../class/Note';
-import { Massilia } from '../class/Massilia';
 
 import { debounce } from 'lodash';
 
@@ -18,13 +15,6 @@ import { Prop, Component, Watch } from 'vue-property-decorator';
 class Editor extends Vue {
   @Prop(Boolean) readonly editMode: boolean
   @Prop(Note) readonly noteObject: Note
-
-  editor: Massilia;
-
-  mounted() {
-    let editor = document.getElementById('editor');
-    this.editor = new Massilia(editor);
-  }
 
   @Watch('editMode')
   onEditModeChange(val: boolean) {

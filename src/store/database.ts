@@ -31,10 +31,10 @@ export const mutations: MutationTree<DatabaseState> = {
   UPDATE_NOTE(state, { index, note }: { index: number; note: Note }): void {
     state.noteList[index] = note;
   },
-  ADD_NOTE(state, payload): void {
+  ADD_NOTE(state, payload: Note): void {
     state.noteList.unshift(payload);
   },
-  DELETE_NOTE(state, index): void {
+  DELETE_NOTE(state, index: number): void {
     state.noteList.splice(index, 1);
   },
   SAVE_NOTE(state, { index, theNote }: {index: number; theNote: Note}): void {
@@ -47,7 +47,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     if (!window.indexedDB) {
       alert('Your browser doesn\'t support IndexedDb. The app may not save your notes');
     } else {
-      const request = window.indexedDB.open('Notes App', 1);
+      const request = window.indexedDB.open('Nwotable', 1);
 
       request.onerror = (): void => {
         alert('An error occur while using IndexedDb. The app may not save your notes locally.');
@@ -58,7 +58,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
         // Gestionnaire d'erreur générique pour toutes les erreurs de requêtes de cette db
         db.onerror = (event: any): void => {
-          alert('Database error: ' + event.target.errorCode);
+          alert('Database error: ' + event.target.error);
         };
 
         commit('ADD_DATABASE', db);
@@ -68,8 +68,14 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
         const getNotes = noteObjectStore.getAll();
 
-        getNotes.onsuccess = (): void => {
-          dispatch('selectFirstNote', event.target.result);
+        getNotes.onsuccess = (event: any): void => {
+          const noteList = event.target.result;
+          for (let i = 0, length = noteList.length; i < length; i++) {
+            const note = new Note(event.target.result[i].note);
+            commit('ADD_NOTE', note);
+          }
+          commit('DELETE_NOTE', 1);
+          dispatch('selectFirstNote');
         };
 
         getNotes.onerror = (): void => {
@@ -81,14 +87,14 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         const db = event.target.result;
 
         // Crée un objet de stockage pour cette base de données
-        const noteObjectStore = db.createObjectStore('notes', { keyPath: 'lastEdit' });
+        // TODO ajouter keypath created metadata
+        const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
 
         // Créer un index pour rechercher les note par leur titre et leur body.
-        noteObjectStore.createIndex('lastEdit', 'lastEdit', { unique: false });
-        noteObjectStore.createIndex('body', 'body', { unique: false });
-        noteObjectStore.createIndex('label', 'label', { unique: false });
-        noteObjectStore.createIndex('favorite', 'favorite', { unique: false });
-        noteObjectStore.createIndex('pin', 'pin', { unique: false });
+        noteObjectStore.createIndex('content', 'content', { unique: true });
+        noteObjectStore.createIndex('tags', 'tags', { unique: false });
+        noteObjectStore.createIndex('favorited', 'favorited', { unique: false });
+        noteObjectStore.createIndex('pinned', 'pinned', { unique: false });
 
         // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
         // est terminée avant d'ajouter des données dedans.
@@ -111,12 +117,18 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     commit('UPDATE_NOTE', { index, note });
   },
   addNewNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note = new Note()): void {
+    dispatch('setEditMode', false, { root: true });
     commit('ADD_NOTE', theNote);
     dispatch('selectFirstNote');
-    dispatch('changeEditMode', { root: true });
+    dispatch('setEditMode', true, { root: true });
   },
-  deleteNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
+  deleteNote({ commit, dispatch, state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     const index = dispatch('getIndex', theNote);
+
+    state.iDb.transaction('notes', 'readwrite')
+      .objectStore('notes')
+      .delete(theNote.data.meta.created);
+
     commit('DELETE_NOTE', index);
     dispatch('selectFirstNote');
   },
@@ -127,6 +139,18 @@ export const actions: ActionTree<DatabaseState, RootState> = {
       theNote
     };
     commit('SAVE_NOTE', payload);
+
+    const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
+
+    // Save the note to indexed DB.
+    if (theNote.data.meta.modified) {
+      store.put(theNote);
+    } else {
+      theNote.modified();
+      store.add(theNote).onerror = (event: any): void => {
+        console.log(event);
+      };
+    }
   }
 };
 

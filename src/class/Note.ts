@@ -22,7 +22,7 @@ export class Note {
   }
 
   public get plainNote(): string {
-    return this.note.content;
+    return this.note.content.substring(0);
   }
 
   public get markdown(): string {
@@ -49,5 +49,13 @@ export class Note {
         }
       };
     }
+  }
+
+  public clone(): Note {
+    return new Note(this.note);
+  }
+
+  public modified(): void {
+    this.note.meta.modified = new Date();
   }
 }

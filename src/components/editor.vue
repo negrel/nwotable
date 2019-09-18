@@ -1,5 +1,13 @@
 <template>
-  <div id="editor" v-html="note" :contenteditable="editMode">
+  <div id="container">
+    <div id="editor" v-html="plainNote" contenteditable="true"
+      @keydown="debounceSave"
+      v-if="editMode"
+    >
+    </div>
+    <div id="viewer" v-html="selectedNote.markdown" contenteditable="false" v-else>
+    </div>
+      <!-- TODO add highlighting for markdown -->
   </div>
 </template>
 
@@ -10,34 +18,42 @@ import { debounce } from 'lodash';
 
 import Vue from 'vue';
 import { Prop, Component, Watch } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
 @Component
 class Editor extends Vue {
+  @State(state => state.Editor.selectedNote) selectedNote: Note;
   @Prop(Boolean) readonly editMode: boolean
-  @Prop(Note) readonly noteObject: Note
+  public plainNote: string
 
   @Watch('editMode')
   onEditModeChange(val: boolean) {
     if (val) {
-      console.log(this.noteObject.plainNote);
-    }
-  }
-
-  get note() {
-    if (this.editMode) {
-      return this.noteObject.plainNote;
+      this.plainNote = this.selectedNote.plainNote;
     } else {
-      return this.noteObject.markdown;
+      this.saveNote();
     }
   }
 
-  public saveNote = debounce(() => {
+  @Watch('selectedNote')
+  onSelectedNoteChange(val: Note, oldVal: Note) {
+    if (oldVal.data.meta.created !== val.data.meta.created) {
+      this.plainNote = this.selectedNote.plainNote;
+      // TODO Fix bug when edit mode + create new note
+    }
+  }
+
+  saveNote() {
     let editor = document.querySelector('#editor');
     if (editor) {
-      this.noteObject.markdown = editor.innerHTML;
+      this.selectedNote.markdown = editor.innerHTML;
     }
     this.$store.dispatch('saveNote');
-  }, 350)
+  }
+
+  public debounceSave = debounce(() => {
+    this.saveNote();
+  }, 1000)
 };
 
 export default Editor;

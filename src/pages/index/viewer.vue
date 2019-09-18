@@ -32,7 +32,7 @@
       <!-- TODO add split button to have the parsed and plain note -->
     </q-toolbar>
     <div class="fit bg-white">
-      <editor :editMode="editMode" :noteObject="selectedNote" :class="{ 'hack-font': editMode }" />
+      <editor :editMode="editMode" :class="{ 'hack-font': editMode }" />
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ class Viewer extends Vue {
   }
 
   changeEditMode(): void {
-    this.$store.dispatch('changeEditMode');
+    this.$store.dispatch('setEditMode', !this.editMode);
   }
 
   switchBool(): void {

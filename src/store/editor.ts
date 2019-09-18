@@ -16,8 +16,8 @@ export const mutations: MutationTree<EditorState> = {
   SET_SELECTED_NOTE(state, selectedNote: Note): void {
     state.selectedNote = selectedNote;
   },
-  CHANGE_EDIT_MODE(state): void {
-    state.editMode = !state.editMode;
+  SET_EDIT_MODE(state, bool: boolean): void {
+    state.editMode = bool;
   }
 };
 
@@ -25,11 +25,8 @@ export const actions: ActionTree<EditorState, RootState> = {
   setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note): void {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  changeEditMode({ commit, dispatch, state }: ActionContext<EditorState, RootState>, newNote?: Note): void {
-    if (state.editMode && newNote) {
-      dispatch('saveNote', newNote, { root: true });
-    }
-    commit('CHANGE_EDIT_MODE');
+  setEditMode({ commit }: ActionContext<EditorState, RootState>, bool: boolean): void {
+    commit('SET_EDIT_MODE', bool);
   }
 };
 

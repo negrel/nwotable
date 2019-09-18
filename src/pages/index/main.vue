@@ -22,6 +22,8 @@
         <q-item v-for="noteObj in noteListFilterd"
           :key="noteObj.data.meta.created"
           @click="selectNote(noteObj)"
+          active-class="q-item-hover"
+          :class="{ 'q-item-active': noteObj === selectedNote }"
           clickable
         >
           <q-item-section>
@@ -79,13 +81,12 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  addNewNote(event: Event): void {
-    console.log(event);
-    console.log('SALUT');
+  addNewNote(): void {
     this.$store.dispatch('addNewNote');
   }
 
   @State(state => state.Database.noteList) noteList: Note[];
+  @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get noteListFilterd() {
     if (this.titleSort) {

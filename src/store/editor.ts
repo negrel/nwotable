@@ -7,8 +7,20 @@ export interface EditorState {
   editMode: boolean;
 }
 
+export const defaultNote = {
+  title: 'No note',
+  content: '# No note saved, start now !',
+  meta: {
+    created: new Date().toString(),
+    modified: new Date(),
+    tags: [],
+    favorited: false,
+    pinned: false
+  }
+};
+
 export const state: EditorState = {
-  selectedNote: new Note(),
+  selectedNote: new Note(defaultNote),
   editMode: false
 };
 
@@ -27,6 +39,10 @@ export const actions: ActionTree<EditorState, RootState> = {
   },
   setEditMode({ commit }: ActionContext<EditorState, RootState>, bool: boolean): void {
     commit('SET_EDIT_MODE', bool);
+  },
+  defaultNote({ commit }: ActionContext<EditorState, RootState>): void {
+    const note = new Note(defaultNote);
+    commit('SET_SELECTED_NOTE', note);
   }
 };
 

@@ -41,6 +41,7 @@ class Editor extends Vue {
       this.plainNote = this.selectedNote.plainNote;
       // TODO Fix bug when edit mode + create new note
     }
+    console.log('YAYAY');
   }
 
   saveNote() {

@@ -130,7 +130,12 @@ export const actions: ActionTree<DatabaseState, RootState> = {
       .delete(theNote.data.meta.created);
 
     commit('DELETE_NOTE', index);
-    dispatch('selectFirstNote');
+
+    if (state.noteList.length === 0) {
+      dispatch('defaultNote', { root: true });
+    } else {
+      dispatch('selectFirstNote');
+    }
   },
   saveNote({ commit, dispatch, rootState }: ActionContext<DatabaseState, RootState>): void {
     const theNote = rootState.Editor.selectedNote;

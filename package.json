@@ -11,17 +11,20 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@types/dompurify": "0.0.33",
+    "@types/markdown-it": "0.0.8",
+    "@types/marked": "^0.6.5",
     "babel-eslint": "^10.0.3",
+    "dompurify": "^2.0.1",
     "lodash": "^4.17.15",
-    "markdown-plus": "^2.5.2",
     "marked": "^0.7.0",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vue-showdown": "^2.4.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
     "@quasar/quasar-app-extension-typescript": "^1.0.0-beta.1",
     "@types/lodash": "^4.14.138",
-    "@types/marked": "^0.6.5",
     "@types/node": "11.9.5",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",

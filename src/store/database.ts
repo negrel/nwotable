@@ -123,6 +123,8 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     dispatch('setEditMode', true, { root: true });
   },
   deleteNote({ commit, dispatch, state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
+    dispatch('setEditMode', false, { root: true });
+
     const index = dispatch('getIndex', theNote);
 
     state.iDb.transaction('notes', 'readwrite')

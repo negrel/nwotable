@@ -9,7 +9,7 @@ export interface EditorState {
 
 export const defaultNote = {
   title: 'No note',
-  content: '# No note saved, start now !',
+  content: '# No note saved.',
   meta: {
     created: new Date().toString(),
     modified: new Date(),

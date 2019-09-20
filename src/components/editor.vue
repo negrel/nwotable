@@ -41,13 +41,12 @@ class Editor extends Vue {
       this.plainNote = this.selectedNote.plainNote;
       // TODO Fix bug when edit mode + create new note
     }
-    console.log('YAYAY');
   }
 
   saveNote() {
     let editor = document.querySelector('#editor');
     if (editor) {
-      this.selectedNote.markdown = editor.innerHTML;
+      this.selectedNote.plainNote = editor.innerHTML;
     }
     this.$store.dispatch('saveNote');
   }

@@ -1,4 +1,5 @@
 import * as marked from 'marked';
+import * as DOMPurify from 'dompurify';
 
 export interface MetaData {
   created: string;
@@ -25,12 +26,12 @@ export class Note {
     return this.note.content.substring(0);
   }
 
-  public get markdown(): string {
-    return marked(this.note.content);
+  public set plainNote(newplainNote) {
+    this.note.content = newplainNote;
   }
 
-  public set markdown(newMarkdown) {
-    this.note.content = newMarkdown;
+  public get markdown(): string {
+    return DOMPurify.sanitize(marked(this.note.content));
   }
 
   public constructor(note?: NoteType) {

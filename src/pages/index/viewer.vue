@@ -6,7 +6,7 @@
         @click="changeEditMode">
         <q-icon name="edit"/>
       </button>
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.tags.length }"
+      <button class="btn-toolbar"
         @click="switchBool()">
         <q-icon name="local_offer" />
       </button>
@@ -15,14 +15,13 @@
         <q-icon name="attachment" class="rotate-270" />
       </button> -->
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.favorited }"
-      @click="switchBool()">
+      @click="switchMetaBool">
         <q-icon name="star" v-if="meta.favorited" />
         <q-icon name="star_border" v-else />
       </button>
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.pinned }"
-        @click="switchBool()">
-        <q-icon name="turned_in" v-if="meta.pinned" />
-        <q-icon name="turned_in_not" v-else />
+        @click="switchMetaBool">
+        <q-icon name="room" />
       </button>
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': false }"
         @click="deleteNote">
@@ -66,8 +65,15 @@ class Viewer extends Vue {
     this.$store.dispatch('setEditMode', !this.editMode);
   }
 
-  switchBool(): void {
-    console.log('switching some bool.');
+  switchMetaBool(el: MouseEvent): void {
+    let src = el.srcElement ? el.srcElement as HTMLElement : null;
+
+    if (src && src.innerText === 'room') {
+      this.selectedNote.pinned = !this.selectedNote.pinned;
+    } else {
+      this.selectedNote.favorited = !this.selectedNote.favorited;
+    }
+    this.$store.dispatch('saveNote');
   }
 
   deleteNote(): void {

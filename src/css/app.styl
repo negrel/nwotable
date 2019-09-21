@@ -32,6 +32,10 @@ body {
     height 100vh
     flex 10
     display inline-block
+
+    & .q-focusable:hover {
+      background #00000020
+    }
   }
 
   & .q-item__label--header {
@@ -63,7 +67,7 @@ body {
 $header-border = 1px solid $grey-4
 
 #main {
-  min-width 285px
+  min-width 295px
   max-width 500px
 
   .list {

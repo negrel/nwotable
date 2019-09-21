@@ -8,19 +8,7 @@ export interface DatabaseState {
 }
 
 export const state: DatabaseState = {
-  noteList: [
-    new Note({
-      title: 'Start taking note now !',
-      content: '# No note saved.',
-      meta: {
-        created: '15/10/2000',
-        modified: new Date('11/09/2019'),
-        tags: [],
-        favorited: false,
-        pinned: false
-      }
-    })
-  ],
+  noteList: [],
   iDb: {}
 };
 
@@ -74,7 +62,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
             const note = new Note(event.target.result[i].note);
             commit('ADD_NOTE', note);
           }
-          commit('DELETE_NOTE', 1);
           dispatch('selectFirstNote');
         };
 

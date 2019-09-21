@@ -33,7 +33,12 @@
           <q-item-label class="text-grey-5" caption></q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable tag="a" target="_blank" href="https://github.com/Nergel3/">
+      <q-item clickable
+        tag="a"
+        target="_blank"
+        href="https://github.com/Nergel3/"
+        id="github"
+      >
         <q-item-section avatar>
           <q-icon name="code" />
         </q-item-section>

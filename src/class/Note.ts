@@ -26,12 +26,28 @@ export class Note {
     return this.note.content.substring(0);
   }
 
-  public set plainNote(newplainNote) {
+  public set plainNote(newplainNote: string) {
     this.note.content = newplainNote;
   }
 
   public get markdown(): string {
     return DOMPurify.sanitize(marked(this.note.content));
+  }
+
+  public get favorited(): boolean {
+    return this.note.meta.favorited;
+  }
+
+  public set favorited(newBool: boolean) {
+    this.note.meta.favorited = newBool;
+  }
+
+  public get pinned(): boolean {
+    return this.note.meta.pinned;
+  }
+
+  public set pinned(newBool: boolean) {
+    this.note.meta.pinned = newBool;
   }
 
   public constructor(note?: NoteType) {

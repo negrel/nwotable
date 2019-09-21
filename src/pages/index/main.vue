@@ -11,10 +11,10 @@
         <q-icon name="add" />
       </button>
     </q-toolbar>
-    <q-bar @click="titleSort = !titleSort">
-      <div>Title</div>
+    <q-bar @click="dateSort = !dateSort">
+      <div>Date</div>
       <q-space />
-      <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': titleSort }" />
+      <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': dateSort }" />
     </q-bar>
     <div class="list">
       <q-list>
@@ -32,6 +32,10 @@
               {{ noteObj.data.meta.modified.toLocaleDateString() }}
             </q-item-label>
           </q-item-section>
+          <q-item-section avatar>
+            <q-icon name="star" v-if="noteObj.favorited" />
+            <q-icon name="room" v-if="noteObj.pinned" />
+          </q-item-section>
         </q-item>
       </q-list>
     </div>
@@ -46,11 +50,11 @@ import { State } from 'vuex-class';
 import { NoteType, Note } from '../../class/Note';
 
 @Component class Main extends Vue {
-  titleSort: boolean
+  dateSort: boolean
 
   constructor() {
     super();
-    this.titleSort = true;
+    this.dateSort = true;
   }
 
   mounted() {
@@ -89,7 +93,7 @@ import { NoteType, Note } from '../../class/Note';
   @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get noteListFilterd() {
-    if (this.titleSort) {
+    if (this.dateSort) {
       return this.noteList;
     } else {
       // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.

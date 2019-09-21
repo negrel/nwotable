@@ -1,11 +1,11 @@
 // app global css
 body {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  -webkit-touch-callout none
+  -webkit-user-select none
+  -khtml-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
   height 100vh
   max-height 100vh
   overflow hidden
@@ -17,6 +17,10 @@ body {
     cursor col-resize
     background-color $grey-4
     border $header-border
+  }
+
+  & button {
+    cursor pointer
   }
 }
 
@@ -33,27 +37,27 @@ body {
     flex 10
     display inline-block
 
-    & .q-focusable:hover {
+    & .q-focusablehover {
       background #00000020
     }
   }
 
   & .q-item__label--header {
-    padding: 1em .7em
+    padding 1em .7em
   }
 
   & .q-focus-helper {
     background transparent
 
-    &:hover {
+    &hover {
       background rgba(0,0,0,1)!important
     }
 
-    &:active {
+    &active {
       background rgba(0,0,0,1)
     }
 
-    &::after {
+    &after {
       background rgba(0,0,0,1)
       opacity 1
     }
@@ -108,15 +112,12 @@ $header-border = 1px solid $grey-4
 
 #viewer {
   flex 1
-
-  & #editor {
-    -webkit-touch-callout: text;
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-  }
+  -webkit-touch-callout text
+  -webkit-user-select text
+  -khtml-user-select text
+  -moz-user-select text
+  -ms-user-select text
+  user-select text
 }
 
 #main, #viewer {
@@ -144,11 +145,11 @@ $header-border = 1px solid $grey-4
       outline none
       transition .2s ease-in-out
 
-      &:hover {
+      &hover {
         cursor pointer
       }
 
-      &:active {
+      &active {
         background-color $grey-5
       }
 

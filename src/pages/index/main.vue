@@ -47,6 +47,8 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
+import { throttle } from 'lodash';
+
 import { NoteType, Note } from '../../class/Note';
 
 @Component class Main extends Vue {
@@ -85,9 +87,9 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  addNewNote(): void {
+  addNewNote = throttle((): void => {
     this.$store.dispatch('addNewNote');
-  }
+  }, 1000);
 
   @State(state => state.Database.noteList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;

@@ -31,66 +31,79 @@ export const mutations: MutationTree<DatabaseState> = {
 };
 
 export const actions: ActionTree<DatabaseState, RootState> = {
-  initDb({ commit, dispatch }: ActionContext<DatabaseState, RootState>): void {
-    if (!window.indexedDB) {
-      alert('Your browser doesn\'t support IndexedDb. The app may not save your notes');
-    } else {
-      const request = window.indexedDB.open('Nwotable', 1);
+  initDb({ commit }: ActionContext<DatabaseState, RootState>): Promise<Note[] | undefined> {
+    return new Promise((resolve, reject): Note[] | void => {
+      if (!window.indexedDB) {
+        alert('Your browser doesn\'t support IndexedDb. The app may not save your notes');
+        reject();
+      } else {
+        const request = window.indexedDB.open('Nwotable', 1);
 
-      request.onerror = (): void => {
-        alert('An error occur while using IndexedDb. The app may not save your notes locally.');
-      };
-
-      request.onsuccess = (event: any): void => {
-        const db = event.target.result;
-
-        // Gestionnaire d'erreur générique pour toutes les erreurs de requêtes de cette db
-        db.onerror = (event: any): void => {
-          alert('Database error: ' + event.target.error);
+        request.onerror = (): void => {
+          alert('An error occur while using IndexedDb. The app may not save your notes locally.');
+          reject();
         };
 
-        commit('ADD_DATABASE', db);
+        request.onsuccess = (event: any): void => {
+          const db = event.target.result;
 
-        // Set notes state with the IndexedDb objectStores
-        const noteObjectStore = db.transaction('notes', 'readonly').objectStore('notes');
+          // Gestionnaire d'erreur générique pour toutes les erreurs de requêtes de cette db
+          db.onerror = (event: any): void => {
+            alert('Database error: ' + event.target.error);
+            reject();
+          };
 
-        const getNotes = noteObjectStore.getAll();
+          commit('ADD_DATABASE', db);
 
-        getNotes.onsuccess = (event: any): void => {
-          const noteList = event.target.result;
-          for (let i = 0, length = noteList.length; i < length; i++) {
-            const note = new Note(event.target.result[i].note);
-            commit('ADD_NOTE', note);
-          }
-          dispatch('selectFirstNote');
+          // Set notes state with the IndexedDb objectStores
+          const noteObjectStore = db.transaction('notes', 'readonly').objectStore('notes');
+
+          const getNotes = noteObjectStore.getAll();
+
+          getNotes.onsuccess = (event: any): void => {
+            const noteList = event.target.result;
+            resolve(noteList);
+          };
+
+          getNotes.onerror = (): void => {
+            alert('Error while getting the notes from IndexedDb.');
+            reject();
+          };
         };
 
-        getNotes.onerror = (): void => {
-          alert('Error while getting the notes from IndexedDb.');
+        request.onupgradeneeded = (event: any): void => {
+          const db = event.target.result;
+
+          // Crée un objet de stockage pour cette base de données
+          // TODO ajouter keypath created metadata
+          const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
+
+          // Créer un index pour rechercher les note par leur titre et leur body.
+          noteObjectStore.createIndex('content', 'content', { unique: true });
+          noteObjectStore.createIndex('tags', 'tags', { unique: false });
+          noteObjectStore.createIndex('favorited', 'favorited', { unique: false });
+          noteObjectStore.createIndex('pinned', 'pinned', { unique: false });
+
+          // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
+          // est terminée avant d'ajouter des données dedans.
+          noteObjectStore.transaction.oncomplete = (): void => {
+            // Stocker les valeurs dans le nouvel objet de stockage.
+            console.log('Indexed DB ready.');
+          };
         };
-      };
-
-      request.onupgradeneeded = (event: any): void => {
-        const db = event.target.result;
-
-        // Crée un objet de stockage pour cette base de données
-        // TODO ajouter keypath created metadata
-        const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
-
-        // Créer un index pour rechercher les note par leur titre et leur body.
-        noteObjectStore.createIndex('content', 'content', { unique: true });
-        noteObjectStore.createIndex('tags', 'tags', { unique: false });
-        noteObjectStore.createIndex('favorited', 'favorited', { unique: false });
-        noteObjectStore.createIndex('pinned', 'pinned', { unique: false });
-
-        // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
-        // est terminée avant d'ajouter des données dedans.
-        noteObjectStore.transaction.oncomplete = (): void => {
-          // Stocker les valeurs dans le nouvel objet de stockage.
-          console.log('Indexed DB ready.');
-        };
-      };
-    }
+      }
+    });
+  },
+  init({ dispatch, commit }: ActionContext<DatabaseState, RootState>): void {
+    dispatch('initDb')
+      .then((noteList: Note[]): void => {
+        console.log(noteList);
+        for (let i = 0, length = noteList.length; i < length; i++) {
+          const theNote = new Note(noteList[i].data);
+          commit('ADD_NOTE', theNote);
+        }
+        dispatch('selectFirstNote');
+      });
   },
   selectFirstNote({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
     // Set the selected note to the first in the list.

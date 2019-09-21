@@ -24,7 +24,7 @@ import Component from 'vue-class-component';
 })
 class Index extends Vue {
   mounted() {
-    this.$store.dispatch('initDb');
+    this.$store.dispatch('init');
   }
 };
 

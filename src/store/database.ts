@@ -3,44 +3,20 @@ import { ActionContext, MutationTree, ActionTree, Module } from 'vuex';
 import { RootState } from './store';
 
 export interface DatabaseState {
-  noteList: Note[];
   iDb: any;
 }
 
 export const state: DatabaseState = {
-  noteList: [],
   iDb: {}
 };
 
 export const mutations: MutationTree<DatabaseState> = {
   ADD_DATABASE(state, db: any): void {
     state.iDb = db;
-  },
-  UPDATE_NOTE(state, { index, note }: { index: number; note: Note }): void {
-    state.noteList[index] = note;
-  },
-  ADD_NOTE(state, payload: Note): void {
-    state.noteList.unshift(payload);
-  },
-  DELETE_NOTE(state, index: number): void {
-    state.noteList.splice(index, 1);
-  },
-  SAVE_NOTE(state, { index, theNote }: {index: number; theNote: Note}): void {
-    state.noteList[index] = theNote;
   }
 };
 
 export const actions: ActionTree<DatabaseState, RootState> = {
-  async init({ dispatch, commit }: ActionContext<DatabaseState, RootState>): Promise<void> {
-    const noteList = await dispatch('initDb');
-
-    for (let i = 0, length = noteList.length; i < length; i++) {
-      const theNote = new Note(noteList[i].data);
-      commit('ADD_NOTE', theNote);
-    }
-    dispatch('setNoteList', state.noteList, { root: true });
-    dispatch('selectFirstNote');
-  },
   initDb({ commit }: ActionContext<DatabaseState, RootState>): Promise<Note[] | undefined> {
     return new Promise((resolve, reject): Note[] | void => {
       if (!window.indexedDB) {
@@ -104,48 +80,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
       }
     });
   },
-  selectFirstNote({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
-    // Set the selected note to the first in the list.
-    dispatch('setSelectedNote', state.noteList[0], { root: true });
-  },
-  getIndex({ state }: ActionContext<DatabaseState, RootState>, note: Note): number {
-    return state.noteList.map((element: Note): string => element.data.meta.created.toString()).indexOf(note.data.meta.created.toString());
-  },
-  editNote({ dispatch, commit }: ActionContext<DatabaseState, RootState>, note: Note): void {
-    const index = dispatch('getIndex', note);
-    commit('UPDATE_NOTE', { index, note });
-  },
-  addNewNote({ commit, dispatch }: ActionContext<DatabaseState, RootState>, theNote: Note = new Note()): void {
-    dispatch('setEditMode', false, { root: true });
-    commit('ADD_NOTE', theNote);
-    dispatch('selectFirstNote');
-    dispatch('setEditMode', true, { root: true });
-  },
-  deleteNote({ commit, dispatch, state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
-    dispatch('setEditMode', false, { root: true });
-
-    const index = dispatch('getIndex', theNote);
-
-    state.iDb.transaction('notes', 'readwrite')
-      .objectStore('notes')
-      .delete(theNote.data.meta.created);
-
-    commit('DELETE_NOTE', index);
-
-    if (state.noteList.length === 0) {
-      dispatch('defaultNote', { root: true });
-    } else {
-      dispatch('selectFirstNote');
-    }
-  },
-  saveNote({ commit, dispatch, rootState }: ActionContext<DatabaseState, RootState>): void {
-    const theNote = rootState.Editor.selectedNote;
-    const payload = {
-      index: dispatch('getIndex', theNote),
-      theNote
-    };
-    commit('SAVE_NOTE', payload);
-
+  saveNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
 
     // Save the note to indexed DB.
@@ -154,9 +89,14 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     } else {
       theNote.modified();
       store.add(theNote).onerror = (event: any): void => {
-        console.log(event);
+        alert(event);
       };
     }
+  },
+  deleteNoteFromDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
+    state.iDb.transaction('notes', 'readwrite')
+      .objectStore('notes')
+      .delete(theNote.data.meta.created);
   }
 };
 

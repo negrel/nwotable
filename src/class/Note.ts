@@ -31,7 +31,11 @@ export class Note {
   }
 
   public get markdown(): string {
-    return DOMPurify.sanitize(marked(this.note.content));
+    const res = DOMPurify.sanitize(this.note.content.split(/\s{2,}/g)
+      .map((el: string): string => marked(el))
+      .join());
+    console.log(res);
+    return res;
   }
 
   public get favorited(): boolean {

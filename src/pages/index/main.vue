@@ -19,7 +19,7 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="noteObj in noteList"
+        <q-item v-for="noteObj in sortedList"
           :key="noteObj.data.meta.created"
           @click="selectNote(noteObj)"
           active-class="q-item-hover"
@@ -89,10 +89,18 @@ import { NoteType, Note } from '../../class/Note';
 
   addNewNote = throttle((): void => {
     this.$store.dispatch('addNewNote');
-  }, 1000);
+  }, 1500);
 
   @State(state => state.NoteList.sortedList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
+
+  get sortedList() {
+    if (this.dateSort) {
+      return this.noteList;
+    } else {
+      return this.noteList.slice(0).reverse();
+    }
+  }
 };
 
 export default Main;

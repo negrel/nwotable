@@ -3,7 +3,7 @@ import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
 export interface NoteListState {
-  noteList: Note[]
+  noteList: Note[];
   sortedList: Note[];
   mode: string[];
 }

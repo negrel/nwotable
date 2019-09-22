@@ -31,6 +31,16 @@ export const mutations: MutationTree<DatabaseState> = {
 };
 
 export const actions: ActionTree<DatabaseState, RootState> = {
+  async init({ dispatch, commit }: ActionContext<DatabaseState, RootState>): Promise<void> {
+    const noteList = await dispatch('initDb');
+
+    for (let i = 0, length = noteList.length; i < length; i++) {
+      const theNote = new Note(noteList[i].data);
+      commit('ADD_NOTE', theNote);
+    }
+    dispatch('setNoteList', state.noteList, { root: true });
+    dispatch('selectFirstNote');
+  },
   initDb({ commit }: ActionContext<DatabaseState, RootState>): Promise<Note[] | undefined> {
     return new Promise((resolve, reject): Note[] | void => {
       if (!window.indexedDB) {
@@ -93,17 +103,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         };
       }
     });
-  },
-  init({ dispatch, commit }: ActionContext<DatabaseState, RootState>): void {
-    dispatch('initDb')
-      .then((noteList: Note[]): void => {
-        console.log(noteList);
-        for (let i = 0, length = noteList.length; i < length; i++) {
-          const theNote = new Note(noteList[i].data);
-          commit('ADD_NOTE', theNote);
-        }
-        dispatch('selectFirstNote');
-      });
   },
   selectFirstNote({ dispatch, state }: ActionContext<DatabaseState, RootState>): void {
     // Set the selected note to the first in the list.

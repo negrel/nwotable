@@ -3,10 +3,12 @@ import Vuex from 'vuex';
 
 import { Database, DatabaseState } from './database';
 import { Editor, EditorState } from './editor';
+import { NoteList, NoteListState } from './noteList';
 
 export interface RootState {
   Editor: EditorState;
   Database: DatabaseState;
+  NoteList: NoteListState;
 };
 
 Vue.use(Vuex);
@@ -20,7 +22,8 @@ export default function(/* { ssrContext } */): any {
   const Store = new Vuex.Store<RootState>({
     modules: {
       Editor,
-      Database
+      Database,
+      NoteList
     }
 
     // enable strict mode (adds overhead!)

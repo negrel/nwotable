@@ -19,7 +19,7 @@
     <div class="list">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="noteObj in noteListFilterd"
+        <q-item v-for="noteObj in noteList"
           :key="noteObj.data.meta.created"
           @click="selectNote(noteObj)"
           active-class="q-item-hover"
@@ -91,18 +91,8 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('addNewNote');
   }, 1000);
 
-  @State(state => state.Database.noteList) noteList: Note[];
+  @State(state => state.NoteList.sortedList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
-
-  get noteListFilterd() {
-    if (this.dateSort) {
-      return this.noteList;
-    } else {
-      // Clone the array with slice then reverse it. NOTE You can't change store value from vue component.
-      // TODO transition when the list reverse.
-      return this.noteList.slice(0).reverse();
-    }
-  }
 };
 
 export default Main;

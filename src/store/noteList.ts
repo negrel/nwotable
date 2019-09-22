@@ -1,7 +1,6 @@
 import { Note } from '../class/Note';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
-import { stat } from 'fs';
 
 export interface NoteListState {
   noteList: Note[];
@@ -70,6 +69,7 @@ export const actions: ActionTree<NoteListState, RootState> = {
   async updateNote({ commit, dispatch, rootState }: ActionContext<NoteListState, RootState>): Promise<void> {
     const theNote = rootState.Editor.selectedNote;
     const index = await dispatch('getIndex', theNote);
+
     commit('DELETE_NOTE', index);
     commit('ADD_NOTE', theNote);
   },

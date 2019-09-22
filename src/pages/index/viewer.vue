@@ -70,6 +70,9 @@ class Viewer extends Vue {
 
     if (src && src.innerText === 'room') {
       this.selectedNote.pinned = !this.selectedNote.pinned;
+      if (this.selectedNote.pinned) {
+        this.$store.dispatch('updateNote');
+      }
     } else {
       this.selectedNote.favorited = !this.selectedNote.favorited;
     }

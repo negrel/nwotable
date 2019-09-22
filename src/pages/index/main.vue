@@ -29,7 +29,7 @@
           <q-item-section>
             <q-item-label>{{ noteObj.data.title }}</q-item-label>
             <q-item-label class="text-grey-5" caption>
-              {{ noteObj.data.meta.modified.toLocaleDateString() }}
+              {{ noteObj.data.meta.modified.toLocaleString() }}
             </q-item-label>
           </q-item-section>
           <q-item-section avatar>
@@ -91,7 +91,7 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('addNewNote');
   }, 1500);
 
-  @State(state => state.NoteList.sortedList) noteList: Note[];
+  @State(state => state.NoteList.noteList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get sortedList() {

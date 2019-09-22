@@ -34,7 +34,6 @@ export class Note {
     const res = DOMPurify.sanitize(this.note.content.split(/\s{2,}/g)
       .map((el: string): string => marked(el))
       .join());
-    console.log(res);
     return res;
   }
 

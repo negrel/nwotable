@@ -26,6 +26,15 @@
       </q-item>
       <q-item clickable>
         <q-item-section avatar>
+          <q-icon name="star" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Favorite</q-item-label>
+          <q-item-label class="text-grey-5" caption></q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable>
+        <q-item-section avatar>
           <q-icon name="local_offer" />
         </q-item-section>
         <q-item-section>

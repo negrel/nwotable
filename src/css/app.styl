@@ -103,6 +103,10 @@ $header-border = 1px solid $grey-4
     margin-right 1em
     background-color white
 
+  & input[type=text] {
+    width 85%
+  }
+
     & * {
       border none
       outline none
@@ -112,7 +116,7 @@ $header-border = 1px solid $grey-4
   }
 }
 
-#viewer {
+#markdown {
   flex 1
   -webkit-touch-callout text
   -webkit-user-select text
@@ -120,9 +124,13 @@ $header-border = 1px solid $grey-4
   -moz-user-select text
   -ms-user-select text
   user-select text
+
+  & * ::selection {
+    background-color #fecc75
+  }
 }
 
-#main, #viewer {
+#main, #markdown {
 
   & .q-toolbar {
     min-height 5vh

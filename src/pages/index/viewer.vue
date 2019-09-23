@@ -1,5 +1,5 @@
 <template>
-  <div id="viewer">
+  <div id="markdown">
     <!-- TODO merge some buttons by groups -->
     <q-toolbar class="text-primary bg-grey-3">
       <button :class="{ 'btn-toolbar': true, 'text-orange-8': editMode }"

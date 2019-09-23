@@ -28,7 +28,12 @@ export class Note {
 
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
-    let title = newPlainNote.replace(/#+/g, '').trim().substr(0, 35);
+    let title = newPlainNote.trim()
+      .replace(/#+/g, '')
+      .replace(/(\[.* |\!\[.*|^\>|\*)?/, '')
+      .split('\n')[0]
+      .substr(0, 30);
+
     if (title.length === 0) {
       title = 'No title...';
     }

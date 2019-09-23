@@ -98,7 +98,9 @@ import { NoteType, Note } from '../../class/Note';
     if (this.dateSort) {
       return this.noteList;
     } else {
-      return this.noteList.slice(0).reverse();
+      const pinned = this.noteList.filter(el => el.pinned);
+      const other = this.noteList.filter(el => !el.pinned);
+      return [...pinned, ...other];
     }
   }
 };

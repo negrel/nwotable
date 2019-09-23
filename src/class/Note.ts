@@ -28,6 +28,7 @@ export class Note {
 
   public set plainNote(newplainNote: string) {
     this.note.content = newplainNote;
+    this.note.title = this.markdown.replace(/<(\/)?[^>]*>/g, '').trim().substr(0, 35);
   }
 
   public get markdown(): string {

@@ -1,4 +1,4 @@
-import { Note } from '../class/Note';
+import { Note, NoteType } from '../class/Note';
 import { Module, ActionContext, MutationTree, ActionTree } from 'vuex';
 import { RootState } from './store';
 
@@ -7,7 +7,7 @@ export interface EditorState {
   editMode: boolean;
 }
 
-export const defaultNote = {
+export const defaultNote: NoteType = {
   title: 'No note',
   content: '# No note saved.',
   meta: {

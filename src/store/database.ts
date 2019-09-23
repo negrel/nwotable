@@ -3,11 +3,11 @@ import { ActionContext, MutationTree, ActionTree, Module } from 'vuex';
 import { RootState } from './store';
 
 export interface DatabaseState {
-  iDb: any;
+  iDb: IDBDatabase | null;
 }
 
 export const state: DatabaseState = {
-  iDb: {}
+  iDb: null
 };
 
 export const mutations: MutationTree<DatabaseState> = {
@@ -81,22 +81,26 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     });
   },
   saveNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
-    const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
+    if (state.iDb) {
+      const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
 
-    // Save the note to indexed DB.
-    if (theNote.data.meta.modified) {
-      store.put(theNote);
-    } else {
-      theNote.modified();
-      store.add(theNote).onerror = (event: any): void => {
-        alert(event);
-      };
+      // Save the note to indexed DB.
+      if (theNote.data.meta.modified) {
+        store.put(theNote);
+      } else {
+        theNote.modified();
+        store.add(theNote).onerror = (event: any): void => {
+          alert(event);
+        };
+      }
     }
   },
   deleteNoteFromDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
-    state.iDb.transaction('notes', 'readwrite')
-      .objectStore('notes')
-      .delete(theNote.data.meta.created);
+    if (state.iDb) {
+      state.iDb.transaction('notes', 'readwrite')
+        .objectStore('notes')
+        .delete(theNote.data.meta.created);
+    }
   }
 };
 

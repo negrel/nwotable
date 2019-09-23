@@ -73,17 +73,12 @@ export const actions: ActionTree<NoteListState, RootState> = {
     commit('DELETE_NOTE', index);
     commit('ADD_NOTE', theNote);
   },
-  async deleteNote({ commit, dispatch, state }: ActionContext<NoteListState, RootState>, theNote: Note): Promise<void> {
+  async deleteNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, theNote: Note): Promise<void> {
     dispatch('setEditMode', false, { root: true });
 
     const index = await dispatch('getIndex', theNote);
     commit('DELETE_NOTE', index);
-
-    if (state.noteList.length === 0) {
-      dispatch('defaultNote', { root: true });
-    } else {
-      dispatch('selectFirstNote');
-    }
+    dispatch('deleteNoteFromDb', theNote);
   }
 };
 

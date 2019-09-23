@@ -26,9 +26,14 @@ export class Note {
     return this.note.content.substring(0);
   }
 
-  public set plainNote(newplainNote: string) {
-    this.note.content = newplainNote;
-    this.note.title = this.markdown.replace(/<(\/)?[^>]*>/g, '').trim().substr(0, 35);
+  public set plainNote(newPlainNote: string) {
+    this.note.content = newPlainNote;
+    let title = newPlainNote.replace(/#+/g, '').trim().substr(0, 35);
+    if (title.length === 0) {
+      title = 'No title...';
+    }
+
+    this.note.title = title;
   }
 
   public get markdown(): string {

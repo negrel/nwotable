@@ -1,13 +1,14 @@
 <template>
   <div id="container">
-    <div id="editor" v-html="plainNote" contenteditable="true"
+    <textarea id="editor"
       @keydown="debounceSave"
       v-if="editMode"
+      v-model="plainNote"
     >
-    </div>
+    </textarea>
     <div id="viewer" v-html="selectedNote.markdown" contenteditable="false" v-else>
     </div>
-      <!-- TODO add highlighting for markdown -->
+    <!-- TODO add highlighting for markdown -->
   </div>
 </template>
 
@@ -44,9 +45,9 @@ class Editor extends Vue {
   }
 
   saveNote() {
-    let editor = document.querySelector('#editor');
+    let editor = document.getElementById('editor') as HTMLInputElement;
     if (editor) {
-      this.selectedNote.plainNote = editor.innerHTML;
+      this.selectedNote.plainNote = editor.value;
     }
     this.$store.dispatch('saveNote');
   }

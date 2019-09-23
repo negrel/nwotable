@@ -9,6 +9,8 @@ body {
   height 100vh
   max-height 100vh
   overflow hidden
+  position fixed
+  top 0
 
   & .dragger {
     min-width .15em
@@ -123,7 +125,7 @@ $header-border = 1px solid $grey-4
 #main, #viewer {
 
   & .q-toolbar {
-    min-height 3em
+    min-height 5vh
     border-bottom $header-border
 
     &active {

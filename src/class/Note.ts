@@ -31,6 +31,7 @@ export class Note {
     let title = newPlainNote.trim()
       .replace(/#+/g, '')
       .replace(/(\[.* |\!\[.*|^\>|\*)?/, '')
+      .replace(/\<\/?.*\/?>/, '')
       .split('\n')[0]
       .substr(0, 30);
 

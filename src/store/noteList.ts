@@ -4,10 +4,12 @@ import { RootState } from './store';
 
 export interface NoteListState {
   noteList: Note[];
+  filter: Function;
 }
 
 export const state: NoteListState = {
-  noteList: []
+  noteList: [],
+  filter: (): void => {}
 };
 
 export const mutations: MutationTree<NoteListState> = {
@@ -20,25 +22,18 @@ export const mutations: MutationTree<NoteListState> = {
   },
   DELETE_NOTE(state, index: number): void {
     state.noteList.splice(index, 1);
+  },
+  SET_FILTER(state, func: Function): void {
+    state.filter = func;
   }
 };
 
-// function pinnedNotes(noteList: Note[]): number[] {
-//   const pinnedNote: number[] = [];
-//   const otherNote: number[] = [];
-
-//   for (let i = noteList.length - 1; i > 0; i--) {
-//     if (noteList[i].pinned) {
-//       pinnedNote.unshift(i);
-//     } else {
-//       otherNote.unshift(i);
-//     }
-//   }
-//   return [...pinnedNote, ...otherNote];
-// }
-
 export const actions: ActionTree<NoteListState, RootState> = {
   async init({ dispatch, commit, state }: ActionContext<NoteListState, RootState>): Promise<void> {
+    commit('SET_FILTER', (noteList: Note[]): Note[] => {
+      return noteList;
+    });
+
     const noteList = await dispatch('initDb', { root: true });
 
     noteList.forEach((element: any): void => {
@@ -79,6 +74,16 @@ export const actions: ActionTree<NoteListState, RootState> = {
     const index = await dispatch('getIndex', theNote);
     commit('DELETE_NOTE', index);
     dispatch('deleteNoteFromDb', theNote);
+  },
+  filterAll({ commit }: ActionContext<NoteListState, RootState>): void {
+    commit('SET_FILTER', (noteList: Note[]): Note[] => {
+      return noteList;
+    });
+  },
+  filterFavorited({ commit }: ActionContext<NoteListState, RootState>): void {
+    commit('SET_FILTER', (noteList: Note[]): Note[] => {
+      return noteList.filter((element: Note): boolean => element.favorited);
+    });
   }
 };
 

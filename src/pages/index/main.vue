@@ -16,7 +16,7 @@
       <q-space />
       <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': dateSort }" />
     </q-bar>
-    <div class="list">
+    <div class="list" v-if="sortedList.length !== 0">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
         <q-item v-for="noteObj in sortedList"
@@ -38,6 +38,11 @@
           </q-item-section>
         </q-item>
       </q-list>
+    </div>
+    <div id="emptyList" v-else>
+      <span class="text-grey-6">
+        No note here.
+      </span>
     </div>
     <!-- TODO add bottom button to trigger left drawer -->
   </div>
@@ -93,15 +98,18 @@ import { NoteType, Note } from '../../class/Note';
 
   @State(state => state.NoteList.noteList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
+  @State(state => state.NoteList.filter) filterNote: Function;
 
   get sortedList() {
-    if (this.dateSort) {
-      return this.noteList;
-    } else {
-      const pinned = this.noteList.filter(el => el.pinned);
-      const other = this.noteList.filter(el => !el.pinned);
+    let noteList = this.filterNote(this.noteList);
+
+    if (!this.dateSort) {
+      const pinned = noteList.filter((el: Note) => el.pinned);
+      const other = noteList.filter((el: Note) => !el.pinned);
       return [...pinned, ...other];
     }
+
+    return noteList;
   }
 };
 

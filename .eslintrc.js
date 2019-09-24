@@ -39,7 +39,7 @@ module.exports = {
     // allow paren-less arrow functions
     'arrow-parens': 'off',
     'one-var': 'off',
-
+  
     'import/first': 'off',
     'import/named': 'error',
     'import/namespace': 'error',
@@ -54,6 +54,7 @@ module.exports = {
     'space-before-function-paren': ['error', 'never'],
     'no-useless-escape': "off",
     "@typescript-eslint/indent": ["error", 2],
+    'no-tabs': 'off',
     // allow console.log during development only
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow debugger during development only

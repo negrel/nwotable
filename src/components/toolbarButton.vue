@@ -1,0 +1,50 @@
+<template>
+  <button :class="{ 'btn-toolbar': true, 'text-orange-8': condition && active }"
+  @click="emitEvent">
+      <q-icon :name="icons[0]" v-if="!condition" />
+      <q-icon :name="icons[1] || icons[0]" v-else />
+  </button>
+</template>
+
+<script lang="ts">
+
+import { Vue, Component, Prop } from 'vue-property-decorator';
+
+@Component
+class ToolbarButton extends Vue {
+  @Prop({ default: () => { return ['search', 'clear']; } })
+  icons: string[]
+
+  @Prop({ default: false })
+  condition: boolean
+
+  @Prop({ default: false })
+  active: boolean
+
+  emitEvent() {
+    this.$emit('click');
+  }
+};
+
+export default ToolbarButton;
+</script>
+
+<style lang="stylus" scoped>
+  .btn-toolbar {
+    background-color white
+    border 1px solid $grey-4
+    border-radius 5px
+    padding .1em .5em
+    outline none
+    transition .2s ease-in-out
+
+    &:hover {
+      cursor pointer
+      background-color $grey-2
+    }
+
+    &:active {
+      background-color $grey-5
+    }
+  }
+</style>

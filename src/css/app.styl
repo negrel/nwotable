@@ -107,26 +107,6 @@ $header-border = 1px solid $grey-4
       vertical-align middle
     }
   }
-
-  #search-field {
-    border $header-border
-    border-radius 5px
-    overflow hidden
-    padding .1em .5em
-    margin-right 1em
-    background-color white
-
-  & input[type=text] {
-    width 85%
-  }
-
-    & * {
-      border none
-      outline none
-      color black
-      background-color white
-    }
-  }
 }
 
 #markdown {
@@ -139,7 +119,8 @@ $header-border = 1px solid $grey-4
   user-select text
 
   & * ::selection {
-    background-color #fecc75
+    background-color #fecc7580
+    color: white
   }
 }
 
@@ -158,24 +139,6 @@ $header-border = 1px solid $grey-4
       font-size 1.2em
       justify-content center
       align-items center
-    }
-
-    .btn-toolbar {
-      background-color white
-      border $header-border
-      border-radius 5px
-      padding .1em .5em
-      outline none
-      transition .2s ease-in-out
-
-      &hover {
-        cursor pointer
-      }
-
-      &active {
-        background-color $grey-5
-      }
-
     }
 
   .q-bar {

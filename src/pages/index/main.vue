@@ -1,15 +1,8 @@
 <template>
   <div class="bg-white" id="main">
     <q-toolbar class="text-primary bg-grey-3">
-      <div id="search-field" class="fit">
-        <input type="text" placeholder="Search..." />
-          <button class="float-right">
-            <q-icon name="search" />
-          </button>
-      </div>
-      <button class="btn-toolbar" @click="addNewNote" >
-        <q-icon name="add" />
-      </button>
+      <searchBar />
+      <toolbarButton :icons="['add']" @click="addNewNote"/>
     </q-toolbar>
     <q-bar @click="dateSort = !dateSort">
       <div>Date</div>
@@ -55,8 +48,16 @@ import { State } from 'vuex-class';
 import { throttle } from 'lodash';
 
 import { NoteType, Note } from '../../class/Note';
+import searchBar from '../../components/searchBar.vue';
+import toolbarButton from '../../components/toolbarButton.vue';
 
-@Component class Main extends Vue {
+@Component({
+  components: {
+    searchBar,
+    toolbarButton
+  }
+})
+class Main extends Vue {
   dateSort: boolean
 
   constructor() {
@@ -92,10 +93,6 @@ import { NoteType, Note } from '../../class/Note';
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  addNewNote = throttle((): void => {
-    this.$store.dispatch('addNewNote');
-  }, 1500);
-
   @State(state => state.NoteList.noteList) noteList: Note[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.NoteList.filter) filterNote: Function;
@@ -111,6 +108,10 @@ import { NoteType, Note } from '../../class/Note';
 
     return noteList;
   }
+
+  addNewNote = throttle((): void => {
+    this.$store.dispatch('addNewNote');
+  }, 1500);
 };
 
 export default Main;

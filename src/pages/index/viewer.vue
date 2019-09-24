@@ -2,31 +2,20 @@
   <div id="markdown">
     <!-- TODO merge some buttons by groups -->
     <q-toolbar class="text-primary bg-grey-3">
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': editMode }"
-        @click="changeEditMode">
-        <q-icon name="edit"/>
-      </button>
-      <button class="btn-toolbar"
-        @click="switchBool()">
-        <q-icon name="local_offer" />
-      </button>
+      <toolbarButtonGroup>
+        <toolbarButton :icons="['edit']" :condition="editMode" @click="changeEditMode" :active="true"/>
+        <toolbarButton :icons="['local_offer']" @click="switchBool()"/>
+      </toolbarButtonGroup>
+      <!-- TODO add attachment button -->
       <!-- <button :class="{ 'btn-toolbar': true, 'text-orange-8': attachment }"
         @click="attachment = inverse(attachment)">
         <q-icon name="attachment" class="rotate-270" />
       </button> -->
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.favorited }"
-      @click="switchMetaBool">
-        <q-icon name="star" v-if="meta.favorited" />
-        <q-icon name="star_border" v-else />
-      </button>
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': meta.pinned }"
-        @click="switchMetaBool">
-        <q-icon name="room" />
-      </button>
-      <button :class="{ 'btn-toolbar': true, 'text-orange-8': false }"
-        @click="deleteNote">
-        <q-icon name="delete" />
-      </button>
+      <toolbarButtonGroup>
+        <toolbarButton :icons="['star', 'star_border']" @click="switchMetaBool('favorited')" :active="true"/>
+        <toolbarButton :icons="['room']" @click="switchMetaBool('pinned')" :active="true"/>
+      </toolbarButtonGroup>
+      <toolbarButton :icons="['delete']" @click="deleteNote" />
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
     </q-toolbar>
@@ -38,6 +27,8 @@
 
 <script lang="ts">
 import editor from '../../components/editor.vue';
+import toolbarButtonGroup from '../../components/toolbarButtonGroup.vue';
+import toolbarButton from '../../components/toolbarButton.vue';
 
 import { Note, MetaData } from '../../class/Note';
 
@@ -46,7 +37,9 @@ import { State } from 'vuex-class';
 
 @Component({
   components: {
-    editor
+    editor,
+    toolbarButtonGroup,
+    toolbarButton
   }
 })
 class Viewer extends Vue {
@@ -65,17 +58,19 @@ class Viewer extends Vue {
     this.$store.dispatch('setEditMode', !this.editMode);
   }
 
-  switchMetaBool(el: MouseEvent): void {
-    let src = el.srcElement ? el.srcElement as HTMLElement : null;
-
-    if (src && src.innerText === 'room') {
-      this.selectedNote.pinned = !this.selectedNote.pinned;
-      if (this.selectedNote.pinned) {
-        this.$store.dispatch('updateNote');
-      }
-    } else {
-      this.selectedNote.favorited = !this.selectedNote.favorited;
+  switchMetaBool(string: string): void {
+    switch (string) {
+      case 'favorited':
+        this.selectedNote.favorited = !this.selectedNote.favorited;
+        break;
+      case 'pinned':
+        this.selectedNote.pinned = !this.selectedNote.pinned;
+        if (this.selectedNote.pinned) {
+          this.$store.dispatch('updateNote');
+        }
+        break;
     }
+
     this.$store.dispatch('saveNote');
   }
 

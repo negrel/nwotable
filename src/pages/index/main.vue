@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white" id="main">
+  <div class="bg-grey-1">
     <q-toolbar class="text-primary bg-grey-3">
       <searchBar />
       <toolbarButton :icons="['add']" @click="addNewNote"/>
@@ -9,25 +9,25 @@
       <q-space />
       <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': dateSort }" />
     </q-bar>
-    <div class="list" v-if="sortedList.length !== 0">
+    <div class="list" v-if="indexList.length !== 0">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="noteObj in sortedList"
-          :key="noteObj.data.meta.created"
-          @click="selectNote(noteObj)"
+        <q-item v-for="key in indexList"
+          :key="key"
+          @click="selectNote(sortedList[key])"
           active-class="q-item-hover"
-          :class="{ 'q-item-active': noteObj === selectedNote }"
+          :class="{ 'q-item-active': sortedList[key] === selectedNote }"
           clickable
         >
           <q-item-section>
-            <q-item-label>{{ noteObj.data.title }}</q-item-label>
+            <q-item-label>{{ sortedList[key].data.title }}</q-item-label>
             <q-item-label class="text-grey-5" caption>
-              {{ noteObj.data.meta.modified.toLocaleString() }}
+              {{ sortedList[key].data.meta.modified.toLocaleString() }}
             </q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-icon name="star" v-if="noteObj.favorited" />
-            <q-icon name="room" v-if="noteObj.pinned" />
+            <q-icon name="star" v-if="sortedList[key].favorited" />
+            <q-icon name="room" v-if="sortedList[key].pinned" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -94,19 +94,14 @@ class Main extends Vue {
   }
 
   @State(state => state.NoteList.noteList) noteList: Note[];
+  @State(state => state.NoteList.indexList) indexList: number[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
-  @State(state => state.NoteList.filter) filterNote: Function;
 
   get sortedList() {
-    let noteList = this.filterNote(this.noteList);
-
-    if (!this.dateSort) {
-      const pinned = noteList.filter((el: Note) => el.pinned);
-      const other = noteList.filter((el: Note) => !el.pinned);
-      return [...pinned, ...other];
+    if (this.dateSort) {
+      return this.noteList;
     }
-
-    return noteList;
+    return this.noteList.slice(0).reverse();
   }
 
   addNewNote = throttle((): void => {

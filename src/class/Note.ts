@@ -27,12 +27,16 @@ export class Note {
 
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
-    let title = newPlainNote.trim()
-      .replace(/#+/g, '')
-      .replace(/(\[.* |\!\[.*|^\>|\*)?/, '')
-      .replace(/\<\/?.*\/?>/, '')
+    // let title = newPlainNote.trim()
+    //   .replace(/#+/g, '')
+    //   .replace(/(\[.* |\!\[.*|^\>|\*)?/, '')
+    //   .replace(/\<\/?.*\/?>/, '')
+    //   .split('\n')[0]
+    //   .substr(0, 30);
+    let title = this.markdown.trim()
+      .replace(/(<([^>]+)>)/ig, '')
       .split('\n')[0]
-      .substr(0, 30);
+      .substring(0, 60);
 
     if (title.length === 0) {
       title = 'No title...';

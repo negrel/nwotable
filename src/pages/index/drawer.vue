@@ -2,7 +2,7 @@
   <div id="drawer">
     <q-list class="text-grey-1">
       <q-item-label header>Menu</q-item-label>
-      <q-item clickable @click="dispatchFilter('filterAll')">
+      <q-item clickable @click="dispatchFilter('all')">
         <q-item-section avatar>
           <q-icon name="book" />
         </q-item-section>
@@ -13,7 +13,7 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="dispatchFilter('filterFavorited')">
+      <q-item clickable @click="dispatchFilter('favorited')">
         <q-item-section avatar>
           <q-icon name="star" />
         </q-item-section>
@@ -56,7 +56,7 @@ import Component from 'vue-class-component';
 @Component
 class Drawer extends Vue {
   dispatchFilter(filter: string): void {
-    this.$store.dispatch(filter);
+    this.$store.dispatch('setFilter', filter);
   }
 };
 

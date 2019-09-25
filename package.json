@@ -28,7 +28,8 @@
     "marked": "^0.7.0",
     "npm": "^6.11.3",
     "quasar": "^1.0.0",
-    "showdown": "1.9.0"
+    "showdown": "1.9.0",
+    "vue-multipane": "0.9.5"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

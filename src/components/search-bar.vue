@@ -4,7 +4,9 @@
       placeholder="Search..."
       @change="fuzzySearch"
     />
-		<toolbarButton :icons="['search']" class="float-right" />
+    <div class="float-right">
+      <q-icon name="search" />
+    </div>
 	</div>
 </template>
 
@@ -34,15 +36,17 @@ export default SearchBar;
 <style lang="stylus" scoped>
 
   .search-field {
+    display flex
+    flex 1
     border 1px solid $grey-4
     border-radius 5px
     overflow hidden
-    padding .1em 0em .1em .5em
+    padding .1em .5em 0em .5em
     margin-right 1em
     background-color white
 
     & input[type=text] {
-      width 85%
+      flex 1
     }
 
     & * {

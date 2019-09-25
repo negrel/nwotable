@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
     "dev": "quasar dev",
-    "build": "quasar build -m ssr && cd ./dist/ssr/ && npm i",
+    "build": "quasar build -m ssr",
+    "heroku-postbuild": "&& cd ./dist/ssr/ && npm i",
     "start": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 ./dist/ssr/index.js"
   },
   "dependencies": {

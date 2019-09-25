@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { register } from 'register-service-worker';
 
 // The ready(), registered(), cached(), updatefound() and updated()

@@ -1,4 +1,4 @@
-import { Note } from '../class/Note';
+import { Note, NoteType } from '../class/Note';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
@@ -46,16 +46,15 @@ export const mutations: MutationTree<NoteListState> = {
         func = (el: Note): boolean => true;
     }
 
-    const pinned: number[] = [],
-      filtredNote: number[] = [];
+    const filtredNote: number[] = [];
 
     state.noteList.forEach((el: Note): void => {
       if (func(el)) {
         const index = state.noteList.indexOf(el);
-        el.pinned ? pinned.push(index) : filtredNote.push(index);
+        filtredNote.push(index);
       }
     });
-    state.indexList = [...pinned, ...filtredNote];
+    state.indexList = [...filtredNote];
   }
 };
 
@@ -76,13 +75,21 @@ export const actions: ActionTree<NoteListState, RootState> = {
   getIndex({ state }: ActionContext<NoteListState, RootState>, note: Note): number {
     return state.noteList.map((element: Note): string => element.data.meta.created).indexOf(note.data.meta.created);
   },
-  addNewNote({ commit, dispatch }: ActionContext<NoteListState, RootState>): void {
-    const newNote = new Note();
+  addNewNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, note?: NoteType): void {
+    let newNote;
+
+    if (note) {
+      newNote = new Note(note);
+    } else {
+      newNote = new Note();
+    }
+
     dispatch('setEditMode', false, { root: true });
     commit('ADD_NOTE', newNote);
     dispatch('selectNote', newNote);
     dispatch('setEditMode', true, { root: true });
     commit('APPLY_FILTER');
+    dispatch('saveNote');
   },
   saveNote({ dispatch, rootState }: ActionContext<NoteListState, RootState>): void {
     const theNote = rootState.Editor.selectedNote;

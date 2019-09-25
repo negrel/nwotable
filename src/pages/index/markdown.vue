@@ -1,5 +1,5 @@
 <template>
-  <div id="markdown">
+  <div>
     <div class="fit bg-white">
       <toolbar />
       <editor :editMode="editMode" :class="{ 'hack-font': editMode }" />

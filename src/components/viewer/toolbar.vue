@@ -18,7 +18,10 @@
       <toolbarButton :icons="['delete']" @click="deleteNote" />
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
-      <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
+      <toolbarButtonGroup class="float-right">
+        <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
+        <toolbarButton :icons="['input']" @click="importNote"/>
+      </toolbarButtonGroup>
     </q-toolbar>
 
     <!-- NOTE Tags prompt  -->
@@ -68,6 +71,35 @@ class Toolbar extends Vue {
     }
 
     this.$store.dispatch('saveNote');
+  }
+
+  importNote(): void {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.multiple = true;
+
+    document.getElementsByTagName('body')[0].appendChild(input);
+    input.click();
+
+    input.addEventListener('change', async(): Promise<void> => {
+      const files = input.files as any;
+      if (files) {
+        for (let i = 0, length = files.length; i < length; i++) {
+          this.$store.dispatch('addNewNote', {
+            title: files[i].name.split('.md')[0],
+            content: await files[i].text(),
+            meta: {
+              created: files[i].lastModified,
+              modified: files[i].lastModified
+            }
+          });
+        }
+      }
+    });
+
+    setInterval(() => {
+      input.remove();
+    }, 0);
   }
 
   deleteNote(): void {

@@ -12,22 +12,22 @@
     <div class="list" v-if="indexList.length !== 0">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
-        <q-item v-for="key in indexList"
+        <q-item v-for="key in sortedList"
           :key="key"
-          @click="selectNote(sortedList[key])"
+          @click="selectNote(noteList[key])"
           active-class="q-item-hover"
-          :class="{ 'q-item-active': sortedList[key] === selectedNote }"
+          :class="{ 'q-item-active': noteList[key] === selectedNote }"
           clickable
         >
           <q-item-section>
-            <q-item-label>{{ sortedList[key].data.title }}</q-item-label>
+            <q-item-label>{{ noteList[key].data.title }}</q-item-label>
             <q-item-label class="text-grey-5" caption>
-              {{ sortedList[key].data.meta.modified.toLocaleString() }}
+              {{ noteList[key].data.meta.modified.toLocaleString() }}
             </q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-icon name="star" v-if="sortedList[key].favorited" />
-            <q-icon name="room" v-if="sortedList[key].pinned" />
+            <q-icon name="star" v-if="noteList[key].favorited" />
+            <q-icon name="room" v-if="noteList[key].pinned" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -98,10 +98,22 @@ class Main extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get sortedList() {
+    const pinned: number[] = [],
+      other: number[] = [];
+
+    this.indexList.forEach(index => {
+      if (this.noteList[index].pinned) {
+        pinned.push(index);
+      } else {
+        other.push(index);
+      }
+    });
+
     if (this.dateSort) {
-      return this.noteList;
+      return [...pinned, ...other];
+    } else {
+      return [...pinned.reverse(), ...other.reverse()];
     }
-    return this.noteList.slice(0).reverse();
   }
 
   addNewNote = throttle((): void => {

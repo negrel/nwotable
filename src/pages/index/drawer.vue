@@ -1,5 +1,5 @@
 <template>
-  <div id="drawer">
+  <div>
     <q-list class="text-grey-1">
       <q-item-label header>Menu</q-item-label>
       <q-item clickable @click="dispatchFilter('all')">

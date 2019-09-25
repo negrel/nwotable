@@ -27,22 +27,18 @@ export class Note {
 
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
-    // let title = newPlainNote.trim()
-    //   .replace(/#+/g, '')
-    //   .replace(/(\[.* |\!\[.*|^\>|\*)?/, '')
-    //   .replace(/\<\/?.*\/?>/, '')
-    //   .split('\n')[0]
-    //   .substr(0, 30);
+  }
+
+  public get title(): string {
     let title = this.markdown.trim()
       .replace(/(<([^>]+)>)/ig, '')
-      .split('\n')[0]
-      .substring(0, 60);
+      .split('\n')[0];
+      // .substring(0, 60);
 
     if (title.length === 0) {
       title = 'No title...';
     }
-
-    this.note.title = title;
+    return title;
   }
 
   public get markdown(): string {
@@ -67,8 +63,18 @@ export class Note {
   }
 
   public constructor(note?: NoteType) {
-    if (note) {
-      this.note = note;
+    if (note !== undefined) {
+      this.note = {
+        title: note.title || 'New note.',
+        content: note.content || '# Your title',
+        meta: {
+          created: note.meta.created || new Date().toString(),
+          modified: note.meta.modified || new Date(),
+          tags: note.meta.tags || [],
+          favorited: note.meta.favorited || false,
+          pinned: note.meta.pinned || false
+        }
+      };
     } else {
       this.note = {
         title: 'New note.',

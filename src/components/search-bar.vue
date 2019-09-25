@@ -47,6 +47,7 @@ export default SearchBar;
 
     & input[type=text] {
       flex 1
+      min-width 10px
     }
 
     & * {

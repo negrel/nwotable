@@ -91,4 +91,20 @@ export class Note {
   public modified(): void {
     this.note.meta.modified = new Date();
   }
+
+  public download(): void {
+    const filename = this.note.title + '.md';
+    const file = new File(this.note.content.split(''), filename);
+
+    const a = document.createElement('a'),
+      url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout((): void => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
 }

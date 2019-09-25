@@ -1,5 +1,5 @@
 <template>
-  <button :class="{ 'btn-toolbar': true, 'text-orange-8': active }"
+  <button :class="{ 'btn-toolbar': true, 'text-primary': active }"
   @click="emitEvent">
       <q-icon :name="icons[0]" v-if="!active" />
       <q-icon :name="icons[1] || icons[0]" v-else />

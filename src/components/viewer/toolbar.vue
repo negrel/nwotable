@@ -18,6 +18,7 @@
       <toolbarButton :icons="['delete']" @click="deleteNote" />
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
+      <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
     </q-toolbar>
 
     <!-- NOTE Tags prompt  -->

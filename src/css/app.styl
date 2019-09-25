@@ -52,13 +52,21 @@ body {
   overflow-y auto
   overflow-x hidden
   word-break keep-all
-  display flex
   background rgb(32,39,44)
 
   & .q-list {
     height 100vh
     flex 10
     display inline-block
+    
+    & .q-item {
+      word-break keep-all
+      width 100vw
+
+      &:hover {
+        background #181c1fbf
+      }
+    }
 
     & .q-focusablehover {
       background #00000020
@@ -72,15 +80,15 @@ body {
   & .q-focus-helper {
     background transparent
 
-    &hover {
+    &:hover {
       background rgba(0,0,0,1)!important
     }
 
-    &active {
+    &:active {
       background rgba(0,0,0,1)
     }
 
-    &after {
+    &:after {
       background rgba(0,0,0,1)
       opacity 1
     }
@@ -140,7 +148,8 @@ $header-border = 1px solid $grey-4
   user-select text
 
   & * ::selection {
-    background-color rgba(239,108,0,.15);
+    background-color $accent
+    color $grey-2
   }
 }
 

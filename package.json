@@ -6,7 +6,7 @@
   "author": "Alexandre Negrel",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./ --fix",
     "dev": "quasar dev",
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa",
@@ -18,13 +18,17 @@
     "@types/fuzzyset.js": "0.0.2",
     "@types/markdown-it": "0.0.8",
     "@types/marked": "^0.6.5",
+    "@types/showdown": "1.9.3",
     "babel-eslint": "^10.0.3",
     "dompurify": "^2.0.1",
     "install": "^0.13.0",
     "lodash": "^4.17.15",
+    "markdown-it": "10.0.0",
+    "markdown-it-emoji": "1.4.0",
     "marked": "^0.7.0",
     "npm": "^6.11.3",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "showdown": "1.9.0"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

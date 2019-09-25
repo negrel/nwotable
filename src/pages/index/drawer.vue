@@ -13,17 +13,6 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable>
-        <q-item-section avatar>
-          <q-icon name="menu_book" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Notebooks</q-item-label>
-          <q-item-label class="text-grey-5" caption>
-            <!-- TODO Insert notebooks here -->
-          </q-item-label>
-        </q-item-section>
-      </q-item>
       <q-item clickable @click="dispatchFilter('filterFavorited')">
         <q-item-section avatar>
           <q-icon name="star" />
@@ -73,3 +62,12 @@ class Drawer extends Vue {
 
 export default Drawer;
 </script>
+
+<style lang="stylus" scoped>
+#github {
+  width 100%
+  position fixed
+  bottom 0
+  left 0
+}
+</style>

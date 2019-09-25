@@ -1,7 +1,7 @@
 <template>
-  <button :class="{ 'btn-toolbar': true, 'text-orange-8': condition && active }"
+  <button :class="{ 'btn-toolbar': true, 'text-orange-8': active }"
   @click="emitEvent">
-      <q-icon :name="icons[0]" v-if="!condition" />
+      <q-icon :name="icons[0]" v-if="!active" />
       <q-icon :name="icons[1] || icons[0]" v-else />
   </button>
 </template>
@@ -16,9 +16,6 @@ class ToolbarButton extends Vue {
   icons: string[]
 
   @Prop({ default: false })
-  condition: boolean
-
-  @Prop({ default: false })
   active: boolean
 
   emitEvent() {
@@ -31,6 +28,7 @@ export default ToolbarButton;
 
 <style lang="stylus" scoped>
   .btn-toolbar {
+    margin 0px
     background-color white
     border 1px solid $grey-4
     border-radius 5px

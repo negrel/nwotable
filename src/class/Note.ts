@@ -1,5 +1,4 @@
-import * as marked from 'marked';
-import * as DOMPurify from 'dompurify';
+import { marked } from './Parser';
 
 export interface MetaData {
   created: string;
@@ -43,9 +42,7 @@ export class Note {
   }
 
   public get markdown(): string {
-    const res = DOMPurify.sanitize(this.note.content.split(/\s{2,}/g)
-      .map((el: string): string => marked(el))
-      .join());
+    const res = marked(this.note.content);
     return res;
   }
 

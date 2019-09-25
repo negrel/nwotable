@@ -1,6 +1,9 @@
 <template>
-	<div id="search-field" class="fit">
-		<input type="text" placeholder="Search..." @change="fuzzySearch"/>
+	<div class="search-field">
+		<input type="text"
+      placeholder="Search..."
+      @change="fuzzySearch"
+    />
 		<toolbarButton :icons="['search']" class="float-right" />
 	</div>
 </template>
@@ -18,21 +21,23 @@ import { State } from 'vuex-class';
   }
 })
 class SearchBar extends Vue {
-  @Prop({ default: false })
-  compact: boolean
-
   @State(state => state.NoteList.noteList) noteList: Note[];
+
+  fuzzySearch() {
+    console.log('searching...');
+  }
 };
 
 export default SearchBar;
 </script>
 
 <style lang="stylus" scoped>
-  #search-field {
-    border $header-border
+
+  .search-field {
+    border 1px solid $grey-4
     border-radius 5px
     overflow hidden
-    padding .1em .5em
+    padding .1em 0em .1em .5em
     margin-right 1em
     background-color white
 

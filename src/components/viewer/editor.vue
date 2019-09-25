@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Note } from '../class/Note';
+import { Note } from '../../class/Note';
 
 import { debounce } from 'lodash';
 

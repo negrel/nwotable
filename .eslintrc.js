@@ -2,7 +2,7 @@ module.exports = {
   root: true,
 
   parserOptions: {
-    parser: "@typescript-eslint/parser",
+    parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
 
@@ -52,10 +52,11 @@ module.exports = {
 
     'semi': [2, 'always'],
     'space-before-function-paren': ['error', 'never'],
-    'no-useless-escape': "off",
-    "@typescript-eslint/indent": ["error", 2],
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    'no-useless-escape': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     'no-tabs': 'off',
     // allow console.log during development only
     // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

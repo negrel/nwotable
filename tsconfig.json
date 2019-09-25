@@ -8,11 +8,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "baseUrl": ".",
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false
   },
   "exclude": [
     "node_modules",
     "babel.config.js",
-    "quasar.conf.js"
+    "quasar.conf.js",
+    "dist",
+    "src-ssr",
+    "src-pwa"
   ]
 }

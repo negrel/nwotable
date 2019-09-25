@@ -1,25 +1,28 @@
 {
-  "name": "nwote.md",
-  "version": "0.0.1",
+  "name": "nwotable",
+  "version": "0.1.0",
   "description": "A note app based on quasar, vue.js and markdown.",
-  "productName": "Nwote.MD",
+  "productName": "Nwotable",
   "author": "Alexandre Negrel",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "build": "quasar build -m ssr"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "@types/dompurify": "0.0.33",
+    "@types/fuzzyset.js": "0.0.2",
     "@types/markdown-it": "0.0.8",
     "@types/marked": "^0.6.5",
     "babel-eslint": "^10.0.3",
     "dompurify": "^2.0.1",
+    "install": "^0.13.0",
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
-    "quasar": "^1.0.0",
-    "vue-showdown": "^2.4.1"
+    "npm": "^6.11.3",
+    "quasar": "^1.0.0"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

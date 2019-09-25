@@ -1,14 +1,16 @@
 <template>
 	<div id="search-field" class="fit">
-		<input type="text" placeholder="Search..." />
-		<toolbarButton :icons="['search']"/>
+		<input type="text" placeholder="Search..." @change="fuzzySearch"/>
+		<toolbarButton :icons="['search']" class="float-right" />
 	</div>
 </template>
 
 <script lang='ts'>
-import toolbarButton from './toolbarButton.vue';
+import toolbarButton from './toolbar-button.vue';
 
+import { Note } from '../class/Note';
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
 @Component({
   components: {
@@ -18,6 +20,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 class SearchBar extends Vue {
   @Prop({ default: false })
   compact: boolean
+
+  @State(state => state.NoteList.noteList) noteList: Note[];
 };
 
 export default SearchBar;

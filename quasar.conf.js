@@ -88,16 +88,18 @@ module.exports = function(ctx) {
     animations: [],
 
     ssr: {
-      pwa: false
+      pwa: true
     },
 
     pwa: {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
+
+      /* eslint-disable @typescript-eslint/camelcase */
       manifest: {
-        // name: 'Nwote.MD',
-        // short_name: 'Nwote.MD',
-        // description: 'A note app based on quasar, vue.js and markdown.',
+        name: 'Nwotable',
+        short_name: 'Nwotable',
+        description: 'A note app based on quasar, vue.js and markdown.',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

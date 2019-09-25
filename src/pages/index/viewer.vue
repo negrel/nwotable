@@ -12,8 +12,8 @@
         <q-icon name="attachment" class="rotate-270" />
       </button> -->
       <toolbarButtonGroup>
-        <toolbarButton :icons="['star', 'star_border']" @click="switchMetaBool('favorited')" :active="true"/>
-        <toolbarButton :icons="['room']" @click="switchMetaBool('pinned')" :active="true"/>
+        <toolbarButton :icons="['star_border', 'star']" :condition="meta.favorited" @click="switchMetaBool('favorited')" :active="true"/>
+        <toolbarButton :icons="['room']" :condition="meta.pinned" @click="switchMetaBool('pinned')" :active="true"/>
       </toolbarButtonGroup>
       <toolbarButton :icons="['delete']" @click="deleteNote" />
       <!-- TODO add delete prompt -->
@@ -27,8 +27,8 @@
 
 <script lang="ts">
 import editor from '../../components/editor.vue';
-import toolbarButtonGroup from '../../components/toolbarButtonGroup.vue';
-import toolbarButton from '../../components/toolbarButton.vue';
+import toolbarButtonGroup from '../../components/toolbar-button-group.vue';
+import toolbarButton from '../../components/toolbar-button.vue';
 
 import { Note, MetaData } from '../../class/Note';
 

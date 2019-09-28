@@ -1,4 +1,5 @@
 import { Note, NoteType } from '../class/Note';
+import { Attachment } from '../class/Attachment';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
@@ -60,11 +61,16 @@ export const mutations: MutationTree<NoteListState> = {
 
 export const actions: ActionTree<NoteListState, RootState> = {
   async init({ dispatch, commit, state }: ActionContext<NoteListState, RootState>): Promise<void> {
-    const noteList = await dispatch('initDb', { root: true });
+    const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
     noteList.forEach((element: any): void => {
       commit('ADD_NOTE', new Note(element.note));
     });
+
+    attachmentList.forEach((element: File): void => {
+      dispatch('addAttachment', new Attachment(element), { root: true });
+    });
+
     dispatch('setFilter', 'all');
     dispatch('selectNote', state.noteList[0]);
   },

@@ -2,15 +2,10 @@
   <div id="toolbar">
     <q-toolbar class="text-primary bg-grey-3">
       <toolbarButtonGroup>
-        <toolbarButton :icons="['edit']" :active="editMode" @click="changeEditMode">
-        </toolbarButton>
+        <toolbarButton :icons="['edit']" :active="editMode" @click="changeEditMode" />
+        <toolbarButton :icons="['attach_file']" @click="importFile(fileLocal)" />
         <toolbarButton :icons="['local_offer']" />
       </toolbarButtonGroup>
-      <!-- TODO add attachment button -->
-      <!-- <button :class="{ 'btn-toolbar': true, 'text-orange-8': attachment }"
-        @click="attachment = inverse(attachment)">
-        <q-icon name="attachment" class="rotate-270" />
-      </button> -->
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']" :active="meta.favorited" @click="switchMetaBool('favorited')"/>
         <toolbarButton :icons="['room']" :active="meta.pinned" @click="switchMetaBool('pinned')"/>
@@ -20,7 +15,7 @@
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
         <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
-        <toolbarButton :icons="['input']" @click="importNote"/>
+        <toolbarButton :icons="['input']" @click="importFile(noteLocal)"/>
       </toolbarButtonGroup>
     </q-toolbar>
 
@@ -33,6 +28,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
 import { Note, MetaData } from '../../class/Note';
+import { Attachment } from '../../class/Attachment';
 
 import toolbarButtonGroup from '../../components/toolbar-button-group.vue';
 import toolbarButton from '../../components/toolbar-button.vue';
@@ -73,7 +69,7 @@ class Toolbar extends Vue {
     this.$store.dispatch('saveNote');
   }
 
-  importNote(): void {
+  importFile(func: Function): void {
     let input = document.createElement('input');
     input.type = 'file';
     input.multiple = true;
@@ -82,24 +78,32 @@ class Toolbar extends Vue {
     input.click();
 
     input.addEventListener('change', async(): Promise<void> => {
+      // eslint-disable-next-line
       const files = input.files as any;
       if (files) {
         for (let i = 0, length = files.length; i < length; i++) {
-          this.$store.dispatch('addNewNote', {
-            title: files[i].name.split('.md')[0],
-            content: await files[i].text(),
-            meta: {
-              created: files[i].lastModified,
-              modified: files[i].lastModified
-            }
-          });
+          func(files[i]);
         }
       }
     });
+    input.remove();
+  }
 
-    setInterval(() => {
-      input.remove();
-    }, 0);
+  // eslint-disable-next-line
+  async noteLocal(note: any): Promise<void> {
+    this.$store.dispatch('addNewNote', {
+      title: note.name.split('.md')[0],
+      content: await note.text(),
+      meta: {
+        created: note.lastModified,
+        modified: note.lastModified
+      }
+    });
+  }
+
+  fileLocal(file: File): void {
+    this.$store.dispatch('saveAttachmentToDb', file);
+    this.$store.dispatch('addAttachment', new Attachment(file));
   }
 
   deleteNote(): void {

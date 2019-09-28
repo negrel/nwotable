@@ -14,7 +14,6 @@ export default {
     border-radius 0px
     border-left-width .5px
     border-right-width .5px
-    margin-right: 1em
 
     &:first-child {
       border-top-left-radius 5px
@@ -26,6 +25,7 @@ export default {
       border-top-right-radius 5px
       border-bottom-right-radius 5px
       margin-left 0px
+      margin-right: 1em
     }
   }
 </style>

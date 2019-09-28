@@ -11,13 +11,13 @@ export const state: DatabaseState = {
 };
 
 export const mutations: MutationTree<DatabaseState> = {
-  ADD_DATABASE(state, db: any): void {
+  ADD_DATABASE(state, db: IDBDatabase): void {
     state.iDb = db;
   }
 };
 
 export const actions: ActionTree<DatabaseState, RootState> = {
-  initDb({ commit }: ActionContext<DatabaseState, RootState>): Promise<Note[] | undefined> {
+  initDb({ commit }: ActionContext<DatabaseState, RootState>): Promise<[Note[], File[]] | undefined> {
     return new Promise((resolve, reject): Note[] | void => {
       if (!window.indexedDB) {
         alert('Your browser doesn\'t support IndexedDb. The app may not save your notes');
@@ -48,7 +48,22 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
           getNotes.onsuccess = (event: any): void => {
             const noteList = event.target.result;
-            resolve(noteList);
+
+            // Set attachment state with the IndexedDb objectStores
+            const attachmentObjectStore = db.transaction('attachment', 'readonly').objectStore('attachment');
+
+            const getAttachment = attachmentObjectStore.getAll();
+
+            getAttachment.onsuccess = (event: any): void => {
+              const attachmentList = event.target.result;
+
+              resolve([noteList, attachmentList]);
+            };
+
+            getAttachment.onerror = (): void => {
+              alert('Error while getting the attachment from IndexedDb.');
+              reject();
+            };
           };
 
           getNotes.onerror = (): void => {
@@ -60,20 +75,18 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         request.onupgradeneeded = (event: any): void => {
           const db = event.target.result;
 
-          // Crée un objet de stockage pour cette base de données
-          // TODO ajouter keypath created metadata
           const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
 
-          // Créer un index pour rechercher les note par leur titre et leur body.
           noteObjectStore.createIndex('content', 'content', { unique: true });
           noteObjectStore.createIndex('tags', 'tags', { unique: false });
           noteObjectStore.createIndex('favorited', 'favorited', { unique: false });
           noteObjectStore.createIndex('pinned', 'pinned', { unique: false });
 
-          // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
-          // est terminée avant d'ajouter des données dedans.
-          noteObjectStore.transaction.oncomplete = (): void => {
-            // Stocker les valeurs dans le nouvel objet de stockage.
+          const attachmentObjectStore = db.createObjectStore('attachment', { keyPath: 'name' });
+
+          attachmentObjectStore.createIndex('name', 'name', { unique: true });
+
+          attachmentObjectStore.transaction.oncomplete = (): void => {
             console.log('Indexed DB ready.');
           };
         };
@@ -101,6 +114,39 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         .objectStore('notes')
         .delete(theNote.data.meta.created);
     }
+  },
+  saveAttachmentToDb({ state }: ActionContext<DatabaseState, RootState>, file: File): void {
+    if (state.iDb) {
+      const store = state.iDb.transaction('attachment', 'readwrite').objectStore('attachment');
+
+      store.add(file).onerror = (event: any): void => {
+        alert(event);
+      };
+    }
+  },
+  deleteAttachmentFromDb({ state }: ActionContext<DatabaseState, RootState>, file: File): void {
+    if (state.iDb) {
+      state.iDb.transaction('attachment', 'readwrite')
+        .objectStore('attachment')
+        .delete(file.name);
+    }
+  },
+  getURLAttachment({ state }: ActionContext<DatabaseState, RootState>, fileName: string): Promise<string> {
+    return new Promise((resolve, reject): void => {
+      if (state.iDb) {
+        const objectStore = state.iDb.transaction('attachment', 'readonly').objectStore('attachment');
+        const attachment = objectStore.get(fileName) as IDBRequest<File>;
+
+        attachment.onsuccess = (): void => {
+          const url = URL.createObjectURL(attachment.result);
+          resolve(url);
+        };
+
+        attachment.onerror = (): void => {
+          reject();
+        };
+      }
+    });
   }
 };
 

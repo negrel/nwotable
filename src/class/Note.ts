@@ -27,23 +27,29 @@ export class Note {
 
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
+
+    // let title = await this.markdown;
+    // title = title.trim()
+    //   .replace(/(<([^>]+)>)/ig, '')
+    //   .split('\n')[0];
+    // // .substring(0, 60);
+
+    // if (title.length === 0) {
+    //   title = 'No title...';
+    // }
+    // return title;
+  }
+
+  public set title(theTitle: string) {
+    this.note.title = theTitle;
   }
 
   public get title(): string {
-    let title = this.markdown.trim()
-      .replace(/(<([^>]+)>)/ig, '')
-      .split('\n')[0];
-      // .substring(0, 60);
-
-    if (title.length === 0) {
-      title = 'No title...';
-    }
-    return title;
+    return this.note.title;
   }
 
-  public get markdown(): string {
-    const res = marked(this.note.content);
-    return res;
+  public get markdown(): any {
+    return marked(this.note.content);
   }
 
   public get favorited(): boolean {

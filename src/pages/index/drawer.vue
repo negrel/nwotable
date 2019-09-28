@@ -65,7 +65,6 @@ export default Drawer;
 
 <style lang="stylus" scoped>
 #github {
-  width 100%
   position fixed
   bottom 0
   left 0

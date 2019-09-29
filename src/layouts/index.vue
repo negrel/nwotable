@@ -40,3 +40,24 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+#drawer {
+  min-width 56px
+  max-width 250px
+  overflow-y auto
+  overflow-x hidden
+  word-break keep-all
+  background rgb(32,39,44)
+}
+
+#main {
+  min-width 200px
+  max-width 500px
+  z-index 1
+}
+
+#markdown {
+  flex 1
+}
+</style>

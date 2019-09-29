@@ -8,7 +8,7 @@ export interface EditorState {
 }
 
 export const defaultNote: NoteType = {
-  title: 'No note',
+  title: '',
   content: '# No note saved.',
   meta: {
     created: new Date().toString(),

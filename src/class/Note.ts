@@ -1,4 +1,5 @@
 import { marked } from './Parser';
+import { Attachment } from './Attachment';
 
 export interface MetaData {
   created: string;
@@ -6,6 +7,7 @@ export interface MetaData {
   pinned: boolean;
   favorited: boolean;
   tags: string[];
+  // attachments: Attachment[];
 }
 
 export interface NoteType {
@@ -22,33 +24,29 @@ export class Note {
   }
 
   public get plainNote(): string {
-    return this.note.content.substring(0);
+    return this.note.content;
   }
 
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
 
-    // let title = await this.markdown;
-    // title = title.trim()
-    //   .replace(/(<([^>]+)>)/ig, '')
-    //   .split('\n')[0];
-    // // .substring(0, 60);
+    let title = this.markdown;
+    title = title.trim()
+      .replace(/(<([^>]+)>)/ig, '')
+      .split('\n')[0]
+      .substring(0, 60);
 
-    // if (title.length === 0) {
-    //   title = 'No title...';
-    // }
-    // return title;
-  }
-
-  public set title(theTitle: string) {
-    this.note.title = theTitle;
+    if (title.length === 0) {
+      title = 'No title...';
+    }
+    this.note.title = title;
   }
 
   public get title(): string {
     return this.note.title;
   }
 
-  public get markdown(): any {
+  public get markdown(): string {
     return marked(this.note.content);
   }
 

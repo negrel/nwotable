@@ -44,5 +44,11 @@ export default ToolbarButton;
     &:active {
       background-color $grey-5
     }
+
+    & i {
+      font-size 1.2em
+      justify-content center
+      align-items center
+    }
   }
 </style>

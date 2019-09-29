@@ -13,15 +13,24 @@ export const state: AttachmentState = {
 export const mutations: MutationTree<AttachmentState> = {
   ADD_ATTACHMENT(state, payload: Attachment): void {
     state.attachmentList.push(payload);
+  },
+  DELETE_ATTACHMENT(state, payload: Attachment): void {
+    const index = state.attachmentList.map((el: Attachment): string => el.name).indexOf(payload.name);
+    state.attachmentList.splice(index, 1);
   }
 };
 
 export const actions: ActionTree<AttachmentState, RootState> = {
-  addAttachment({ commit }: ActionContext<AttachmentState, RootState>, attachment: Attachment): void {
-    commit('ADD_ATTACHMENT', attachment);
+  addAttachment({ commit, state }: ActionContext<AttachmentState, RootState>, attachment: Attachment): void {
+    const exist = state.attachmentList.map((el: Attachment): string => el.name).indexOf(attachment.name);
+    if (exist === -1) {
+      commit('ADD_ATTACHMENT', attachment);
+    } else {
+      alert(`Your already have an attachment named ${attachment.name}`);
+    }
   },
   deleteAttachment({ commit }: ActionContext<AttachmentState, RootState>, attachment: File): void {
-
+    commit('DELETE_ATTACHMENT', attachment);
   }
 };
 

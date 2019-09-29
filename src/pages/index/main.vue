@@ -4,19 +4,19 @@
       <searchBar />
       <toolbarButton :icons="['add']" @click="addNewNote"/>
     </q-toolbar>
-    <q-bar @click="dateSort = !dateSort">
+    <q-bar id="dateBar" @click="dateSort = !dateSort">
       <div>Date</div>
       <q-space />
       <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': dateSort }" />
     </q-bar>
-    <div class="list" v-if="indexList.length !== 0">
+    <div v-if="indexList.length !== 0">
       <q-list>
       <!-- TODO Limit size of title and ... end of line -->
         <q-item v-for="key in sortedList"
           :key="key"
           @click="selectNote(noteList[key])"
-          active-class="q-item-hover"
-          :class="{ 'q-item-active': noteList[key] === selectedNote }"
+          active-class="q-item-active"
+          :active="noteList[key] === selectedNote"
           clickable
         >
           <q-item-section>
@@ -123,3 +123,62 @@ class Main extends Vue {
 
 export default Main;
 </script>
+
+<style lang="stylus" scoped>
+div {
+  max-height 97vh
+}
+
+.q-list {
+  height 100%
+  width 100%
+  max-height 95vh
+  overflow-y auto
+
+  & .q-item {
+    background-color white
+    & i {
+      font-size 1.2em
+    }
+  }
+
+  & > .q-item:nth-child(even) {
+    background-color $grey-2
+  }
+
+  & >  .q-item-active {
+    color $secondary!important
+    background-color $grey-4!important
+  }
+}
+
+#dateBar {
+  padding 0 1em
+  background-color white!important
+  color #908484
+  max-height 1.5em
+  border-bottom $grey-border
+
+  & div {
+    font-size .8em
+  }
+
+  & .q-icon {
+    transition .1s ease-in-out
+  }
+}
+
+#emptyList {
+  display table
+  text-align center
+  height 90%
+
+  & span {
+    font-size 1.2em
+    width 100vw
+    display table-cell
+    vertical-align middle
+  }
+}
+
+</style>

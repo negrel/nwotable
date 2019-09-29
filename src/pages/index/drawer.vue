@@ -64,6 +64,46 @@ export default Drawer;
 </script>
 
 <style lang="stylus" scoped>
+.q-list {
+  height 100vh
+  flex 10
+  display inline-block
+
+  & .q-item {
+    word-break keep-all
+    width 100vw
+
+    &:hover {
+      background #181c1fbf
+    }
+  }
+
+  & .q-focusablehover {
+    background #00000020
+  }
+}
+
+.q-item__label--header {
+  padding 1em .7em
+}
+
+& .q-focus-helper {
+  background transparent
+
+  &:hover {
+    background rgba(0,0,0,1)!important
+  }
+
+  &:active {
+    background rgba(0,0,0,1)
+  }
+
+  &:after {
+    background rgba(0,0,0,1)
+    opacity 1
+  }
+}
+
 #github {
   position fixed
   bottom 0

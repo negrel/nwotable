@@ -1,19 +1,10 @@
-@font-face
-  font-family hack
-  src url(./fonts/Hack-Regular.ttf)
+// Markdown processed styles
 
-#markdown {
-  width 100%
-
-  .hack-font {
-    font-family hack
-    font-size 1.3em
-  }
-
-  & #container {
-    height 95vh
-    word-break break-word
-
+#container {
+  height 95vh
+  word-break break-word
+  
+  & #viewer {
     // Headers
     h1, h2, h3, h4, h5, h6 {
       font-weight 500
@@ -50,39 +41,32 @@
     & pre {
       background-color $grey-3
     }
-  
-    & #editor {
-      padding-left 1em
-      background-color #F6F6F6
-      color #555
-      padding-top 1em
-      outline none
-      width 100%
-      height 100%
-      box-sizing border-box
-      border none
-      resize none
-      height 97vh
-      font-size 1em
-      font-weight 300
 
+    & table {
+      border-collapse collapse
+      border-spacing 0px
+      width 99%
 
-      & * {
-        transition .1s ease-in-out
-        color #333
+    $table-border = 1px solid $grey-5
+
+      & th {
+        border-top $table-border
+        border-bottom 1.5px solid $grey-8
+        border-right $table-border
+        padding 0 .3em
+
+        &:nth-child(1) {
+          border-left $table-border
+        }
       }
-    }
 
-    & #viewer {
-      padding-top 1em
-      padding-left 1em
-      height 100%
-      overflow-y auto
-      font-size 1.3em
-      font-weight 400
+      & tr {
+        border $table-border
 
-      & * {
-        max-width 99%
+        & td {
+          padding .3em
+          border-left $table-border
+        }
       }
     }
   }

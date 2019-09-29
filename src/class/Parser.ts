@@ -3,6 +3,8 @@ import Store from '../store/store';
 const showdown = require('showdown');
 const parser: showdown.Converter = new showdown.Converter();
 parser.setFlavor('github');
+parser.setOption('parseImgDimensions', true);
+parser.setOption('tables', true);
 
 export function marked(input: string): string {
   let html = parser.makeHtml(input);

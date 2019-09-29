@@ -1,20 +1,17 @@
+@import './functions.styl'
+
 // app global css
 body {
-  -webkit-touch-callout none
-  -webkit-user-select none
-  -khtml-user-select none
-  -moz-user-select none
-  -ms-user-select none
-  user-select none
-  height 100vh
+  no-user-select()
   max-height 100vh
   overflow hidden
-  position fixed
+  position absolute
   top 0
+  color $secondary
+}
 
-  & button {
-    cursor pointer
-  }
+.pane {
+  height 100vh
 }
 
 .float-right {
@@ -26,8 +23,8 @@ body {
   width: 100%;
   height: 100%;
 
-  & .multipane-resizer {
-    z-index: 1000
+  & > .multipane-resizer {
+    z-index: 10000
     height: 100vh!important
   }
 
@@ -45,157 +42,15 @@ body {
   }
 }
 
-.pane > div {
-  height 100vh
-  width 100%
-}
-
-#drawer {
-  min-width 56px
-  max-width 250px
-  height 100vh
-  overflow-y auto
-  overflow-x hidden
-  word-break keep-all
-  background rgb(32,39,44)
-
-  & .q-list {
-    height 100vh
-    flex 10
-    display inline-block
-    
-    & .q-item {
-      word-break keep-all
-      width 100vw
-
-      &:hover {
-        background #181c1fbf
-      }
-    }
-
-    & .q-focusablehover {
-      background #00000020
-    }
-  }
-
-  & .q-item__label--header {
-    padding 1em .7em
-  }
-
-  & .q-focus-helper {
-    background transparent
-
-    &:hover {
-      background rgba(0,0,0,1)!important
-    }
-
-    &:active {
-      background rgba(0,0,0,1)
-    }
-
-    &:after {
-      background rgba(0,0,0,1)
-      opacity 1
-    }
-  }
-}
-
-.q-layout {
+& .q-toolbar {
   display flex
+  min-height 2.5em
+  height 3vh
+  border-bottom $header-border
 }
 
-$header-border = 1px solid $grey-4
-
-#main {
-  min-width 200px
-  max-width 500px
-  max-height 97vh
-
-  .list {
-    display flex
-    border 0
-  }
-
-  .q-list {
-    height 100%
-    width 100%
-    max-height 95vh
-    overflow-y auto
-
-    & .q-item-active {
-      background-color rgba(0,0,0,.08)
-    }
-
-    & .q-item-hover {
-      background-color rgba(0,0,0,.04)
-    }
-  }
-
-  #emptyList {
-    display table
-    text-align center
-    height 90%
-
-    & span {
-      font-size 1.2em
-      width 100vw
-      display table-cell
-      vertical-align middle
-    }
-  }
-}
-
-#markdown {
-  flex 1
-  -webkit-touch-callout text
-  -webkit-user-select text
-  -khtml-user-select text
-  -moz-user-select text
-  -ms-user-select text
-  user-select text
-
-  & * ::selection {
-    background-color $accent
-    color $grey-2
-  }
-}
-
-#main, #markdown {
-
-  & .q-toolbar {
-    display flex
-    min-height 2.5em
-    height 3vh
-    border-bottom $header-border
-
-    &active {
-      background-color $grey-3
-    }
-  }
-
-    & i {
-      font-size 1.2em
-      justify-content center
-      align-items center
-    }
-
-  .q-bar {
-    padding 0 1em
-    background-color white
-    color #908484
-    max-height 1.5em
-    border-bottom $header-border
-
-    &hover {
-      cursor pointer
-    }
-    
-    & div {
-      font-size .8em
-    }
-
-    & .q-icon {
-      transition .1s ease-in-out
-    }
+.q-list {
+  & .q-item {
+    transition .01s ease-in-out!important
   }
 }

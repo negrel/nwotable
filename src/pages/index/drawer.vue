@@ -42,7 +42,7 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Github</q-item-label>
-          <q-item-label class="text-grey-5" caption>github.com/Nergel3</q-item-label>
+          <!-- <q-item-label class="text-grey-5" caption>github.com/Nergel3</q-item-label> -->
         </q-item-section>
       </q-item>
     </q-list>

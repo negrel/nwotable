@@ -14,7 +14,7 @@
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
-        <toolbarButton :icons="['save_alt']" @click="selectedNote.downloadPDF()" />
+        <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
         <toolbarButton :icons="['input']" @click="importFile(noteLocal)"/>
       </toolbarButtonGroup>
     </q-toolbar>
@@ -60,13 +60,9 @@ class Toolbar extends Vue {
         break;
       case 'pinned':
         this.selectedNote.pinned = !this.selectedNote.pinned;
-        if (this.selectedNote.pinned) {
-          this.$store.dispatch('updateNote');
-        }
         break;
     }
-
-    this.$store.dispatch('saveNote');
+    this.$store.dispatch('updateNote');
   }
 
   importFile(func: Function): void {

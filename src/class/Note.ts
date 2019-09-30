@@ -29,11 +29,16 @@ export class Note {
   public set plainNote(newPlainNote: string) {
     this.note.content = newPlainNote;
 
-    let title = this.markdown;
+    // Setting the title
+
+    let title = newPlainNote;
     title = title.trim()
-      .replace(/(<([^>]+)>)/ig, '')
+      // Removing metadata
+      .replace(/(-|<){3}\n(.*\n)+(-|>){3}\n\W+/, '')
+      // Removing markdown syntax
+      .replace(/[#]+/, '')
       .split('\n')[0]
-      .substring(0, 60);
+      .substring(0, 30);
 
     if (title.length === 0) {
       title = 'No title...';

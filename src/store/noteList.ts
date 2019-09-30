@@ -30,6 +30,9 @@ export const mutations: MutationTree<NoteListState> = {
   DELETE_NOTE(state, index: number): void {
     state.noteList.splice(index, 1);
   },
+  SET_NOTE(state, { index, theNote }: { index: number; theNote: Note}): void {
+    state.noteList[index] = theNote;
+  },
   SET_FILTER(state, filterName): void {
     state.filter = filterName;
   },
@@ -90,10 +93,8 @@ export const actions: ActionTree<NoteListState, RootState> = {
       newNote = new Note();
     }
 
-    dispatch('setEditMode', false, { root: true });
     commit('ADD_NOTE', newNote);
     dispatch('selectNote', newNote);
-    dispatch('setEditMode', true, { root: true });
     commit('APPLY_FILTER');
     dispatch('saveNote');
   },
@@ -107,8 +108,10 @@ export const actions: ActionTree<NoteListState, RootState> = {
     const theNote = rootState.Editor.selectedNote;
     const index = await dispatch('getIndex', theNote);
 
-    commit('DELETE_NOTE', index);
-    commit('ADD_NOTE', theNote);
+    theNote.modified();
+
+    commit('SET_NOTE', { index, theNote });
+    dispatch('updateNoteToDb', theNote, { root: true });
     commit('APPLY_FILTER');
   },
   async deleteNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, theNote: Note): Promise<void> {
@@ -118,6 +121,7 @@ export const actions: ActionTree<NoteListState, RootState> = {
     commit('DELETE_NOTE', index);
     dispatch('deleteNoteFromDb', theNote);
     commit('APPLY_FILTER');
+    dispatch('setSelectedNote', state.noteList[state.indexList[0]], { root: true });
   },
   setFilter({ commit }: ActionContext<NoteListState, RootState>, filter: string): void {
     commit('SET_FILTER', filter);

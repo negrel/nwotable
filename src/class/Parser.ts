@@ -6,17 +6,20 @@ parser.setFlavor('github');
 parser.setOption('parseImgDimensions', true);
 parser.setOption('tables', true);
 parser.setOption('parseImgDimensions', true);
+parser.setOption('metadata', true);
 
-export function marked(input: string): string {
-  let html = parser.makeHtml(input);
+// Detect link to other note and image attachment
+const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,
+  imgRegex = /src="@attachment\/[^><:"/\\|?*]+"/;
+
+function imgAttachment(html: string): string {
+  // Checking for image attachment
 
   const storeAttachments = Store().state.NoteAttachment.attachmentList,
     storeAttachmentsName = storeAttachments.map((el: any): void => el.name),
-    attachRegex = /src="@attachment\/[^><:"/\\|?*]+"/g,
-    res = html.match(attachRegex),
+    globalImgRegex = new RegExp(imgRegex, 'g'),
+    res = html.match(globalImgRegex),
     attachList: number[] = [];
-
-  console.log(res);
 
   if (res) {
     res.forEach((element: string): void => {
@@ -32,10 +35,23 @@ export function marked(input: string): string {
     });
   }
   for (let i = 0, length = attachList.length; i < length; i++) {
-    html = html.replace(/src="@attachment\/[^><:"/\\|?*]+"/, `src="${attachList[i]}"`);
+    html = html.replace(imgRegex, `src="${attachList[i]}"`);
   }
+  return html;
+}
 
-  console.log(html);
+function noteAttachment(html: string): string {
+  const res = html.match(noteRegex);
+  // console.log(res);
+
+  return html;
+}
+
+export function marked(input: string): string {
+  let html = parser.makeHtml(input);
+
+  html = imgAttachment(html);
+  html = noteAttachment(html);
 
   return html;
 }

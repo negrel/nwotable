@@ -51,7 +51,13 @@ body {
 
 .q-list {
   & .q-item {
-    transition .01s ease-in-out!important
+    min-height 2.5em
+    height 2.5em
+    transition 0s!important
+
+    & * {
+      transition 0s!important
+    }
   }
 }
 
@@ -68,8 +74,5 @@ body {
     height 100%
     padding 0
     overflow hidden
-    & * {
-      page-break-after auto
-    }
   }
 }

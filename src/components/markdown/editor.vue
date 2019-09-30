@@ -1,7 +1,7 @@
 <template>
   <textarea id="editor"
     @keydown="debounceSave"
-    :value="value"
+    v-model="plainNote"
   >
   </textarea>
   <!-- TODO add highlighting for markdown -->
@@ -14,25 +14,27 @@ import { debounce } from 'lodash';
 
 import Vue from 'vue';
 import { Prop, Component, Watch } from 'vue-property-decorator';
-import { State } from 'vuex-class';
 
 @Component
 class Editor extends Vue {
   @Prop({ default: '' })
   value: string
 
-  @State(state => state.Editor.selectedNote) selectedNote: Note;
+  plainNote: string
 
-  // @Watch('selectedNote')
-  // onSelectedNoteChange(val: Note, oldVal: Note) {
-  //   if (oldVal.data.meta.created !== val.data.meta.created) {
-  //     this.plainNote = this.selectedNote.plainNote;
-  //     // TODO Fix bug when edit mode + create new note
-  //   }
-  // }
+  @Watch('value')
+  onValueChange(val: string): void {
+    this.plainNote = val.substring(0);
+  }
+
+  created() {
+    // Cloning prop for avoid mutating prop
+    this.plainNote = this.value.substring(0);
+  }
 
   save() {
-    this.$emit('input', this.value);
+    this.$emit('input', this.plainNote);
+    this.$store.dispatch('updateNote');
   }
 
   public debounceSave = debounce(() => {

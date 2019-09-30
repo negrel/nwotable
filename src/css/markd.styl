@@ -13,14 +13,16 @@
     // Headers
     h1, h2, h3, h4, h5, h6 {
       font-weight 500
-      margin-top 0px
       line-height 1.5em
-      border-bottom 1px solid #2f2f2f2f
+    }
+
+    h1, h2 {
+      border-bottom 1px solid $grey-4
     }
 
     for n in 1 2 3 4 5 6 {
       & h{n} {
-        font-size 2.5rem - n * .25rem
+        font-size 2rem - n * .15rem
         margin n * .5rem 0 
       }
     }
@@ -28,6 +30,12 @@
     & pre {
       background-color $grey-3
       padding-left 1em
+    }
+
+    & code {
+      background-color $grey-3
+      border-radius 3px
+      padding .2em .4em
     }
 
     & table {
@@ -39,9 +47,10 @@
 
       & th {
         border-top $table-border
-        border-bottom 1.5px solid $grey-8
+        border-bottom 1.2px solid $grey-6
         border-right $table-border
-        padding 0 .3em
+        padding .3em
+        font-size 1.2em
 
         &:nth-child(1) {
           border-left $table-border

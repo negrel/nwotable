@@ -3,7 +3,7 @@
     <div class="fit bg-white">
       <toolbar />
       <editor class="hack-font" v-if="editMode" v-model="selectedNote.plainNote" />
-      <viewer v-else />
+      <viewer :markdown="selectedNote.markdown" v-else />
     </div>
   </div>
 </template>
@@ -32,16 +32,8 @@ class Viewer extends Vue {
   @Watch('editMode')
   onEditModeChange(val: boolean) {
     if (!val) {
-      this.saveNote();
+      this.$store.dispatch('updateNote');
     }
-  }
-
-  saveNote() {
-    let editor = document.getElementById('editor') as HTMLInputElement;
-    if (editor) {
-      this.selectedNote.plainNote = editor.value;
-    }
-    this.$store.dispatch('saveNote');
   }
 };
 

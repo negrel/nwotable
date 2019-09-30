@@ -96,16 +96,15 @@ export const actions: ActionTree<DatabaseState, RootState> = {
   saveNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     if (state.iDb) {
       const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
+      store.add(theNote);
+    }
+  },
+  updateNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
+    if (state.iDb) {
+      const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
 
-      // Save the note to indexed DB.
-      if (theNote.data.meta.modified) {
-        store.put(theNote);
-      } else {
-        theNote.modified();
-        store.add(theNote).onerror = (event: any): void => {
-          alert(event);
-        };
-      }
+      theNote.modified();
+      store.put(theNote);
     }
   },
   deleteNoteFromDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
@@ -119,9 +118,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     if (state.iDb) {
       const store = state.iDb.transaction('attachment', 'readwrite').objectStore('attachment');
 
-      store.add(file).onerror = (event: any): void => {
-        alert(event);
-      };
+      store.add(file);
     }
   },
   deleteAttachmentFromDb({ state }: ActionContext<DatabaseState, RootState>, file: File): void {
@@ -130,23 +127,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
         .objectStore('attachment')
         .delete(file.name);
     }
-  },
-  getURLAttachment({ state }: ActionContext<DatabaseState, RootState>, fileName: string): Promise<string> {
-    return new Promise((resolve, reject): void => {
-      if (state.iDb) {
-        const objectStore = state.iDb.transaction('attachment', 'readonly').objectStore('attachment');
-        const attachment = objectStore.get(fileName) as IDBRequest<File>;
-
-        attachment.onsuccess = (): void => {
-          const url = URL.createObjectURL(attachment.result);
-          resolve(url);
-        };
-
-        attachment.onerror = (): void => {
-          reject();
-        };
-      }
-    });
   }
 };
 

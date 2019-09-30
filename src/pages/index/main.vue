@@ -20,10 +20,7 @@
           clickable
         >
           <q-item-section>
-            <q-item-label>{{ noteList[key].data.title }}</q-item-label>
-            <q-item-label class="text-grey-5" caption>
-              {{ noteList[key].data.meta.modified.toLocaleString() }}
-            </q-item-label>
+            <q-item-label class="title" >{{ noteList[key].data.title }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-icon name="star" v-if="noteList[key].favorited" />
@@ -134,21 +131,52 @@ div {
   width 100%
   max-height 95vh
   overflow-y auto
+  overflow-x hidden
 
   & .q-item {
+    word-break keep-all
     background-color white
     & i {
-      font-size 1.2em
+      font-size 1em
     }
   }
 
   & > .q-item:nth-child(even) {
-    background-color $grey-2
+    background-color $grey-1
   }
 
   & >  .q-item-active {
     color $secondary!important
-    background-color $grey-4!important
+    background-color $grey-3!important
+  }
+
+  & .title {
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+  }
+
+  // Scroll bar
+  &::-webkit-scrollbar {
+    width .5em
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color $grey-1;
+    border-radius: 1000px
+    box-shadow inset 0 0 3px $grey-6
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color $grey-5;
+    border-radius: 1000px
+
+    /* Handle on hover */
+    &:hover {
+      background-color $grey-6;
+    }
   }
 }
 

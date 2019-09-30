@@ -44,7 +44,7 @@ export default {
 <style lang="stylus" scoped>
 #drawer {
   min-width 56px
-  max-width 250px
+  max-width 216px
   overflow-y auto
   overflow-x hidden
   word-break keep-all
@@ -52,12 +52,13 @@ export default {
 }
 
 #main {
-  min-width 200px
+  min-width 250px
   max-width 500px
   z-index 1
 }
 
 #markdown {
+  min-width 335px
   flex 1
 }
 </style>

@@ -10,13 +10,13 @@ export interface Filter {
 export interface NoteListState {
   noteList: Note[];
   indexList: number[];
-  filter: string;
+  filter: 'all' | 'favorited';
 }
 
 export const state: NoteListState = {
   noteList: [],
   indexList: [],
-  filter: ''
+  filter: 'all'
 };
 
 export const mutations: MutationTree<NoteListState> = {

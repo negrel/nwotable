@@ -53,8 +53,4 @@ export default Viewer;
   font-family hack
   font-size 1.3em
 }
-#container {
-  height 95vh
-  word-break break-word
-}
 </style>

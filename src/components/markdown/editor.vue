@@ -55,9 +55,10 @@ export default Editor;
   box-sizing border-box
   border none
   resize none
-  height 97vh
+  height 96vh
   font-size 1em
   font-weight 300
+  overflow-y scroll
 
   & * {
     transition .1s ease-in-out

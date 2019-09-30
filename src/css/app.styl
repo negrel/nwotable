@@ -3,9 +3,9 @@
 // app global css
 body {
   no-user-select()
-  max-height 100vh
+  height 100vh
   overflow hidden
-  position absolute
+  position fixed
   top 0
   color $secondary
 }
@@ -52,5 +52,24 @@ body {
 .q-list {
   & .q-item {
     transition .01s ease-in-out!important
+  }
+}
+
+@media print {
+  #main, #drawer {
+    display none
+  }
+
+  #toolbar {
+    display none
+  }
+
+  #viewer {
+    height 100%
+    padding 0
+    overflow hidden
+    & * {
+      page-break-after auto
+    }
   }
 }

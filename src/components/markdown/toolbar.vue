@@ -14,7 +14,7 @@
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
-        <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
+        <toolbarButton :icons="['save_alt']" @click="selectedNote.downloadPDF()" />
         <toolbarButton :icons="['input']" @click="importFile(noteLocal)"/>
       </toolbarButtonGroup>
     </q-toolbar>

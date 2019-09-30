@@ -1,53 +1,41 @@
 // Markdown processed styles
 
 #container {
-  height 95vh
+  height 96vh
   word-break break-word
   
   & #viewer {
+
+    & * {
+      max-width 99%
+    }
+
     // Headers
     h1, h2, h3, h4, h5, h6 {
       font-weight 500
       margin-top 0px
-      margin-bottom 1em
       line-height 1.5em
       border-bottom 1px solid #2f2f2f2f
     }
 
-    & h1 {
-      font-size 2.5rem
-    }
-
-    & h2 {
-      font-size 2rem
-    }
-
-    & h3 {
-      font-size 1.75rem
-    }
-
-    & h4 {
-      font-size 1.5rem
-    }
-
-    & h5 {
-      font-size 1.25rem
-    }
-
-    & h6 {
-      font-size 1rem
+    for n in 1 2 3 4 5 6 {
+      & h{n} {
+        font-size 2.5rem - n * .25rem
+        margin n * .5rem 0 
+      }
     }
 
     & pre {
       background-color $grey-3
+      padding-left 1em
     }
 
     & table {
       border-collapse collapse
       border-spacing 0px
-      width 99%
+      min-width 50%
 
-    $table-border = 1px solid $grey-5
+      $table-border = 1px solid $grey-5
 
       & th {
         border-top $table-border
@@ -68,6 +56,13 @@
           border-left $table-border
         }
       }
+    }
+
+    & blockquote {
+      background-color $grey-2
+      margin .5em 0
+      padding-left 1em
+      border-left 5px solid $grey-5
     }
   }
 }

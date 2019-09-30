@@ -5,15 +5,18 @@ const parser: showdown.Converter = new showdown.Converter();
 parser.setFlavor('github');
 parser.setOption('parseImgDimensions', true);
 parser.setOption('tables', true);
+parser.setOption('parseImgDimensions', true);
 
 export function marked(input: string): string {
   let html = parser.makeHtml(input);
 
   const storeAttachments = Store().state.NoteAttachment.attachmentList,
     storeAttachmentsName = storeAttachments.map((el: any): void => el.name),
-    attachRegex = /src="@attachment\/\w+\.+\w+"/g,
+    attachRegex = /src="@attachment\/[^><:"/\\|?*]+"/g,
     res = html.match(attachRegex),
     attachList: number[] = [];
+
+  console.log(res);
 
   if (res) {
     res.forEach((element: string): void => {
@@ -29,8 +32,10 @@ export function marked(input: string): string {
     });
   }
   for (let i = 0, length = attachList.length; i < length; i++) {
-    html = html.replace(/src="@attachment\/.*"/, `src="${attachList[i]}"`);
+    html = html.replace(/src="@attachment\/[^><:"/\\|?*]+"/, `src="${attachList[i]}"`);
   }
+
+  console.log(html);
 
   return html;
 }

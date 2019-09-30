@@ -21,15 +21,19 @@ export default Viewer;
 <style lang="stylus" scoped>
 // See markd.styl for markdown css rules
 #viewer {
-  padding-top 1em
   padding-left 1em
   height 100%
   overflow-y auto
   font-size 1.3em
   font-weight 400
+  text-user-select()
 
   & * {
     max-width 99%
+  }
+
+  ::selection {
+    background-color $accent
   }
 }
 </style>

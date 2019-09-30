@@ -1,5 +1,4 @@
 import { marked } from './Parser';
-import { Attachment } from './Attachment';
 
 export interface MetaData {
   created: string;
@@ -116,5 +115,9 @@ export class Note {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 0);
+  }
+
+  public downloadPDF(): void {
+    console.log('DOWNLOADING...');
   }
 }

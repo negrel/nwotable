@@ -123,7 +123,7 @@ class Main extends Vue {
       const noNote = new Note();
       noNote.setupFromNote({
         title: '',
-        content: '# You have no note saved...',
+        content: '# You have no note saved... :slightly_frowning_face:',
         meta: {
           created: new Date().toString(),
           modified: new Date(),

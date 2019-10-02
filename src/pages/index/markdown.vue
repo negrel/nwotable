@@ -28,13 +28,6 @@ import { State } from 'vuex-class';
 class Viewer extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.Editor.editMode) editMode: boolean;
-
-  @Watch('editMode')
-  onEditModeChange(val: boolean) {
-    if (!val) {
-      this.$store.dispatch('updateNote');
-    }
-  }
 };
 
 export default Viewer;

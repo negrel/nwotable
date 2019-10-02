@@ -1,11 +1,13 @@
 import Store from '../store/store';
 
-const showdown = require('showdown');
-const parser: showdown.Converter = new showdown.Converter();
-parser.setFlavor('github');
+const showdown = require('showdown'),
+  highlight = require('showdown-highlight');
+const parser = new showdown.Converter({
+  extensions: [highlight]
+});
 parser.setOption('parseImgDimensions', true);
 parser.setOption('tables', true);
-parser.setOption('parseImgDimensions', true);
+parser.setOption('emoji', true);
 parser.setOption('metadata', true);
 
 // Detect link to other note and image attachment
@@ -15,7 +17,7 @@ const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,
 function imgAttachment(html: string): string {
   // Checking for image attachment
 
-  const storeAttachments = Store().state.NoteAttachment.attachmentList,
+  const storeAttachments = Store().state.Attachments.attachmentList,
     storeAttachmentsName = storeAttachments.map((el: any): void => el.name),
     globalImgRegex = new RegExp(imgRegex, 'g'),
     res = html.match(globalImgRegex),
@@ -41,7 +43,7 @@ function imgAttachment(html: string): string {
 }
 
 function noteAttachment(html: string): string {
-  const res = html.match(noteRegex);
+  // const res = html.match(noteRegex);
   // console.log(res);
 
   return html;

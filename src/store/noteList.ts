@@ -67,7 +67,9 @@ export const actions: ActionTree<NoteListState, RootState> = {
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
     noteList.forEach((element: any): void => {
-      commit('ADD_NOTE', new Note(element.note));
+      const note = new Note();
+      note.setupFromNote(element.note);
+      commit('ADD_NOTE', note);
     });
 
     attachmentList.forEach((element: File): void => {
@@ -75,32 +77,27 @@ export const actions: ActionTree<NoteListState, RootState> = {
     });
 
     dispatch('setFilter', 'all');
-    dispatch('selectNote', state.noteList[0]);
-  },
-  selectNote({ dispatch }: ActionContext<NoteListState, RootState>, theNote?: Note): void {
-    // Set the selected note to the first in the list.
-    dispatch('setSelectedNote', theNote, { root: true });
+    dispatch('setSelectedNote', state.noteList[0], { root: true });
   },
   getIndex({ state }: ActionContext<NoteListState, RootState>, note: Note): number {
     return state.noteList.map((element: Note): string => element.data.meta.created).indexOf(note.data.meta.created);
   },
-  addNewNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, note?: NoteType): void {
-    let newNote;
+  async addNewNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, note?: NoteType | File): Promise<void> {
+    const newNote = new Note();
 
-    if (note) {
-      newNote = new Note(note);
-    } else {
-      newNote = new Note();
+    if (note instanceof File) {
+      await newNote.setupFromFile(note);
+    } else if (note) {
+      newNote.setupFromNote(note);
     }
 
     commit('ADD_NOTE', newNote);
-    dispatch('selectNote', newNote);
-    commit('APPLY_FILTER');
+    dispatch('setSelectedNote', newNote, { root: true });
+    dispatch('setEditMode', true, { root: true });
     dispatch('saveNote');
   },
   saveNote({ dispatch, rootState }: ActionContext<NoteListState, RootState>): void {
     const theNote = rootState.Editor.selectedNote;
-    theNote.modified();
 
     dispatch('saveNoteToDb', theNote, { root: true });
   },
@@ -108,15 +105,12 @@ export const actions: ActionTree<NoteListState, RootState> = {
     const theNote = rootState.Editor.selectedNote;
     const index = await dispatch('getIndex', theNote);
 
-    theNote.modified();
-
     commit('SET_NOTE', { index, theNote });
     dispatch('updateNoteToDb', theNote, { root: true });
     commit('APPLY_FILTER');
   },
-  async deleteNote({ commit, dispatch }: ActionContext<NoteListState, RootState>, theNote: Note): Promise<void> {
+  async deleteNote({ commit, dispatch, state }: ActionContext<NoteListState, RootState>, theNote: Note): Promise<void> {
     dispatch('setEditMode', false, { root: true });
-
     const index = await dispatch('getIndex', theNote);
     commit('DELETE_NOTE', index);
     dispatch('deleteNoteFromDb', theNote);

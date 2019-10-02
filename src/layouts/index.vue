@@ -52,6 +52,7 @@ export default {
 }
 
 #main {
+  width 300px
   min-width 250px
   max-width 500px
   z-index 1

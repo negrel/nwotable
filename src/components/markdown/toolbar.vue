@@ -15,7 +15,7 @@
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
         <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
-        <toolbarButton :icons="['input']" @click="importFile(noteLocal)"/>
+        <toolbarButton :icons="['cloud_upload']" @click="importFile(noteLocal)"/>
       </toolbarButtonGroup>
     </q-toolbar>
 
@@ -27,7 +27,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
-import { Note, MetaData } from '../../class/Note';
+import { Note, MetaData, NoteType } from '../../class/Note';
 import { Attachment } from '../../class/Attachment';
 
 import toolbarButtonGroup from '../../components/toolbar-button-group.vue';
@@ -86,15 +86,8 @@ class Toolbar extends Vue {
   }
 
   // eslint-disable-next-line
-  async noteLocal(note: any): Promise<void> {
-    this.$store.dispatch('addNewNote', {
-      title: note.name.split('.md')[0],
-      content: await note.text(),
-      meta: {
-        created: note.lastModified,
-        modified: note.lastModified
-      }
-    });
+  async noteLocal(note: File): Promise<void> {
+    this.$store.dispatch('addNewNote', note);
   }
 
   fileLocal(file: File): void {

@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import { Database, DatabaseState } from './database';
 import { Editor, EditorState } from './editor';
 import { NoteList, NoteListState } from './noteList';
-import { NoteAttachment, AttachmentState } from './noteAttachment';
+import { Attachments, AttachmentState } from './attachment';
 
 export interface RootState {
   Editor: EditorState;
@@ -26,7 +26,7 @@ export default function(/* { ssrContext } */): any {
       Editor,
       Database,
       NoteList,
-      NoteAttachment
+      Attachments
     }
 
     // enable strict mode (adds overhead!)

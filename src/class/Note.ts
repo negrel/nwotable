@@ -6,7 +6,6 @@ export interface MetaData {
   pinned: boolean;
   favorited: boolean;
   tags: string[];
-  // attachments: Attachment[];
 }
 
 export interface NoteType {
@@ -18,6 +17,57 @@ export interface NoteType {
 export class Note {
   private note: NoteType;
 
+  // Create a default note
+  public constructor(note?: NoteType) {
+    this.note = {
+      title: 'New note.',
+      content: '# Your title\n Your stuff here.',
+      meta: {
+        created: new Date().toString(),
+        modified: new Date(),
+        tags: [],
+        favorited: false,
+        pinned: false
+      }
+    };
+  }
+
+  // Setup the object from a File object 'import'
+  public async setupFromFile(note: File): Promise<void> {
+    const content = await (note as any).text(),
+      metaRegex = /(-|<){3,}(.|\n)*(-|>){3,}/,
+      metadata = content.match(metaRegex);
+
+    const theNote = {
+      title: '',
+      content: '',
+      meta: {
+        created: new Date().toString(),
+        modified: new Date(note.lastModified),
+        pinned: false,
+        favorited: false,
+        tags: []
+      }
+    };
+    this.note = theNote;
+    this.plainNote = content.replace(metaRegex, '').trim();
+  }
+
+  // Setup the object from a note
+  public setupFromNote(note: NoteType): void {
+    this.note = {
+      title: note.title || 'New note.',
+      content: note.content || '# Your title',
+      meta: {
+        created: note.meta.created || new Date().toString(),
+        modified: note.meta.modified || new Date(),
+        tags: note.meta.tags || [],
+        favorited: note.meta.favorited || false,
+        pinned: note.meta.pinned || false
+      }
+    };
+  }
+
   public get data(): NoteType {
     return this.note;
   }
@@ -27,14 +77,20 @@ export class Note {
   }
 
   public set plainNote(newPlainNote: string) {
+    this.modified();
+
     this.note.content = newPlainNote;
+    this.editMetaData('modified', new Date());
+    // Using the setter to detect the title
+    this.title = newPlainNote;
+  }
 
-    // Setting the title
+  public get title(): string {
+    return this.note.title;
+  }
 
-    let title = newPlainNote;
-    title = title.trim()
-      // Removing metadata
-      .replace(/(-|<){3}\n(.*\n)+(-|>){3}\n\W+/, '')
+  public set title(note: string) {
+    let title = note.trim()
       // Removing markdown syntax
       .replace(/[#]+/, '')
       .split('\n')[0]
@@ -44,10 +100,6 @@ export class Note {
       title = 'No title...';
     }
     this.note.title = title;
-  }
-
-  public get title(): string {
-    return this.note.title;
   }
 
   public get markdown(): string {
@@ -68,34 +120,6 @@ export class Note {
 
   public set pinned(newBool: boolean) {
     this.note.meta.pinned = newBool;
-  }
-
-  public constructor(note?: NoteType) {
-    if (note !== undefined) {
-      this.note = {
-        title: note.title || 'New note.',
-        content: note.content || '# Your title',
-        meta: {
-          created: note.meta.created || new Date().toString(),
-          modified: note.meta.modified || new Date(),
-          tags: note.meta.tags || [],
-          favorited: note.meta.favorited || false,
-          pinned: note.meta.pinned || false
-        }
-      };
-    } else {
-      this.note = {
-        title: 'New note.',
-        content: '# Your title',
-        meta: {
-          created: new Date().toString(),
-          modified: new Date(),
-          tags: [],
-          favorited: false,
-          pinned: false
-        }
-      };
-    }
   }
 
   public clone(): Note {
@@ -124,5 +148,15 @@ export class Note {
 
   public downloadPDF(): void {
     console.log('DOWNLOADING...');
+  }
+
+  private editMetaData(meta: string, value: any): string {
+    const regex = new RegExp(`/${meta}\s.*\n/`);
+
+    if (typeof value !== 'string') {
+      value += '';
+    }
+
+    return this.note.content.replace(regex, value);
   }
 }

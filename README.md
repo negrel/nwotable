@@ -4,8 +4,8 @@ Nwotable is a [Vue.js](https://github.com/vuejs/vue) PWA inspired by the crazy w
 
 ![screenshot](./resources/home.jpg)
 
-## ⭐️ Show Your Support
-Please give a ⭐️ if this project helped you!
+## :stars: Show Your Support
+Please give a :star: if this project helped you!
 
 ## Contributing
 If you want to contribute to Nwotable to add a feature or improve the code contact me: [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com) or make a pull request.
@@ -13,5 +13,5 @@ If you want to contribute to Nwotable to add a feature or improve the code conta
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
-### License
+### :scroll: License
 MIT © Alexandre Negrel

@@ -28,7 +28,7 @@ class Editor extends Vue {
   }
 
   created() {
-    // Cloning prop for avoid mutating prop
+    // Cloning prop to avoid mutating prop
     this.plainNote = this.value.substring(0);
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "nwotable",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A note app based on quasar, vue.js and markdown.",
   "productName": "Nwotable",
   "author": "Alexandre Negrel",
@@ -28,6 +28,7 @@
     "npm": "^6.11.3",
     "quasar": "^1.0.0",
     "showdown": "1.9.0",
+    "showdown-highlight": "2.1.3",
     "vue-multipane": "0.9.5"
   },
   "devDependencies": {

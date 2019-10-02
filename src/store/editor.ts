@@ -9,7 +9,7 @@ export interface EditorState {
 
 export const defaultNote: NoteType = {
   title: '',
-  content: '# No note saved.',
+  content: '# No note...',
   meta: {
     created: new Date().toString(),
     modified: new Date(),
@@ -37,8 +37,12 @@ export const actions: ActionTree<EditorState, RootState> = {
   setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note): void {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  setEditMode({ commit }: ActionContext<EditorState, RootState>, bool: boolean): void {
+  setEditMode({ commit, dispatch }: ActionContext<EditorState, RootState>, bool: boolean): void {
     commit('SET_EDIT_MODE', bool);
+    if (!bool) {
+      dispatch('updateNote', { root: true });
+      console.log('UPDATING NOTE');
+    }
   },
   defaultNote({ commit }: ActionContext<EditorState, RootState>): void {
     const note = new Note(defaultNote);

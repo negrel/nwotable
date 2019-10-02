@@ -103,7 +103,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
     if (state.iDb) {
       const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
 
-      theNote.modified();
       store.put(theNote);
     }
   },

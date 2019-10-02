@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
 import { throttle } from 'lodash';
@@ -116,6 +116,25 @@ class Main extends Vue {
   addNewNote = throttle((): void => {
     this.$store.dispatch('addNewNote');
   }, 1500);
+
+  @Watch('indexList')
+  onInedxListChange() {
+    if (this.indexList.length === 0) {
+      const noNote = new Note();
+      noNote.setupFromNote({
+        title: '',
+        content: '# You have no note saved.',
+        meta: {
+          created: new Date().toString(),
+          modified: new Date(),
+          favorited: false,
+          pinned: false,
+          tags: []
+        }
+      });
+      this.$store.dispatch('setSelectedNote', noNote, { root: true });
+    }
+  }
 };
 
 export default Main;

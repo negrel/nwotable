@@ -34,10 +34,10 @@ export const actions: ActionTree<AttachmentState, RootState> = {
   }
 };
 
-export const NoteAttachment: Module<AttachmentState, RootState> = {
+export const Attachments: Module<AttachmentState, RootState> = {
   state,
   mutations,
   actions
 };
 
-export default NoteAttachment;
+export default Attachments;

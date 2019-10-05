@@ -1,4 +1,4 @@
-# [Nwotable](https://nwotable.netlify.com) [![Netlify Status](https://api.netlify.com/api/v1/badges/9de8bcbc-9e16-49e4-a59b-d473ce5e0ba3/deploy-status)](https://app.netlify.com/sites/nwotable/deploys) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
+# [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
 
 Nwotable is a [Vue.js](https://github.com/vuejs/vue) PWA inspired by the crazy work of [Fabio Spampinato](https://github.com/fabiospampinato).
 

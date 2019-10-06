@@ -1,21 +1,23 @@
 <template>
-  <q-layout>
-    <multipane class="vertical-panes" layout="vertical">
-      <div class="pane" id="drawer">
-        <drawer />
-      </div>
-      <multipane-resizer></multipane-resizer>
-      <div class="pane" id="main">
-        <mainSection />
-      </div>
-      <multipane-resizer></multipane-resizer>
-      <div class="pane" id="markdown">
-        <div>
-          <viewer />
+  <main>
+    <q-layout>
+      <multipane class="vertical-panes" layout="vertical">
+        <div class="pane" id="drawer">
+          <drawer />
         </div>
-      </div>
-    </multipane>
-  </q-layout>
+        <multipane-resizer></multipane-resizer>
+        <div class="pane" id="main">
+          <mainSection />
+        </div>
+        <multipane-resizer></multipane-resizer>
+        <div class="pane" id="markdown">
+          <div>
+            <viewer />
+          </div>
+        </div>
+      </multipane>
+    </q-layout>
+  </main>
 </template>
 
 <script>

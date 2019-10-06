@@ -2,20 +2,46 @@
   <div id="toolbar">
     <q-toolbar class="text-primary bg-grey-3">
       <toolbarButtonGroup>
-        <toolbarButton :icons="['edit']" :active="editMode" @click="changeEditMode" />
-        <toolbarButton :icons="['attach_file']" @click="importFile(fileLocal)" />
-        <toolbarButton :icons="['local_offer']" />
+        <toolbarButton :icons="['edit']"
+          title="Edit"
+          @click="changeEditMode"
+          v-if="!editMode"
+        />
+        <toolbarButton :icons="['edit']" :active="true"
+          title="Save"
+          @click="changeEditMode"
+          v-else
+        />
+        <toolbarButton :icons="['attach_file']" title="Attachment" @click="importFile(fileLocal)" />
+        <toolbarButton :icons="['local_offer']" title="Tag"/>
       </toolbarButtonGroup>
       <toolbarButtonGroup>
-        <toolbarButton :icons="['star_border', 'star']" :active="meta.favorited" @click="switchMetaBool('favorited')"/>
-        <toolbarButton :icons="['room']" :active="meta.pinned" @click="switchMetaBool('pinned')"/>
+        <toolbarButton :icons="['star_border', 'star']"
+          :active="meta.favorited"
+          @click="switchMetaBool('favorited')"
+          title="Favorite"
+        />
+        <toolbarButton :icons="['room']"
+          :active="meta.pinned"
+          title="Pin"
+          @click="switchMetaBool('pinned')"
+        />
       </toolbarButtonGroup>
-      <toolbarButton :icons="['delete']" @click="deleteNote" />
+      <toolbarButton :icons="['delete']"
+        title="Delete"
+        @click="deleteNote"
+      />
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
-        <toolbarButton :icons="['save_alt']" @click="selectedNote.download()" />
-        <toolbarButton :icons="['cloud_upload']" @click="importFile(noteLocal)"/>
+        <toolbarButton :icons="['save_alt']"
+          title="Download"
+          @click="selectedNote.download()"
+        />
+        <toolbarButton :icons="['cloud_upload']"
+          title="Import"
+          @click="importFile(noteLocal)"
+        />
       </toolbarButtonGroup>
     </q-toolbar>
 

@@ -2,6 +2,7 @@
 	<div class="search-field">
 		<input type="text"
       placeholder="Search..."
+      aria-label="search-field"
       @change="fuzzySearch"
     />
     <div class="float-right">

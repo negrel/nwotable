@@ -2,7 +2,10 @@
   <div class="bg-grey-1">
     <q-toolbar class="text-primary bg-grey-3">
       <searchBar />
-      <toolbarButton :icons="['add']" @click="addNewNote"/>
+      <toolbarButton :icons="['add']"
+        @click="addNewNote"
+        title="Add"
+      />
     </q-toolbar>
     <q-bar id="dateBar" @click="dateSort = !dateSort">
       <div>Date</div>

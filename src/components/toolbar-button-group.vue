@@ -1,5 +1,5 @@
 <template>
-  <div id="group">
+  <div class="group">
     <slot></slot>
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  #group * {
+  .group * {
     border-radius 0px
     border-left-width .5px
     border-right-width .5px

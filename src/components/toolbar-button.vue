@@ -1,6 +1,7 @@
 <template>
   <button :class="{ 'btn-toolbar': true, 'text-primary': active }"
-  @click="emitEvent">
+  @click="emitEvent"
+  :title="title">
       <q-icon :name="icons[0]" v-if="!active" />
       <q-icon :name="icons[1] || icons[0]" v-else />
   </button>
@@ -8,7 +9,7 @@
 
 <script lang="ts">
 
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
 @Component
 class ToolbarButton extends Vue {
@@ -17,6 +18,9 @@ class ToolbarButton extends Vue {
 
   @Prop({ default: false })
   active: boolean
+
+  @Prop({ default: '' })
+  title: string
 
   emitEvent() {
     this.$emit('click');

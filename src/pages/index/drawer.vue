@@ -36,6 +36,7 @@
         target="_blank"
         href="https://github.com/Nergel3/"
         id="github"
+        rel="noopener"
       >
         <q-item-section avatar>
           <q-icon name="code" />

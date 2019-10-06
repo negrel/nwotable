@@ -10,9 +10,9 @@ Vue.use(VueRouter);
  * directly export the Router instantiation
  */
 
-export default function(/* { store, ssrContext } */) {
+export default function(/* { store, ssrContext } */): VueRouter {
   const Router = new VueRouter({
-    scrollBehavior: () => ({ x: 0, y: 0 }),
+    scrollBehavior: (): any => ({ x: 0, y: 0 }),
     routes,
 
     // Leave these as is and change from quasar.conf.js instead!

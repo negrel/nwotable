@@ -28,17 +28,13 @@ module.exports = function(ctx) {
       // iconSet: 'ionicons-v4',
       lang: 'en-us', // Quasar language
 
-      all: true, // --- includes everything; for dev only!
+      all: false, // --- includes everything; for dev only!
 
       components: [
         'QLayout',
-        'QHeader',
-        'QDrawer',
-        'QPageContainer',
-        'QPage',
         'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
+        'QBar',
+        'QSpace',
         'QIcon',
         'QList',
         'QItem',

@@ -52,8 +52,6 @@ export const actions: ActionTree<FilterState, RootState> = {
     }
   },
   getFiltredIndex({ state }: ActionContext<FilterState, RootState>, index: number): number {
-    console.log(index);
-    console.log(state.filtred);
     return state.filtred.indexOf(index);
   }
 };

@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import drawer from '../pages/index/drawer.vue';
-import mainSection from '../pages/index/main.vue';
-import viewer from '../pages/index/markdown.vue';
+import drawer from '../pages/index/drawer/drawer.vue';
+import mainSection from '../pages/index/main/main.vue';
+import viewer from '../pages/index/markdown/markdown.vue';
 
 import Vue from 'vue';
 import Component from 'vue-class-component';

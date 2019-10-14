@@ -53,11 +53,12 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
-import { Note, MetaData, NoteType } from '../../class/Note';
-import { Attachment } from '../../class/Attachment';
+// @ prefix doesn't work
+import { Note, MetaData, NoteType } from 'src/class/Note';
+import { Attachment } from 'src/class/Attachment';
 
-import toolbarButtonGroup from '../../components/toolbar-button-group.vue';
-import toolbarButton from '../../components/toolbar-button.vue';
+import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
+import toolbarButton from 'src/components/toolbar-button.vue';
 
 @Component({
   components: {

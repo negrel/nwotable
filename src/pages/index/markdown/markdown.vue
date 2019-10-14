@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
-import toolbar from '../../components/markdown/toolbar.vue';
-import editor from '../../components/markdown/codemirror.vue';
-import viewer from '../../components/markdown/viewer.vue';
+import toolbar from './toolbar.vue';
+import editor from './codemirror.vue';
+import viewer from './viewer.vue';
 
-import { Note } from '../../class/Note';
+import { Note } from 'src/class/Note';
 
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';

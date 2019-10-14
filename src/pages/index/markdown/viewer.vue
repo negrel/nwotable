@@ -7,7 +7,7 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
-import { Note } from '../../class/Note';
+import { Note } from 'src/class/Note';
 
 @Component
 class Viewer extends Vue {
@@ -19,8 +19,8 @@ export default Viewer;
 </script>
 
 <style lang="stylus" scoped>
-@import '../../css/functions.styl'
-@import '../../css/quasar.variables.styl'
+@import '../../../css/functions.styl'
+@import '../../../css/quasar.variables.styl'
 
 // See markd.styl for markdown css rules
 #viewer {

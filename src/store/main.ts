@@ -61,10 +61,8 @@ export const actions: ActionTree<MainState, RootState> = {
 
     if (filtred.length > 0) {
       if (filtredIndex - 1 >= 0) {
-        alert('SELECT - 1');
         dispatch('setSelectedNote', noteList[filtred[filtredIndex - 1]], { root: true });
       } else {
-        alert('SELECT + 1');
         dispatch('setSelectedNote', noteList[filtred[filtredIndex + 1]], { root: true });
       }
     } else {

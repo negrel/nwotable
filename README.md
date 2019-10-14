@@ -1,10 +1,17 @@
+# Readme.md
 # [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
+
+![logo](https://github.com/Nergel3/Nwotable/raw/master/resources/nwotable.png =100x100)
 
 Nwotable is a [Vue.js](https://github.com/vuejs/vue) PWA inspired by the crazy work of [Fabio Spampinato](https://github.com/fabiospampinato) and his [app](https://github.com/notable/notable).
 
 The app is still in development so some features may not work. Mobile devices aren't currently supported.
 
-![screenshot](./resources/home.jpg)
+![screenshot](https://github.com/Nergel3/Nwotable/raw/master/resources/home.jpg)
+
+## Official App and Beta
+ * Official website : [Nwotable](https://nwotable.herokuapp.com)
+ * Beta (update at each github push): [Nwotable (Beta)](https://nwotable.netlify.com) 
 
 ## :stars: Show Your Support
 Please give a :star: if this project helped you!

@@ -2,7 +2,9 @@
   <codemirror
     :options="{
       mode: 'markdown',
-      extraKeys: {'Ctrl-Space': 'autocomplete'}
+      extraKeys: {'Ctrl-Space': 'autocomplete'},
+      indentWithTabs: true,
+      lineWrapping: true
     }"
     id="editor"
     v-model="plainNote"
@@ -66,7 +68,7 @@ export default {
   height 96vh
   font-size 1em
   font-weight 300
-  overflow-y scroll
+  overflow hidden
 
   & * {
     transition .1s ease-in-out

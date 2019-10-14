@@ -9,6 +9,7 @@ parser.setOption('parseImgDimensions', true);
 parser.setOption('tables', true);
 parser.setOption('emoji', true);
 parser.setOption('metadata', true);
+parser.setOption('openLinksInNewWindow', true);
 
 // Detect link to other note and image attachment
 // const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,

@@ -122,6 +122,10 @@ export class Note {
     this.note.meta.pinned = newBool;
   }
 
+  public get created(): string {
+    return this.note.meta.created;
+  }
+
   public clone(): Note {
     return new Note(this.note);
   }

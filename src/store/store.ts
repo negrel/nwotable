@@ -1,16 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import { Main, MainState } from './main';
 import { Database, DatabaseState } from './database';
 import { Editor, EditorState } from './editor';
-import { NoteList, NoteListState } from './noteList';
-import { Attachments, AttachmentState } from './attachment';
+import { Notes, NoteListState } from './notes';
+import { Attachments, AttachmentState } from './attachments';
+import { Filters, FilterState } from './filters';
 
 export interface RootState {
+  Main: MainState;
   Editor: EditorState;
   Database: DatabaseState;
-  NoteList: NoteListState;
+  Notes: NoteListState;
   NoteAttachment: AttachmentState;
+  Filters: FilterState;
 };
 
 Vue.use(Vuex);
@@ -23,10 +27,12 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */): any {
   const Store = new Vuex.Store<RootState>({
     modules: {
+      Main,
       Editor,
       Database,
-      NoteList,
-      Attachments
+      Notes,
+      Attachments,
+      Filters
     }
 
     // enable strict mode (adds overhead!)

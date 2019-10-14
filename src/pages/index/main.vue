@@ -93,8 +93,8 @@ class Main extends Vue {
     this.$store.dispatch('setSelectedNote', note);
   }
 
-  @State(state => state.NoteList.noteList) noteList: Note[];
-  @State(state => state.NoteList.indexList) indexList: number[];
+  @State(state => state.Notes.noteList) noteList: Note[];
+  @State(state => state.Filters.filtred) indexList: number[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get sortedList() {
@@ -117,7 +117,7 @@ class Main extends Vue {
   }
 
   addNewNote = throttle((): void => {
-    this.$store.dispatch('addNewNote');
+    this.$store.dispatch('addNote');
   }, 1500);
 
   @Watch('indexList')
@@ -221,7 +221,7 @@ div {
 #emptyList {
   display table
   text-align center
-  height 90%
+  height 2.5em
 
   & span {
     font-size 1.2em

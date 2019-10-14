@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import toolbar from '../../components/markdown/toolbar.vue';
-import editor from '../../components/markdown/editor.vue';
+import editor from '../../components/markdown/codemirror.vue';
 import viewer from '../../components/markdown/viewer.vue';
 
 import { Note } from '../../class/Note';

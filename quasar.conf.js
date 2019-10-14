@@ -16,11 +16,12 @@ module.exports = function(ctx) {
       'app.styl',
       'highlight.styl',
       'markd.styl',
-      'functions.styl'
+      'functions.styl',
+      'codemirror.styl'
     ],
 
     extras: [
-      'roboto-font', // optional, you are not bound to it
+      'roboto-font',
       'material-icons' // optional, you are not bound to it
     ],
 

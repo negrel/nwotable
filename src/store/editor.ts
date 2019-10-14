@@ -37,16 +37,13 @@ export const actions: ActionTree<EditorState, RootState> = {
   setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note): void {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  setEditMode({ commit, dispatch }: ActionContext<EditorState, RootState>, bool: boolean): void {
-    commit('SET_EDIT_MODE', bool);
-    if (!bool) {
-      dispatch('updateNote', { root: true });
-      console.log('UPDATING NOTE');
+  setEditMode({ commit, dispatch, rootState }: ActionContext<EditorState, RootState>, bool: boolean): void {
+    if (rootState.Notes.noteList.length > 0) {
+      commit('SET_EDIT_MODE', bool);
+      if (!bool) {
+        dispatch('updateNote', { root: true });
+      }
     }
-  },
-  defaultNote({ commit }: ActionContext<EditorState, RootState>): void {
-    const note = new Note(defaultNote);
-    commit('SET_SELECTED_NOTE', note);
   }
 };
 

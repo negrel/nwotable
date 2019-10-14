@@ -2,24 +2,26 @@
   <div>
     <q-list class="text-grey-1">
       <q-item-label header>Menu</q-item-label>
-      <q-item clickable @click="dispatchFilter('all')">
+      <q-item clickable>
         <q-item-section avatar>
           <q-icon name="book" />
         </q-item-section>
         <q-item-section>
           <q-item-label>All Notes</q-item-label>
-          <q-item-label class="text-grey-5" caption>
-            <!-- TODO Insert number of notes -->
+          <q-item-label class="text-grey-5 text-right" caption>
+            {{ noteCount }}
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="dispatchFilter('favorited')">
+      <q-item clickable>
         <q-item-section avatar>
           <q-icon name="star" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Favorite</q-item-label>
-          <q-item-label class="text-grey-5" caption></q-item-label>
+          <q-item-label class="text-grey-5 text-right" caption>
+            {{ favCount }}
+          </q-item-label>
         </q-item-section>
       </q-item>
       <q-item clickable>
@@ -43,7 +45,6 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Github</q-item-label>
-          <!-- <q-item-label class="text-grey-5" caption>github.com/Nergel3</q-item-label> -->
         </q-item-section>
       </q-item>
     </q-list>
@@ -53,12 +54,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { State } from 'vuex-class';
 
 @Component
 class Drawer extends Vue {
   dispatchFilter(filter: string): void {
     this.$store.dispatch('setFilter', filter);
   }
+
+  @State(state => state.Notes.noteList.length) noteCount: number
+  @State(state => state.Filters.favorited) favCount: number
 };
 
 export default Drawer;
@@ -69,6 +74,11 @@ export default Drawer;
   height 100vh
   flex 10
   display inline-block
+  max-width 216px
+
+  & > * {
+    max-width 216px
+  }
 
   & .q-item {
     word-break keep-all

@@ -1,6 +1,6 @@
 import { Note, NoteType } from '../class/Note';
 import { Attachment } from '../class/Attachment';
-import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
+import { ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
 // eslint-disable-next-line

@@ -38,6 +38,8 @@ export class Note {
       metaRegex = /(-|<){3,}(.|\n)*(-|>){3,}/,
       metadata = content.match(metaRegex);
 
+    console.log(metadata);
+
     const theNote = {
       title: '',
       content: '',

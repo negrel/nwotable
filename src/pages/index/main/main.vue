@@ -48,7 +48,7 @@ import { State } from 'vuex-class';
 import { throttle } from 'lodash';
 
 import { NoteType, Note } from 'src/class/Note';
-import searchBar from 'src/components/search-bar.vue';
+import searchBar from './search-bar.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 
 @Component({

@@ -14,7 +14,7 @@
 <script lang='ts'>
 import toolbarButton from './toolbar-button.vue';
 
-import { Note } from '../class/Note';
+import { Note } from 'src/class/Note';
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 

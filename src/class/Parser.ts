@@ -11,8 +11,8 @@ parser.setOption('emoji', true);
 parser.setOption('metadata', true);
 
 // Detect link to other note and image attachment
-const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,
-  imgRegex = /src="@attachment\/[^><:"/\\|?*]+"/;
+// const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,
+const imgRegex = /src="@attachment\/[^><:"/\\|?*]+"/;
 
 function imgAttachment(html: string): string {
   // Checking for image attachment

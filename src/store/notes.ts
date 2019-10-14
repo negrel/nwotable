@@ -1,8 +1,6 @@
 import { Note, NoteType } from '../class/Note';
-import { Attachment } from '../class/Attachment';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
-import { MainState } from './main';
 
 export interface NoteListState {
   noteList: Note[];

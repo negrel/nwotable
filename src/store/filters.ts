@@ -1,4 +1,3 @@
-import { Note, NoteType } from '../class/Note';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 

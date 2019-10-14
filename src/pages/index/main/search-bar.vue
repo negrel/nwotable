@@ -12,7 +12,7 @@
 </template>
 
 <script lang='ts'>
-import toolbarButton from './toolbar-button.vue';
+import toolbarButton from 'src/components/toolbar-button.vue';
 
 import { Note } from 'src/class/Note';
 import { Vue, Component, Prop } from 'vue-property-decorator';

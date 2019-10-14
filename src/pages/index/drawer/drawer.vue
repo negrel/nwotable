@@ -2,7 +2,7 @@
   <div>
     <q-list class="text-grey-1">
       <q-item-label header>Menu</q-item-label>
-      <q-item clickable>
+      <q-item clickable @click="dispatchFilter('all')">
         <q-item-section avatar>
           <q-icon name="book" />
         </q-item-section>
@@ -13,7 +13,7 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable>
+      <q-item clickable @click="dispatchFilter('favorited')">
         <q-item-section avatar>
           <q-icon name="star" />
         </q-item-section>

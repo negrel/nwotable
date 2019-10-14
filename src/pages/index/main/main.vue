@@ -94,7 +94,7 @@ class Main extends Vue {
   }
 
   @State(state => state.Notes.noteList) noteList: Note[];
-  @State(state => state.Filters.filtred) indexList: number[];
+  @State(state => state.Filters.filtredList) indexList: number[];
   @State(state => state.Editor.selectedNote) selectedNote: Note;
 
   get sortedList() {

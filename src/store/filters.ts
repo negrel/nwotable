@@ -1,39 +1,53 @@
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
+import { Note } from 'src/class/Note';
 
 export interface FilterState {
-  filtred: number[];
+  filtredList: number[];
   filter: string;
   favorited: number;
 }
 
 export const state: FilterState = {
-  filtred: [],
+  filtredList: [],
   filter: 'all',
   favorited: 0
 };
 
 export const mutations: MutationTree<FilterState> = {
   SET_LIST(state, payload): void{
-    state.filtred = payload;
+    state.filtredList = payload;
   },
   SET_FAV(state, payload): void {
     state.favorited = payload;
+  },
+  SET_FILTER(state, payload): void {
+    state.filter = payload;
   }
 };
 
 export const actions: ActionTree<FilterState, RootState> = {
   filterByAll({ commit, rootState }: ActionContext<FilterState, RootState>): void {
-    const length = rootState.Notes.noteList.length;
-    const payload = [];
+    const length = rootState.Notes.noteList.length,
+      payload = [];
 
     for (let i = 0; i < length; i++) {
       payload[i] = i;
     }
     commit('SET_LIST', payload);
   },
-  filterByFav(): void {
+  filterByFav({ commit, rootState }: ActionContext<FilterState, RootState>): void {
+    const noteList = rootState.Notes.noteList,
+      payload = [];
 
+    for (let i = 0, length = noteList.length; i < length; i++) {
+      const note = noteList[i];
+      if (note.favorited) {
+        payload.push(i);
+      }
+    }
+
+    commit('SET_LIST', payload);
   },
   updateFavorited({ rootState, commit }: ActionContext<FilterState, RootState>): void {
     const favorited = rootState.Notes.noteList.filter((el): boolean => el.favorited).length;
@@ -45,13 +59,20 @@ export const actions: ActionTree<FilterState, RootState> = {
       case 'all':
         dispatch('filterByAll');
         break;
+      case 'favorited':
+        dispatch('filterByFav');
+        break;
       default:
         dispatch('filterByAll');
         break;
     }
   },
+  setFilterAndUpdate({ commit, dispatch }: ActionContext<FilterState, RootState>, filter: string): void {
+    commit('SET_FILTER', filter);
+    dispatch('updateFiltred');
+  },
   getFiltredIndex({ state }: ActionContext<FilterState, RootState>, index: number): number {
-    return state.filtred.indexOf(index);
+    return state.filtredList.indexOf(index);
   }
 };
 

@@ -56,14 +56,14 @@ export const actions: ActionTree<MainState, RootState> = {
 
     // Select the previous note in the list or the next if don't exist
     const filtredIndex = await dispatch('getFiltredIndex', index, { root: true }),
-      filtred = rootState.Filters.filtred,
+      filtredList = rootState.Filters.filtredList,
       noteList = rootState.Notes.noteList;
 
-    if (filtred.length > 0) {
+    if (filtredList.length > 0) {
       if (filtredIndex - 1 >= 0) {
-        dispatch('setSelectedNote', noteList[filtred[filtredIndex - 1]], { root: true });
+        dispatch('setSelectedNote', noteList[filtredList[filtredIndex - 1]], { root: true });
       } else {
-        dispatch('setSelectedNote', noteList[filtred[filtredIndex + 1]], { root: true });
+        dispatch('setSelectedNote', noteList[filtredList[filtredIndex + 1]], { root: true });
       }
     } else {
       alert('ERROR');
@@ -86,6 +86,21 @@ export const actions: ActionTree<MainState, RootState> = {
 
     dispatch('updateNoteToList', { index, theNote }, { root: true });
     dispatch('updateNoteToDb', theNote, { root: true });
+  },
+  async setFilter({ dispatch, rootState }, filter: string): Promise<void> {
+    dispatch('setFilterAndUpdate', filter, { root: true });
+
+    // Check if the selected note is in the filtred list
+    const noteList = rootState.Notes.noteList,
+      theNote = rootState.Editor.selectedNote,
+      index = await dispatch('getNoteIndex', theNote, { root: true }),
+      filtredIndex = await dispatch('getFiltredIndex', index, { root: true }),
+      filtredList = rootState.Filters.filtredList;
+
+    if (filtredIndex === -1 && noteList.length > 0 && filtredList.length > 0) {
+      // if not select the first note of the filtred list
+      dispatch('setSelectedNote', noteList[filtredList[0]], { root: true });
+    }
   }
 };
 

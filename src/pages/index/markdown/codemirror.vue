@@ -4,7 +4,8 @@
       mode: 'markdown',
       extraKeys: {'Ctrl-Space': 'autocomplete'},
       indentWithTabs: true,
-      lineWrapping: true
+      lineWrapping: true,
+      theme: 'nergel'
     }"
     id="editor"
     v-model="plainNote"
@@ -33,7 +34,7 @@ export default {
     value: String
   },
   watch: {
-    plainNote: function(val) {
+    value: function(val) {
       this.plainNote = val.substring(0);
     }
   },
@@ -73,6 +74,10 @@ export default {
   & * {
     transition .1s ease-in-out
     color #333
+  }
+
+  & *::selection {
+    background-color #ef6c0026!important
   }
 }
 </style>

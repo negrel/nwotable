@@ -1,6 +1,5 @@
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
-import { Note } from 'src/class/Note';
 
 export interface FilterState {
   filtredList: number[];

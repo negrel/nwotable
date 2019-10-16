@@ -29,6 +29,8 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Multipane, MultipaneResizer } from 'vue-multipane';
 
+import hotkeys from 'hotkeys-js';
+
 export default {
   components: {
     Multipane,
@@ -39,6 +41,42 @@ export default {
   },
   mounted() {
     this.$store.dispatch('init');
+  },
+  created() {
+    const store = this.$store;
+
+    // Switch edit mode
+    hotkeys('ctrl+e', (event, handler) => {
+      event.preventDefault();
+
+      const editMode = store.state.Editor.editMode;
+      store.dispatch('setEditMode', !editMode);
+    });
+
+    // Save the note
+    hotkeys('ctrl+s', (event, handler) => {
+      event.preventDefault();
+
+      const editMode = store.state.Editor.editMode;
+
+      if (editMode) {
+        store.dispatch('updateNote');
+      }
+    });
+
+    // Download the note
+    hotkeys('ctrl+shift+s', (event, handler) => {
+      event.preventDefault();
+
+      store.state.Editor.selectedNote.download();
+    });
+
+    // Add a new note.
+    hotkeys('ctrl+b', (event, handler) => {
+      event.preventDefault();
+      console.log('HELLO');
+      store.dispatch('addNote');
+    });
   }
 };
 </script>

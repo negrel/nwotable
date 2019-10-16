@@ -1,8 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-const path = require('path');
-
 module.exports = function(ctx) {
   return {
     sourceFiles: {

@@ -2,14 +2,20 @@
   <codemirror
     :options="{
       mode: 'markdown',
-      extraKeys: {'Ctrl-Space': 'autocomplete'},
       indentWithTabs: true,
       lineWrapping: true,
-      theme: 'nergel'
+      extraKeys: {
+        'Ctrl-Space': 'autocomplete',
+        'Ctrl-S': save,
+        'Ctrl-E': viewMode
+      },
+      autofocus: true,
+      theme: 'nwotable',
     }"
     id="editor"
     v-model="plainNote"
-    @input="debounceSave"
+    @input="save"
+    ref="mdEditor"
   >
   </codemirror>
 </template>
@@ -18,7 +24,7 @@
 import Vue from 'vue';
 import { Prop, Component, Watch } from 'vue-property-decorator';
 
-import { debounce } from 'lodash';
+import { debounce } from 'quasar';
 
 import { codemirror } from 'vue-codemirror-lite';
 require('codemirror/mode/markdown/markdown');
@@ -41,14 +47,21 @@ export default {
   created() {
     // Cloning prop to avoid mutating prop
     this.plainNote = this.value.substring(0);
+    this.save = debounce(this.save, 500);
   },
   methods: {
-    debounceSave: debounce(function() {
-      this.save();
-    }, 1000),
     save() {
       this.$emit('input', this.plainNote);
       this.$store.dispatch('updateNote');
+    },
+    viewMode() {
+      this.$store.dispatch('setEditMode', false);
+    }
+  },
+  computed: {
+    editor() {
+      // get current editor object
+      return this.$refs.mdEditor.editor;
     }
   }
 };
@@ -74,10 +87,6 @@ export default {
   & * {
     transition .1s ease-in-out
     color #333
-  }
-
-  & *::selection {
-    background-color #ef6c0026!important
   }
 }
 </style>

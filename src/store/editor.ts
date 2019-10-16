@@ -44,6 +44,31 @@ export const actions: ActionTree<EditorState, RootState> = {
         dispatch('updateNote', { root: true });
       }
     }
+  },
+  async selectNextNote({ dispatch, rootState, state }: ActionContext<EditorState, RootState>): Promise<void> {
+    const noteIndex = await dispatch('getNoteIndex', state.selectedNote),
+      index = await dispatch('getFiltredIndex', noteIndex, { root: true }) + 1,
+      noteList = rootState.Notes.noteList,
+      filtredList = rootState.Filters.filtredList;
+
+    if (index === filtredList.length) {
+      dispatch('setSelectedNote', noteList[filtredList[0]]);
+    } else {
+      dispatch('setSelectedNote', noteList[filtredList[index]]);
+    }
+  },
+  async selectPreviousNote({ dispatch, rootState, state }: ActionContext<EditorState, RootState>): Promise<void> {
+    const noteIndex = await dispatch('getNoteIndex', state.selectedNote),
+      index = await dispatch('getFiltredIndex', noteIndex, { root: true }) - 1,
+      noteList = rootState.Notes.noteList,
+      filtredList = rootState.Filters.filtredList;
+
+    if (index === -1) {
+      const lastIndex = filtredList.length - 1;
+      dispatch('setSelectedNote', noteList[filtredList[lastIndex]]);
+    } else {
+      dispatch('setSelectedNote', noteList[filtredList[index]]);
+    }
   }
 };
 

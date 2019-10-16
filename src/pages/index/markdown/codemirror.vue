@@ -7,7 +7,8 @@
       extraKeys: {
         'Ctrl-Space': 'autocomplete',
         'Ctrl-S': save,
-        'Ctrl-E': viewMode
+        'Ctrl-E': viewMode,
+        'Ctrl-D': downloadNote,
       },
       autofocus: true,
       theme: 'nwotable',
@@ -56,6 +57,10 @@ export default {
     },
     viewMode() {
       this.$store.dispatch('setEditMode', false);
+    },
+    downloadNote() {
+      const note = this.$store.state.Editor.selectedNote;
+      note.download();
     }
   },
   computed: {

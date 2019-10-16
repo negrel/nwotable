@@ -65,17 +65,30 @@ export default {
     });
 
     // Download the note
-    hotkeys('ctrl+shift+s', (event, handler) => {
+    hotkeys('ctrl+d', (event, handler) => {
       event.preventDefault();
 
       store.state.Editor.selectedNote.download();
     });
 
     // Add a new note.
-    hotkeys('ctrl+b', (event, handler) => {
+    hotkeys('shift+n', (event, handler) => {
       event.preventDefault();
-      console.log('HELLO');
       store.dispatch('addNote');
+    });
+
+    // Next note.
+    hotkeys('shift+tab', (event, handler) => {
+      event.preventDefault();
+
+      store.dispatch('selectNextNote');
+    });
+
+    // Previous note.
+    hotkeys('shift+w+tab', (event, handler) => {
+      event.preventDefault();
+
+      store.dispatch('selectPreviousNote');
     });
   }
 };

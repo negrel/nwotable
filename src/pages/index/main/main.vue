@@ -45,7 +45,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
-import { throttle } from 'lodash';
+import { throttle } from 'quasar';
 
 import { NoteType, Note } from 'src/class/Note';
 import searchBar from './search-bar.vue';
@@ -116,9 +116,9 @@ class Main extends Vue {
     }
   }
 
-  addNewNote = throttle((): void => {
+  addNewNote() {
     this.$store.dispatch('addNote');
-  }, 1500);
+  }
 
   @Watch('indexList')
   onInedxListChange() {

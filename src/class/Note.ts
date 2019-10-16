@@ -23,7 +23,7 @@ export class Note {
       title: 'New note.',
       content: '# Your title\n Your stuff here.',
       meta: {
-        created: new Date().toString(),
+        created: new Date().getTime().toString(),
         modified: new Date(),
         tags: [],
         favorited: false,
@@ -44,7 +44,7 @@ export class Note {
       title: '',
       content: '',
       meta: {
-        created: new Date().toString(),
+        created: new Date().getTime().toString(),
         modified: new Date(note.lastModified),
         pinned: false,
         favorited: false,
@@ -61,7 +61,7 @@ export class Note {
       title: note.title || 'New note.',
       content: note.content || '# Your title',
       meta: {
-        created: note.meta.created || new Date().toString(),
+        created: note.meta.created || new Date().getTime().toString(),
         modified: note.meta.modified || new Date(),
         tags: note.meta.tags || [],
         favorited: note.meta.favorited || false,

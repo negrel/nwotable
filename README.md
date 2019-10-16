@@ -1,4 +1,4 @@
-# ![logo](https://github.com/Nergel3/Nwotable/raw/master/resources/nwotable.png =25x*) | [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
+# <img alt="nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwotable.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
 
 Nwotable is a web application inspired by the crazy work of [Fabio Spampinato](https://github.com/fabiospampinato) and his [app](https://github.com/notable/notable).
 

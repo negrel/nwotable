@@ -17,7 +17,8 @@ module.exports = function(ctx) {
       'highlight.styl',
       'markd.styl',
       'functions.styl',
-      'codemirror.styl'
+      'codemirror.styl',
+      'transitions.styl'
     ],
 
     extras: [

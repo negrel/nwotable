@@ -136,14 +136,45 @@ export class Note {
     this.note.meta.modified = new Date();
   }
 
-  public download(): void {
-    const filename = this.note.title + '.md';
-    const file = new File(this.note.content.split(''), filename);
+  public downloadMD(): void {
+    const fileName = this.note.title + '.md',
+      file = new File(this.note.content.split(''), fileName);
+
+    this.download(file);
+  }
+
+  public downloadPDF(): void {
+    const fileName = this.note.title + '.pdf',
+      data = new FormData();
+    const file = new File(this.markdown.split(''), fileName);
+
+    data.append('File', file, fileName);
+    data.append('PageRange', '10');
+
+    // console.log(file);
+    // console.log(data.getAll('File'));
+
+    fetch('https://v2.convertapi.com/convert/html/to/pdf?Secret=q4dv5mRUbXhR0rlw', {
+      method: 'POST',
+      body: data
+    }).then((resp): Promise<void> => resp.json())
+      .then((resp: any): void => {
+        resp = resp.Files[0];
+        resp = new File(resp.FileData.split(''), resp.FileName);
+        this.download(resp);
+      })
+      .catch((): void => {
+        alert('Error while converting in pdf.');
+      });
+  }
+
+  private download(file: File): void {
+    const fileName = file.name;
 
     const a = document.createElement('a'),
       url = URL.createObjectURL(file);
     a.href = url;
-    a.download = filename;
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     setTimeout((): void => {
@@ -152,8 +183,11 @@ export class Note {
     }, 0);
   }
 
-  public downloadPDF(): void {
-    console.log('DOWNLOADING...');
+  public downloadHTML(): void {
+    const fileName = this.note.title + '.html',
+      file = new File(this.markdown.split(''), fileName);
+
+    this.download(file);
   }
 
   private editMetaData(meta: string, value: any): string {

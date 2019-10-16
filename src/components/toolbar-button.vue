@@ -30,7 +30,7 @@ class ToolbarButton extends Vue {
 export default ToolbarButton;
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
   .btn-toolbar {
     margin 0px
     background-color white

@@ -34,10 +34,7 @@
       <!-- TODO add delete prompt -->
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
-        <toolbarButton :icons="['save_alt']"
-          title="Download"
-          @click="selectedNote.download()"
-        />
+        <downloadButton />
         <toolbarButton :icons="['cloud_upload']"
           title="Import"
           @click="importFile(noteLocal)"
@@ -59,11 +56,13 @@ import { Attachment } from 'src/class/Attachment';
 
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
+import downloadButton from './download-button.vue';
 
 @Component({
   components: {
     toolbarButtonGroup,
-    toolbarButton
+    toolbarButton,
+    downloadButton
   }
 })
 class Toolbar extends Vue {
@@ -114,7 +113,8 @@ class Toolbar extends Vue {
 
   // eslint-disable-next-line
   async noteLocal(note: File): Promise<void> {
-    this.$store.dispatch('addNewNote', note);
+    console.log(note);
+    this.$store.dispatch('addNote', note);
   }
 
   fileLocal(file: File): void {

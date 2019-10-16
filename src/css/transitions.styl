@@ -1,0 +1,19 @@
+.fade {
+  &-enter-active{
+    animation enterFromTopWithANiceFade .2s
+  }
+
+  &-leave-active {
+    animation enterFromTopWithANiceFade .2s reverse
+  }
+}
+
+@keyframes enterFromTopWithANiceFade {
+  from {
+    transform: translate(-50%, -1em)
+    opacity 0
+  }
+  to {
+    opacity 1
+  }
+}

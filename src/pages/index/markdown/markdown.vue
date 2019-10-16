@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import toolbar from './toolbar.vue';
+import toolbar from './toolbar/toolbar.vue';
 import editor from './codemirror.vue';
 import viewer from './viewer.vue';
 

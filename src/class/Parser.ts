@@ -10,6 +10,7 @@ parser.setOption('tables', true);
 parser.setOption('emoji', true);
 parser.setOption('metadata', true);
 parser.setOption('openLinksInNewWindow', true);
+parser.setOption('completeHTMLDocument', true);
 
 // Detect link to other note and image attachment
 // const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,

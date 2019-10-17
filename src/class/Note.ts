@@ -1,4 +1,5 @@
 import { marked } from './Parser';
+import * as $ from 'jquery';
 
 export interface MetaData {
   created: string;
@@ -35,7 +36,7 @@ export class Note {
   // Setup the object from a File object 'import'
   public async setupFromFile(note: File): Promise<void> {
     const content = await (note as any).text(),
-      metaRegex = /(-|<){3,}(.|\n)*(-|>){3,}/,
+      metaRegex = /^(-|<){3,}(.|\n)*(-|>){3,}/,
       metadata = content.match(metaRegex);
 
     console.log(metadata);
@@ -96,7 +97,7 @@ export class Note {
       // Removing markdown syntax
       .replace(/[#]+/, '')
       .split('\n')[0]
-      .substring(0, 30);
+      .substring(0, 60);
 
     if (title.length === 0) {
       title = 'No title...';
@@ -143,28 +144,28 @@ export class Note {
     this.download(file);
   }
 
-  public downloadPDF(): void {
+  public async downloadPDF(): Promise<void> {
     const fileName = this.note.title + '.pdf',
-      data = new FormData();
-    const file = new File(this.markdown.split(''), fileName);
-
+      data = new FormData(),
+      file = new File(this.markdown.split(''), fileName);
     data.append('File', file, fileName);
     data.append('PageRange', '10');
-
-    // console.log(file);
-    // console.log(data.getAll('File'));
 
     fetch('https://v2.convertapi.com/convert/html/to/pdf?Secret=q4dv5mRUbXhR0rlw', {
       method: 'POST',
       body: data
     }).then((resp): Promise<void> => resp.json())
-      .then((resp: any): void => {
+      .then(async(resp: any): Promise<void> => {
+        console.log(resp);
         resp = resp.Files[0];
-        resp = new File(resp.FileData.split(''), resp.FileName);
+        console.log(resp);
+        resp = new File([resp.FileData], resp.FileName, { type: 'application/pdf' });
+        console.log(resp);
         this.download(resp);
       })
-      .catch((): void => {
+      .catch((err: any): void => {
         alert('Error while converting in pdf.');
+        console.log(err);
       });
   }
 

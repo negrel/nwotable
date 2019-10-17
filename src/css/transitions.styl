@@ -1,16 +1,16 @@
 .fade {
   &-enter-active{
-    animation enterFromTopWithANiceFade .2s
+    animation enterFromTop .2s
   }
 
   &-leave-active {
-    animation enterFromTopWithANiceFade .2s reverse
+    animation enterFromTop .2s reverse
   }
 }
 
-@keyframes enterFromTopWithANiceFade {
+@keyframes enterFromTop {
   from {
-    transform: translate(-50%, -1em)
+    transform translate(-50%, -1em) scale(1, 0)
     opacity 0
   }
   to {

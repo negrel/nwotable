@@ -8,6 +8,10 @@ export interface MainState {}
 
 export const actions: ActionTree<MainState, RootState> = {
   async init({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
+    document.addEventListener('unload', () => {
+      alert('YAYA');
+    });
+
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
     noteList.forEach((element: any): void => {

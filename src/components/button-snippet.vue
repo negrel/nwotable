@@ -1,8 +1,6 @@
 <template>
-  <div id="btnSnippet" >
-    <div @click="snippet = !snippet">
-      <slot name="button"></slot>
-    </div>
+  <div id="btnSnippet" @mouseenter="showSnippet" @mouseleave="hideSnippet">
+    <slot name="button"></slot>
     <transition name="fade">
       <div class="snippet shadow-3" v-if="snippet">
         <slot name="body"></slot>
@@ -15,7 +13,15 @@
 export default {
   data: () => ({
     snippet: false
-  })
+  }),
+  methods: {
+    showSnippet() {
+      this.snippet = true;
+    },
+    hideSnippet() {
+      this.snippet = false;
+    }
+  }
 };
 </script>
 
@@ -25,7 +31,7 @@ export default {
 
   & .snippet {
     border-radius 10px
-    width fit-content
+    width max-content
     position fixed
     z-index 10
     color white
@@ -34,6 +40,7 @@ export default {
 
     & * > button {
       margin 0
+      display inline-block
     }
   }
 }

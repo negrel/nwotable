@@ -1,17 +1,17 @@
-import { Note, NoteType } from '../class/Note';
+import { Note, NoteType } from 'src/class/Note';
+import { Tag } from 'src/class/Tag';
 import { Attachment } from '../class/Attachment';
 import { ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
+
+import * as hotkey from 'src/assets/hotkey.js';
 
 // eslint-disable-next-line
 export interface MainState {}
 
 export const actions: ActionTree<MainState, RootState> = {
   async init({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
-    document.addEventListener('unload', () => {
-      alert('YAYA');
-    });
-
+    hotkey.setup();
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
     noteList.forEach((element: any): void => {
@@ -104,6 +104,23 @@ export const actions: ActionTree<MainState, RootState> = {
     if (filtredIndex === -1 && noteList.length > 0 && filtredList.length > 0) {
       // if not select the first note of the filtred list
       dispatch('setSelectedNote', noteList[filtredList[0]], { root: true });
+    }
+  },
+  async addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): Promise<void> {
+    const tagList = rootState.Notes.tagList,
+      note = rootState.Editor.selectedNote,
+      index = await dispatch('getTagIndex', tagName, { root: true })
+
+    if (!note.hasTag(tagName)) {
+      let tag: Tag;
+
+      if (index >= 0) {
+        tag = tagList[index];
+      } else {
+        tag = new Tag(tagName);
+      }
+      note.addTag(tag);
+      dispatch('updateNote');
     }
   }
 };

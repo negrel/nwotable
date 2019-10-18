@@ -1,12 +1,12 @@
 import { marked } from './Parser';
-import * as $ from 'jquery';
+import { Tag } from './Tag';
 
 export interface MetaData {
   created: string;
   modified: Date;
   pinned: boolean;
   favorited: boolean;
-  tags: string[];
+  tags: Tag[];
 }
 
 export interface NoteType {
@@ -58,13 +58,18 @@ export class Note {
 
   // Setup the object from a note
   public setupFromNote(note: NoteType): void {
+    const tags = [];
+    for (let i = 0, length = note.meta.tags.length; i < length; i++) {
+      tags.push(new Tag((note.meta.tags[i] as any)._name));
+    }
+
     this.note = {
       title: note.title || 'New note.',
       content: note.content || '# Your title',
       meta: {
         created: note.meta.created || new Date().getTime().toString(),
         modified: note.meta.modified || new Date(),
-        tags: note.meta.tags || [],
+        tags,
         favorited: note.meta.favorited || false,
         pinned: note.meta.pinned || false
       }
@@ -129,6 +134,10 @@ export class Note {
     return this.note.meta.created;
   }
 
+  public get tags(): Tag[] {
+    return this.note.meta.tags;
+  }
+
   public clone(): Note {
     return new Note(this.note);
   }
@@ -142,6 +151,20 @@ export class Note {
       file = new File(this.note.content.split(''), fileName);
 
     this.download(file);
+  }
+
+  public addTag(tag: Tag): void {
+    this.note.meta.tags.push(tag);
+  }
+
+  public delTag(tag: Tag): void {
+    const index = this.note.meta.tags.indexOf(tag);
+    this.note.meta.tags.splice(index, 1);
+  }
+
+  public hasTag(tag: string): boolean {
+    const index = this.note.meta.tags.map((element: Tag): string => element.name).indexOf(tag);
+    return index >= 0;
   }
 
   public async downloadPDF(): Promise<void> {

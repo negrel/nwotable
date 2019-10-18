@@ -33,7 +33,7 @@ export default {
     border-radius 10px
     width max-content
     position fixed
-    z-index 10
+    z-index 100
     color white
     transform translate(-50%, 0)
     font-size: 1.2em

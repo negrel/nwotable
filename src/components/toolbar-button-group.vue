@@ -19,7 +19,7 @@ export default {
     border-radius 0px
   }
 
-  & .btn-toolbar:last-child, div .btn-toolbar:last-child {
+  & .btn-toolbar:last-child {
     border-right-width 1px
     border-radius 5px
     border-top-left-radius 0px
@@ -28,7 +28,7 @@ export default {
     margin-right: 1em
   }
 
-  & .btn-toolbar:first-child, div .btn-toolbar:first-child {
+  & .btn-toolbar:first-child {
     border-left-width 1px
     border-radius 5px
     border-top-right-radius 0px

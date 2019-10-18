@@ -1,13 +1,16 @@
 import { Note, NoteType } from '../class/Note';
+import { Tag } from '../class/Tag';
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
 export interface NoteListState {
   noteList: Note[];
+  tagList: Tag[];
 }
 
 export const state: NoteListState = {
-  noteList: []
+  noteList: [],
+  tagList: []
 };
 
 export const mutations: MutationTree<NoteListState> = {
@@ -23,6 +26,9 @@ export const mutations: MutationTree<NoteListState> = {
   },
   SET_NOTE(state, { index, theNote }: { index: number; theNote: Note}): void {
     state.noteList[index] = theNote;
+  },
+  ADD_TAG(state, payload: Tag): void {
+    state.tagList.push(payload);
   }
 };
 
@@ -38,6 +44,12 @@ export const actions: ActionTree<NoteListState, RootState> = {
   },
   updateNoteToList({ commit }: ActionContext<NoteListState, RootState>, payload: { index: number; theNote: Note }): void {
     commit('SET_NOTE', payload);
+  },
+  getTagIndex({ state }: ActionContext<NoteListState, RootState>, tagName: string): number {
+    return state.tagList.map((element: Tag): string => element.name).indexOf(tagName);
+  },
+  addTagToList({ commit }: ActionContext<NoteListState, RootState>, payload: Tag): void {
+    commit('ADD_TAG', payload);
   }
 };
 

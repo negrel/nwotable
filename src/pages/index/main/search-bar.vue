@@ -1,18 +1,18 @@
 <template>
-	<div class="search-field">
-		<input type="text"
-      placeholder="Search..."
-      aria-label="search-field"
-      @change="fuzzySearch"
-    />
+  <textField
+    class="search-field"
+    placeholder="Search..."
+    aria-label="search-field"
+    @change="fuzzySearch"
+  >
     <div class="float-right">
       <q-icon name="search" />
     </div>
-	</div>
+  </textField>
 </template>
 
 <script lang='ts'>
-import toolbarButton from 'src/components/toolbar-button.vue';
+import textField from 'src/components/text-field.vue';
 
 import { Note } from 'src/class/Note';
 import { Vue, Component, Prop } from 'vue-property-decorator';
@@ -20,14 +20,14 @@ import { State } from 'vuex-class';
 
 @Component({
   components: {
-    toolbarButton
+    textField
   }
 })
 class SearchBar extends Vue {
   @State(state => state.NoteList.noteList) noteList: Note[];
 
-  fuzzySearch() {
-    console.log('searching...');
+  fuzzySearch(val: string) {
+    console.log('searching: ', val);
   }
 };
 
@@ -35,27 +35,7 @@ export default SearchBar;
 </script>
 
 <style lang="stylus" scoped>
-
-  .search-field {
-    display flex
-    flex 1
-    border 1px solid $grey-4
-    border-radius 5px
-    overflow hidden
-    padding .1em .5em 0em .5em
-    margin-right 1em
-    background-color white
-
-    & input[type=text] {
-      flex 1
-      min-width 10px
-    }
-
-    & * {
-      border none
-      outline none
-      color black
-      background-color white
-    }
-  }
+.search-field {
+  margin-right 1em
+}
 </style>

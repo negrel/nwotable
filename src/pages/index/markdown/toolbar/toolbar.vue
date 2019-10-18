@@ -13,7 +13,7 @@
           v-else
         />
         <toolbarButton :icons="['attach_file']" title="Attachment" @click="importFile(fileLocal)" />
-        <toolbarButton :icons="['local_offer']" title="Tag"/>
+        <tagButton />
       </toolbarButtonGroup>
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']"
@@ -57,12 +57,14 @@ import { Attachment } from 'src/class/Attachment';
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 import downloadButton from './download-button.vue';
+import tagButton from './tag-button.vue';
 
 @Component({
   components: {
     toolbarButtonGroup,
     toolbarButton,
-    downloadButton
+    downloadButton,
+    tagButton
   }
 })
 class Toolbar extends Vue {

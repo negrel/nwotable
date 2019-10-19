@@ -11,7 +11,7 @@
           class="bg-white text-secondary q-pl-md q-pr-sm"
         >
           <q-item-section class="full-width">
-            <q-item-label>{{ tag.name }}</q-item-label>
+            <q-item-label>{{ tag.fullName }}</q-item-label>
             <q-item-label class="text-grey-5 float-right" caption>
               <q-btn icon="clear"
                 @click="selectedNote.delTag(tag)"

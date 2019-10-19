@@ -60,7 +60,8 @@ export class Note {
   public setupFromNote(note: NoteType): void {
     const tags = [];
     for (let i = 0, length = note.meta.tags.length; i < length; i++) {
-      tags.push(new Tag((note.meta.tags[i] as any)._name));
+      console.log(note.meta.tags[i]);
+      tags.push(new Tag((note.meta.tags[i] as any)._fullName));
     }
 
     this.note = {

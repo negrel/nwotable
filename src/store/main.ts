@@ -109,7 +109,7 @@ export const actions: ActionTree<MainState, RootState> = {
   async addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): Promise<void> {
     const tagList = rootState.Notes.tagList,
       note = rootState.Editor.selectedNote,
-      index = await dispatch('getTagIndex', tagName, { root: true })
+      index = await dispatch('getTagIndex', tagName, { root: true });
 
     if (!note.hasTag(tagName)) {
       let tag: Tag;

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-list class="text-grey-1">
+    <q-list class="text-grey-1 drawer-list">
       <q-item-label header>Menu</q-item-label>
-      <q-item clickable @click="dispatchFilter('all')">
+      <q-item clickable @click="dispatchFilter('all')" active-class="active-filter" :active="filter === 'all'">
         <q-item-section avatar>
           <q-icon name="book" />
         </q-item-section>
@@ -13,7 +13,7 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="dispatchFilter('favorited')">
+      <q-item clickable @click="dispatchFilter('favorited')" active-class="active-filter">
         <q-item-section avatar>
           <q-icon name="star" />
         </q-item-section>
@@ -30,8 +30,11 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Tags</q-item-label>
-          <q-item-label class="text-grey-5" caption></q-item-label>
+          <showMoreBtn class="float-right" />
         </q-item-section>
+      </q-item>
+      <q-item>
+        <tagList />
       </q-item>
       <q-item clickable
         tag="a"
@@ -56,7 +59,15 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 
-@Component
+import tagList from './tagList/tagList.vue';
+import showMoreBtn from './tagList/show-more-btn.vue';
+
+@Component({
+  components: {
+    tagList,
+    showMoreBtn
+  }
+})
 class Drawer extends Vue {
   dispatchFilter(filter: string): void {
     this.$store.dispatch('setFilter', filter);
@@ -64,13 +75,14 @@ class Drawer extends Vue {
 
   @State(state => state.Notes.noteList.length) noteCount: number
   @State(state => state.Filters.favorited) favCount: number
+  @State(state => state.Filters.filter) filter: string
 };
 
 export default Drawer;
 </script>
 
-<style lang="stylus" scoped>
-.q-list {
+<style lang="stylus">
+.drawer-list {
   height 100vh
   flex 10
   display inline-block
@@ -80,17 +92,18 @@ export default Drawer;
     max-width 216px
   }
 
-  & .q-item {
+  & > .q-item {
     word-break keep-all
     width 100vw
 
     &:hover {
-      background #181c1fbf
+      background-color: #00000030
     }
   }
 
-  & .q-focusablehover {
-    background #00000020
+  & .active-filter {
+    color: inherit
+    background-color: #00000050!important
   }
 }
 
@@ -99,19 +112,14 @@ export default Drawer;
 }
 
 & .q-focus-helper {
-  background transparent
+  background transparent!important
 
-  &:hover {
-    background rgba(0,0,0,1)!important
+  & * {
+    background transparent!important
   }
 
-  &:active {
-    background rgba(0,0,0,1)
-  }
-
-  &:after {
-    background rgba(0,0,0,1)
-    opacity 1
+  &::after, &::before {
+    background transparent!important
   }
 }
 

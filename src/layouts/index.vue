@@ -51,6 +51,7 @@ export default {
   overflow-x hidden
   word-break keep-all
   background rgb(32,39,44)
+  overflow hidden
 }
 
 #main {

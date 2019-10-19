@@ -1,11 +1,10 @@
 export class Tag {
-  private _name: string;
+  private _fullName: string;
   private _hasParentTag: boolean;
   private _parent: string;
 
   public constructor(name: string) {
-    const tagName = name.split(' ').join('-'),
-      splitted = name.split('/');
+    const splitted = name.split('/');
 
     if (splitted.length > 1) {
       this._hasParentTag = true;
@@ -14,19 +13,20 @@ export class Tag {
       this._hasParentTag = false;
     }
 
-    this._name = tagName;
+    this._fullName = name;
   }
 
-  public set name(newName: string) {
-    const nameRegex = /^[\w-_]+/;
+  public get fullName(): string {
+    return this._fullName;
+  }
 
-    if (nameRegex.test(newName)) {
-      this._name = newName;
-    }
+  public set fullName(fullName: string) {
+    this._fullName = fullName;
   }
 
   public get name(): string {
-    return this._name;
+    const splitted = this._fullName.split('/');
+    return splitted[splitted.length - 1];
   }
 
   public get hasParentTag(): boolean {

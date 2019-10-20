@@ -1,16 +1,15 @@
 .fade {
   &-enter-active{
-    animation enterFromTop .2s
+    animation grow .2s
   }
 
   &-leave-active {
-    animation enterFromTop .2s reverse
+    animation grow .2s reverse
   }
 }
 
-@keyframes enterFromTop {
+@keyframes grow {
   from {
-    transform translate(-50%, -1em) scale(1, 0)
     opacity 0
   }
   to {

@@ -2,7 +2,11 @@
   <div>
     <q-list class="text-grey-1 drawer-list">
       <q-item-label header>Menu</q-item-label>
-      <q-item clickable @click="dispatchFilter('all')" active-class="active-filter" :active="filter === 'all'">
+      <q-item clickable
+        @click="dispatchFilter('all')"
+        active-class="active-filter"
+        :active="filter === 'all'"
+      >
         <q-item-section avatar>
           <q-icon name="book" />
         </q-item-section>
@@ -13,7 +17,11 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="dispatchFilter('favorited')" active-class="active-filter">
+      <q-item clickable
+        @click="dispatchFilter('favorited')"
+        active-class="active-filter"
+        :active="filter === 'favorited'"
+      >
         <q-item-section avatar>
           <q-icon name="star" />
         </q-item-section>
@@ -24,18 +32,19 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable>
+      <q-item clickable
+        active-class="active-filter"
+        :active="filter !== 'favorited' && filter !== 'all'"
+      >
         <q-item-section avatar>
           <q-icon name="local_offer" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Tags</q-item-label>
-          <showMoreBtn class="float-right" />
         </q-item-section>
+        <q-icon name="keyboard_arrow_down" />
       </q-item>
-      <q-item>
-        <tagList />
-      </q-item>
+      <tagList />
       <q-item clickable
         tag="a"
         target="_blank"
@@ -59,7 +68,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 
-import tagList from './tagList/tagList.vue';
+import tagList from './tagList/tag-list.vue';
 import showMoreBtn from './tagList/show-more-btn.vue';
 
 @Component({
@@ -69,13 +78,13 @@ import showMoreBtn from './tagList/show-more-btn.vue';
   }
 })
 class Drawer extends Vue {
-  dispatchFilter(filter: string): void {
-    this.$store.dispatch('setFilter', filter);
-  }
-
   @State(state => state.Notes.noteList.length) noteCount: number
   @State(state => state.Filters.favorited) favCount: number
   @State(state => state.Filters.filter) filter: string
+
+  dispatchFilter(filter: string): void {
+    this.$store.dispatch('setFilter', filter);
+  }
 };
 
 export default Drawer;

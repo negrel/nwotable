@@ -18,6 +18,11 @@ export const actions: ActionTree<MainState, RootState> = {
       const note = new Note();
       note.setupFromNote(element.note);
       dispatch('addNoteToList', note, { root: true });
+
+      const tags = note.tags;
+      tags.forEach((el: Tag): void => {
+        dispatch('addTag', el.fullName);
+      });
     });
 
     dispatch('updateFavorited', { root: true });
@@ -120,6 +125,7 @@ export const actions: ActionTree<MainState, RootState> = {
         tag = new Tag(tagName);
       }
       note.addTag(tag);
+      dispatch('addTagToList', tag, { root: true });
       dispatch('updateNote');
     }
   }

@@ -13,8 +13,13 @@
           v-else
         />
         <toolbarButton :icons="['attach_file']" title="Attachment" @click="importFile(fileLocal)" />
-        <tagButton />
+        <toolbarButton :icons="['local_offer']"
+          title="Tag"
+          :active="showTagPrompt"
+          @click="showTagPrompt = !showTagPrompt"
+        />
       </toolbarButtonGroup>
+      <tagPrompt v-if="showTagPrompt" />
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']"
           :active="meta.favorited"
@@ -29,9 +34,10 @@
       </toolbarButtonGroup>
       <toolbarButton :icons="['delete']"
         title="Delete"
-        @click="deleteNote"
+        :active="showDeletePrompt"
+        @click="showDeletePrompt = !showDeletePrompt"
       />
-      <!-- TODO add delete prompt -->
+      <deletePrompt v-if="showDeletePrompt" @close="showDeletePrompt = false" />
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
         <downloadButton />
@@ -47,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
 // @ prefix doesn't work
@@ -57,19 +63,29 @@ import { Attachment } from 'src/class/Attachment';
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 import downloadButton from './download-button.vue';
-import tagButton from './tag-button.vue';
+import tagPrompt from './tag-prompt.vue';
+import deletePrompt from './delete-prompt.vue';
 
 @Component({
   components: {
     toolbarButtonGroup,
     toolbarButton,
     downloadButton,
-    tagButton
+    tagPrompt,
+    deletePrompt
   }
 })
 class Toolbar extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.Editor.editMode) editMode: boolean;
+  showTagPrompt: boolean;
+  showDeletePrompt: boolean;
+
+  constructor() {
+    super();
+    this.showTagPrompt = false;
+    this.showDeletePrompt = false;
+  }
 
   get meta(): MetaData | undefined {
     if (this.selectedNote) {
@@ -122,10 +138,6 @@ class Toolbar extends Vue {
   fileLocal(file: File): void {
     this.$store.dispatch('saveAttachmentToDb', file);
     this.$store.dispatch('addAttachment', new Attachment(file));
-  }
-
-  deleteNote(): void {
-    this.$store.dispatch('deleteNote', this.selectedNote);
   }
 }
 export default Toolbar;

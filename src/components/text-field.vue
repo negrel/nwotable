@@ -31,15 +31,20 @@ export default {
 .text-field {
   display flex
   flex 1
-  border 1px solid $grey-4
+  border 2px solid $grey-4
   border-radius 5px
   overflow hidden
   padding .1em .5em 0em .5em
   background-color white
+  transition: .15s ease-in-out
 
   & input[type=text] {
     flex 1
     min-width 10px
+  }
+
+  &:focus-within {
+    border 2px solid $primary
   }
 
   & * {

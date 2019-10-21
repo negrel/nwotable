@@ -1,18 +1,18 @@
 <template>
-  <transition name="fade">
-    <prompt header="Delete this note ?">
+  <q-dialog v-model="active">
+    <prompt>
       <span> You are about to delete this note, are you sure ?</span>
       <br />
-      <div class="buttons float-right">
+      <div class="float-right">
         <button class="btn-toolbar" title="Cancel" @click="close">
           Cancel
         </button>
-        <button class="btn-toolbar" title="Okay">
+        <button class="btn-toolbar" title="Okay" @click="deleteNote">
           I'm sure.
         </button>
       </div>
     </prompt>
-  </transition>
+  </q-dialog>
 </template>
 
 <script>
@@ -24,9 +24,13 @@ export default {
   components: {
     prompt
   },
+  props: {
+    active: Boolean
+  },
   methods: {
     deleteNote() {
       this.$store.dispatch('deleteNote', this.selectedNote);
+      this.close();
     },
     close() {
       this.$emit('close');
@@ -39,7 +43,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.buttons {
+div {
   margin-top 1em
 
   & button:last-child {

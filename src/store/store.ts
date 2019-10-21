@@ -7,6 +7,7 @@ import { Editor, EditorState } from './editor';
 import { Notes, NoteListState } from './notes';
 import { Attachments, AttachmentState } from './attachments';
 import { Filters, FilterState } from './filters';
+import { Prompt, PromptState } from './prompt';
 
 export interface RootState {
   Main: MainState;
@@ -15,6 +16,7 @@ export interface RootState {
   Notes: NoteListState;
   NoteAttachment: AttachmentState;
   Filters: FilterState;
+  Prompt: PromptState;
 };
 
 Vue.use(Vuex);
@@ -32,7 +34,8 @@ export default function(/* { ssrContext } */): any {
       Database,
       Notes,
       Attachments,
-      Filters
+      Filters,
+      Prompt
     }
 
     // enable strict mode (adds overhead!)

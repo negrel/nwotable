@@ -60,6 +60,7 @@ export const actions: ActionTree<MainState, RootState> = {
   },
   // -------------------------------------------------------------------------------
   async deleteNote({ dispatch, rootState }: ActionContext<MainState, RootState>, theNote: Note): Promise<void> {
+    console.log('HERE');
     dispatch('setEditMode', false, { root: true });
     const index = await dispatch('getNoteIndex', theNote, { root: true });
 

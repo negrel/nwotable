@@ -77,10 +77,10 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
           const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
 
-          noteObjectStore.createIndex('content', 'content', { unique: true });
-          noteObjectStore.createIndex('tags', 'tags', { unique: false });
-          noteObjectStore.createIndex('favorited', 'favorited', { unique: false });
-          noteObjectStore.createIndex('pinned', 'pinned', { unique: false });
+          noteObjectStore.createIndex('content', 'note.content', { unique: true });
+          noteObjectStore.createIndex('tags', 'note.meta.tags', { unique: false });
+          noteObjectStore.createIndex('favorited', 'note.meta.favorited', { unique: false });
+          noteObjectStore.createIndex('pinned', 'note.meta.pinned', { unique: false });
 
           const attachmentObjectStore = db.createObjectStore('attachment', { keyPath: 'name' });
 

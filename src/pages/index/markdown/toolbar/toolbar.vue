@@ -19,7 +19,7 @@
           @click="showTagPrompt = !showTagPrompt"
         />
       </toolbarButtonGroup>
-      <tagPrompt v-if="showTagPrompt" />
+      <!-- <tagPrompt v-if="showTagPrompt" /> -->
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']"
           :active="meta.favorited"
@@ -37,7 +37,7 @@
         :active="showDeletePrompt"
         @click="showDeletePrompt = !showDeletePrompt"
       />
-      <deletePrompt v-if="showDeletePrompt" @close="showDeletePrompt = false" />
+      <deletePrompt :active="showDeletePrompt" @close="showDeletePrompt = false"/>
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
         <downloadButton />
@@ -63,7 +63,7 @@ import { Attachment } from 'src/class/Attachment';
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 import downloadButton from './download-button.vue';
-import tagPrompt from './tag-prompt.vue';
+// import tagPrompt from './tag-prompt.vue';
 import deletePrompt from './delete-prompt.vue';
 
 @Component({
@@ -71,7 +71,6 @@ import deletePrompt from './delete-prompt.vue';
     toolbarButtonGroup,
     toolbarButton,
     downloadButton,
-    tagPrompt,
     deletePrompt
   }
 })

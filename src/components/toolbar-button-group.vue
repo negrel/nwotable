@@ -11,10 +11,14 @@ export default {
 
 <style lang="stylus">
 .group {
+  max-height 3vh
 
   & .btn-toolbar {
     border-radius 0px
-    border-width 1px
+    border-left-width .5px
+    border-right-width .5px
+    border-top-width 1px
+    border-bottom-width 1px
   }
 
   & .btn-toolbar:first-child {
@@ -29,7 +33,7 @@ export default {
     border-radius 5px
     border-top-left-radius 0px
     border-bottom-left-radius 0px
-    margin-right 1em
+    margin-right .5em
   }
 
 }

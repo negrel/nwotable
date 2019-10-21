@@ -60,7 +60,6 @@ export const actions: ActionTree<MainState, RootState> = {
   },
   // -------------------------------------------------------------------------------
   async deleteNote({ dispatch, rootState }: ActionContext<MainState, RootState>, theNote: Note): Promise<void> {
-    console.log('HERE');
     dispatch('setEditMode', false, { root: true });
     const index = await dispatch('getNoteIndex', theNote, { root: true });
 
@@ -75,8 +74,6 @@ export const actions: ActionTree<MainState, RootState> = {
       } else {
         dispatch('setSelectedNote', noteList[filtredList[filtredIndex + 1]], { root: true });
       }
-    } else {
-      alert('ERROR');
     }
 
     // Then delete the note and update the drawer

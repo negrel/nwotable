@@ -7,20 +7,8 @@ export interface EditorState {
   editMode: boolean;
 }
 
-export const defaultNote: NoteType = {
-  title: '',
-  content: '# No note...',
-  meta: {
-    created: new Date().toString(),
-    modified: new Date(),
-    tags: [],
-    favorited: false,
-    pinned: false
-  }
-};
-
 export const state: EditorState = {
-  selectedNote: new Note(defaultNote),
+  selectedNote: new Note(),
   editMode: false
 };
 

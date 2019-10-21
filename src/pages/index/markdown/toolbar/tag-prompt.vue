@@ -1,47 +1,61 @@
 <template>
-  <transition name="fade">
-    <prompt header="Tag list">
+  <q-dialog v-model="active"
+    @hide="close"
+  >
+    <card>
+      <h5>
+        Add a tag to the note.
+      </h5>
       <q-list>
-        <q-item v-for="tag in selectedNote.tags"
-          :key="tag.name"
-          clickable
+        <div v-if="selectedNote.tags.length">
+          <q-item v-for="tag in selectedNote.tags"
+            :key="tag.name"
+            clickable
+            class="bg-white text-secondary q-pl-md q-pr-sm"
+          >
+            <q-item-section class="full-width">
+              <q-item-label>{{ tag.fullName }}</q-item-label>
+              <q-item-label class="text-grey-5 float-right" caption>
+                <q-btn icon="clear"
+                  @click="selectedNote.delTag(tag)"
+                  size="xs"
+                  round
+                  flat
+                />
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
+        <q-item
           class="bg-white text-secondary q-pl-md q-pr-sm"
+          v-else
         >
-          <q-item-section class="full-width">
-            <q-item-label>{{ tag.fullName }}</q-item-label>
-            <q-item-label class="text-grey-5 float-right" caption>
-              <q-btn icon="clear"
-                @click="selectedNote.delTag(tag)"
-                size="xs"
-                round
-                flat
-              />
-            </q-item-label>
-          </q-item-section>
+          <q-item-label>
+            No tags on this note
+          </q-item-label>
         </q-item>
       </q-list>
       <text-field placeholder="Enter a tag name..."
         aria-label="tag-field"
         @keypress="addTag"
-        id="tagField"
       />
-    </prompt>
-  </transition>
+    </card>
+  </q-dialog>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 
-import prompt from 'src/components/prompt.vue';
+import card from 'src/components/card.vue';
 import textField from 'src/components/text-field.vue';
 
 export default {
-  components: {
-    prompt,
-    textField
+  props: {
+    active: Boolean
   },
-  mounted() {
-    document.querySelector('#tagField > input[type=text]').focus();
+  components: {
+    card,
+    textField
   },
   methods: {
     addTag(event) {
@@ -50,6 +64,9 @@ export default {
         this.$store.dispatch('addTag', tagField.value);
         tagField.value = '';
       }
+    },
+    close() {
+      this.$emit('close');
     }
   },
   computed: mapState({
@@ -59,6 +76,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+h5 {
+  margin-top 0px
+  margin-bottom .5em
+}
 .q-item:first-child {
   border-top-right-radius 1em
   border-top-left-radius 1em

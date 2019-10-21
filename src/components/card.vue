@@ -1,5 +1,5 @@
 <template>
-  <div class="prompt">
+  <div class="card">
     <slot></slot>
   </div>
 </template>
@@ -11,9 +11,9 @@ export default {
 </script>
 
 <style lang="stylus">
-.prompt {
+.card {
   padding 1em
-  background linear-gradient(0deg, $grey-4 0%, $grey-1 100%)
+  background linear-gradient(0deg, $grey-3 0%, $grey-1 100%)
   color $secondary
 }
 </style>

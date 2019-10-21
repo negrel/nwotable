@@ -28,7 +28,7 @@ export default {
     border-bottom-right-radius 0px
   }
 
-  & .btn-toolbar:last-child {
+  & > .btn-toolbar:last-child {
     border-left-width .5px
     border-radius 5px
     border-top-left-radius 0px

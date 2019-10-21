@@ -1,6 +1,6 @@
 <template>
-  <q-dialog v-model="active">
-    <prompt>
+  <q-dialog v-model="active" @hide="close">
+    <card>
       <span> You are about to delete this note, are you sure ?</span>
       <br />
       <div class="float-right">
@@ -11,18 +11,18 @@
           I'm sure.
         </button>
       </div>
-    </prompt>
+    </card>
   </q-dialog>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 
-import prompt from 'src/components/prompt.vue';
+import card from 'src/components/card.vue';
 
 export default {
   components: {
-    prompt
+    card
   },
   props: {
     active: Boolean
@@ -43,20 +43,25 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-div {
-  margin-top 1em
 
-  & button:last-child {
-    margin-left 1em
-    color $grey-1
-    background-color $red-7
+.card {
+  min-width 40vw
 
-    &:hover {
-      background-color $red-8
-    }
+  & > div {
+    margin-top 1em
 
-    &:active {
-      background-color $red-9
+    & button:last-child {
+      margin-left 1em
+      color $grey-1
+      background-color $red-7
+
+      &:hover {
+        background-color $red-8
+      }
+
+      &:active {
+        background-color $red-9
+      }
     }
   }
 }

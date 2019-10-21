@@ -19,7 +19,7 @@
           @click="showTagPrompt = !showTagPrompt"
         />
       </toolbarButtonGroup>
-      <!-- <tagPrompt v-if="showTagPrompt" /> -->
+      <tagPrompt :active="showTagPrompt" @close="showTagPrompt = false" />
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']"
           :active="meta.favorited"
@@ -40,12 +40,17 @@
       <deletePrompt :active="showDeletePrompt" @close="showDeletePrompt = false"/>
       <!-- TODO add split button to have the parsed and plain note -->
       <toolbarButtonGroup class="float-right">
-        <downloadButton />
+        <toolbarButton :icons="['save_alt']"
+          title="Download"
+          :active="showDownloadPrompt"
+          @click="showDownloadPrompt = !showDownloadPrompt"
+        />
         <toolbarButton :icons="['cloud_upload']"
           title="Import"
           @click="importFile(noteLocal)"
         />
       </toolbarButtonGroup>
+      <downloadPrompt :active="showDownloadPrompt" @close="showDownloadPrompt = false" />
     </q-toolbar>
 
     <!-- NOTE Tags prompt  -->
@@ -63,15 +68,18 @@ import { Attachment } from 'src/class/Attachment';
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 import downloadButton from './download-button.vue';
-// import tagPrompt from './tag-prompt.vue';
+import tagPrompt from './tag-prompt.vue';
 import deletePrompt from './delete-prompt.vue';
+import downloadPrompt from './download-prompt.vue';
 
 @Component({
   components: {
     toolbarButtonGroup,
     toolbarButton,
     downloadButton,
-    deletePrompt
+    tagPrompt,
+    deletePrompt,
+    downloadPrompt
   }
 })
 class Toolbar extends Vue {
@@ -79,11 +87,13 @@ class Toolbar extends Vue {
   @State(state => state.Editor.editMode) editMode: boolean;
   showTagPrompt: boolean;
   showDeletePrompt: boolean;
+  showDownloadPrompt: boolean;
 
   constructor() {
     super();
     this.showTagPrompt = false;
     this.showDeletePrompt = false;
+    this.showDownloadPrompt = false;
   }
 
   get meta(): MetaData | undefined {

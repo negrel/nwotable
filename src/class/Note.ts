@@ -22,7 +22,7 @@ export class Note {
   public constructor(note?: NoteType) {
     this.note = {
       title: 'New note.',
-      content: '# Your title\n Your stuff here.',
+      content: '# Your title \nYour stuff here.',
       meta: {
         created: new Date().getTime().toString(),
         modified: new Date(),

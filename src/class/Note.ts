@@ -1,5 +1,6 @@
 import { marked } from './Parser';
 import { Tag } from './Tag';
+import { all } from 'q';
 
 export interface MetaData {
   created: string;
@@ -38,8 +39,6 @@ export class Note {
     const content = await (note as any).text(),
       metaRegex = /^(-|<){3,}(.|\n)*(-|>){3,}/,
       metadata = content.match(metaRegex);
-
-    console.log(metadata);
 
     const theNote = {
       title: '',
@@ -138,6 +137,22 @@ export class Note {
     return this.note.meta.tags;
   }
 
+  public get allTags(): Tag[] {
+    const tags = this.tags;
+    let allTags: Tag[] = [];
+    tags.forEach((tag: Tag): void => {
+      allTags.push(tag);
+      allTags.push(...tag.tree);
+    });
+
+    allTags = allTags.filter((tag: Tag, pos: number): boolean => {
+      const index = allTags.map((el: Tag): string => el.fullName).indexOf(tag.fullName);
+      return index === pos;
+    });
+
+    return allTags;
+  }
+
   public clone(): Note {
     return new Note(this.note);
   }
@@ -165,6 +180,19 @@ export class Note {
   public hasTag(tag: string): boolean {
     const index = this.note.meta.tags.map((element: Tag): string => element.name).indexOf(tag);
     return index >= 0;
+  }
+
+  public match(tag: Tag): boolean {
+    const tags = this.allTags;
+    let result = false;
+    for (let i = 0, length = tags.length; i < length; i++) {
+      if (tags[i].fullName === tag.fullName) {
+        result = true;
+        break;
+      }
+    }
+
+    return result;
   }
 
   public async downloadPDF(): Promise<void> {

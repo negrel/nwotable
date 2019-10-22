@@ -14,15 +14,20 @@ export const actions: ActionTree<MainState, RootState> = {
     hotkey.setup();
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
-    noteList.forEach((element: any): void => {
+    noteList.forEach(async(element: any): Promise<void> => {
       const note = new Note();
       note.setupFromNote(element.note);
       dispatch('addNoteToList', note, { root: true });
 
-      const tags = note.tags;
-      tags.forEach((el: Tag): void => {
-        dispatch('addTag', el.fullName);
-      });
+      const tags = note.tags,
+        length = tags.length;
+      let i = 0;
+
+      // Block until tag is added to avoid double root tag.
+      while (i < length) {
+        await dispatch('addTag', tags[i].fullName);
+        i++;
+      }
     });
 
     dispatch('updateFavorited', { root: true });
@@ -110,22 +115,25 @@ export const actions: ActionTree<MainState, RootState> = {
     }
   },
   async addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): Promise<void> {
-    const tagList = rootState.Notes.tagList,
-      note = rootState.Editor.selectedNote,
-      index = await dispatch('getTagIndex', tagName, { root: true });
+    const note = rootState.Editor.selectedNote;
 
     if (!note.hasTag(tagName)) {
-      let tag: Tag;
+      const tag = new Tag(tagName);
 
-      if (index >= 0) {
-        tag = tagList[index];
-      } else {
-        tag = new Tag(tagName);
-      }
       note.addTag(tag);
-      dispatch('addTagToList', tag, { root: true });
+      await dispatch('addTagToList', tag, { root: true });
       dispatch('updateNote');
     }
+  },
+  tagMatchCounter({ rootState }: ActionContext<MainState, RootState>, tag: Tag): number {
+    const noteList = rootState.Notes.noteList;
+    let counter = 0;
+    noteList.forEach((note: Note): void => {
+      if (note.match(tag)) {
+        counter++;
+      }
+    });
+    return counter;
   }
 };
 

@@ -42,9 +42,9 @@
         <q-item-section>
           <q-item-label>Tags</q-item-label>
         </q-item-section>
-        <q-icon name="keyboard_arrow_down" />
+        <!-- <q-icon name="keyboard_arrow_down" /> -->
       </q-item>
-      <tagList />
+      <tagList :tags="rootTags" class="tagList"/>
       <q-item clickable
         tag="a"
         target="_blank"
@@ -68,6 +68,8 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 
+import { Tag } from 'src/class/Tag';
+
 import tagList from './tagList/tag-list.vue';
 import showMoreBtn from './tagList/show-more-btn.vue';
 
@@ -78,12 +80,17 @@ import showMoreBtn from './tagList/show-more-btn.vue';
   }
 })
 class Drawer extends Vue {
+  @State(state => state.Notes.tagList) tags: Tag[]
   @State(state => state.Notes.noteList.length) noteCount: number
   @State(state => state.Filters.favorited) favCount: number
   @State(state => state.Filters.filter) filter: string
 
   dispatchFilter(filter: string): void {
     this.$store.dispatch('setFilter', filter);
+  }
+
+  get rootTags(): Tag[] {
+    return this.tags.filter((tag: Tag): boolean => !tag.hasParentTag);
   }
 };
 
@@ -97,11 +104,16 @@ export default Drawer;
   display inline-block
   max-width 216px
 
+  & > .tagList {
+    padding-left 0px
+    margin-left 0px
+  }
+
   & > * {
     max-width 216px
   }
 
-  & > .q-item {
+  & .q-item {
     word-break keep-all
     width 100vw
 

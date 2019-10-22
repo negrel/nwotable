@@ -7,7 +7,7 @@
       <span>
         Choose a format :
       </span>
-      <div>
+      <div class="float-right">
         <button title="Markdown"
           @click="selectedNote.downloadMD()"
           class="btn-toolbar"

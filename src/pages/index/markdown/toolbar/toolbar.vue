@@ -67,7 +67,6 @@ import { Attachment } from 'src/class/Attachment';
 
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
-import downloadButton from './download-button.vue';
 import tagPrompt from './tag-prompt.vue';
 import deletePrompt from './delete-prompt.vue';
 import downloadPrompt from './download-prompt.vue';
@@ -76,7 +75,6 @@ import downloadPrompt from './download-prompt.vue';
   components: {
     toolbarButtonGroup,
     toolbarButton,
-    downloadButton,
     tagPrompt,
     deletePrompt,
     downloadPrompt

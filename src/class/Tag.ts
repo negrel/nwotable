@@ -36,6 +36,15 @@ export class Tag {
   public get parent(): Tag {
     return new Tag(this._parent);
   }
+
+  public get tree(): Tag[] {
+    const tree = [];
+    if (this.hasParentTag) {
+      tree.push(this.parent, ...this.parent.tree);
+    }
+
+    return tree;
+  }
 }
 
 export default {

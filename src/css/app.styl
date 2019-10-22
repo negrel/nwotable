@@ -11,6 +11,34 @@ body {
   font-family Roboto, Arial
 }
 
+// Scroll bar
+* {
+  &::-webkit-scrollbar {
+    width .3em
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color $grey-2;
+    border-radius: 1000px
+
+    &:hover {
+      width 10px
+    }
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color $grey-5;
+    border-radius: 1000px
+
+    /* Handle on hover */
+    &:hover {
+      width 12px
+      background-color $grey-6;
+    }
+  }
+}
 .pane {
   height 100vh
 }

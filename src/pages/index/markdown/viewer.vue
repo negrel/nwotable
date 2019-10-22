@@ -29,34 +29,6 @@ export default Viewer;
   overflow-y auto
   text-user-select()
 
-  // Scroll bar
-  &::-webkit-scrollbar {
-    width .5em
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    background-color $grey-1;
-    border-radius: 1000px
-    box-shadow inset 0 0 3px $grey-6
-
-    &:hover {
-      width 10px
-    }
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background-color $grey-5;
-    border-radius: 1000px
-
-    /* Handle on hover */
-    &:hover {
-      width 12px
-      background-color $grey-6;
-    }
-  }
-
   & * {
     max-width 99%
   }

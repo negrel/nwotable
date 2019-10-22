@@ -34,8 +34,9 @@
       </q-item>
       <q-item clickable
         active-class="active-filter"
-        :active="filter !== 'favorited' && filter !== 'all'"
+        :active="true"
       >
+        <!-- :active="filter !== 'favorited' && filter !== 'all'" -->
         <q-item-section avatar>
           <q-icon name="local_offer" />
         </q-item-section>
@@ -102,20 +103,27 @@ export default Drawer;
   height 100vh
   flex 10
   display inline-block
-  max-width 216px
+  max-width 300px
+  overflow-x none
+  overflow-y auto
 
   & > .tagList {
-    padding-left 0px
+    padding-left 3em
     margin-left 0px
+    background-color #00000030
   }
 
   & > * {
-    max-width 216px
+    max-width 300px
   }
 
-  & .q-item {
+  & > .q-item {
     word-break keep-all
     width 100vw
+
+    & .q-item__section--side {
+      min-width 3em
+    }
 
     &:hover {
       background-color: #00000030

@@ -2,15 +2,14 @@
   <q-list class="text-grey-1 tag-list">
     <div v-for="tag in tags" :key="tag.fullName">
       <q-item clickable active-class="active-filter">
-        <q-item-section avatar />
+        <!-- <q-item-section avatar /> -->
         <q-item-section>
           <q-item-label>
-            <q-icon name="keyboard_arrow_down" v-if="childrenOf(tag).length > 0" />
+            <q-icon name="keyboard_arrow_down" :class="{ 'transparent': childrenOf(tag).length === 0 }" />
             {{ tag.name }}
           </q-item-label>
-          <q-item-label class="text-grey-5 text-right counter" caption>
-            <!-- {{ counter(tag) }} -->
-            1
+          <q-item-label class="text-grey-5 text-right float-right" caption>
+            {{ counter(tag) }}
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -45,6 +44,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.transparent {
+  color rgba(0, 0, 0, 0)
+}
+
 .tag-list {
   height fit-content
   overflow hidden
@@ -52,12 +55,8 @@ export default {
   margin-left 1em
 
   & .q-item__label {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width fit-content
+    text-overflow ellipsis
   }
-}
-
-div {
-  height: fit-content;
 }
 </style>

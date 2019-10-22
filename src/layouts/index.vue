@@ -46,7 +46,7 @@ export default {
 <style lang="stylus" scoped>
 #drawer {
   min-width 56px
-  max-width 216px
+  max-width 300px
   overflow-y auto
   overflow-x hidden
   word-break keep-all

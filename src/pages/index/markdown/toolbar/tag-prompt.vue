@@ -9,7 +9,7 @@
       <q-list>
         <div v-if="selectedNote.tags.length">
           <q-item v-for="tag in selectedNote.tags"
-            :key="tag.name"
+            :key="tag.fullName"
             clickable
             class="bg-white text-secondary q-pl-md q-pr-sm"
           >
@@ -80,6 +80,11 @@ h5 {
   margin-top 0px
   margin-bottom .5em
 }
+
+.q-item {
+  min-width fit-content
+}
+
 .q-item:first-child {
   border-top-right-radius 1em
   border-top-left-radius 1em

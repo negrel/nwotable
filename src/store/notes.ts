@@ -48,7 +48,7 @@ export const actions: ActionTree<NoteListState, RootState> = {
   getTagIndex({ state }: ActionContext<NoteListState, RootState>, tagName: string): number {
     return state.tagList.map((element: Tag): string => element.fullName).indexOf(tagName);
   },
-  async addTagToList({ commit, dispatch, rootState }: ActionContext<NoteListState, RootState>, payload: Tag): Promise<void> {
+  async addTagToList({ commit, dispatch }: ActionContext<NoteListState, RootState>, payload: Tag): Promise<void> {
     const index = await dispatch('getTagIndex', payload.fullName);
     if (index === -1) {
       commit('ADD_TAG', payload);

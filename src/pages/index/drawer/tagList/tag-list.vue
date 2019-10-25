@@ -9,7 +9,7 @@
             {{ tag.name }}
           </q-item-label>
           <q-item-label class="text-grey-5 text-right float-right" caption>
-            {{ counter(tag) }}
+            <!-- {{ counter(tag) }} -->
           </q-item-label>
         </q-item-section>
       </q-item>

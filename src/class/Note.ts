@@ -169,7 +169,9 @@ export class Note {
   }
 
   public addTag(tag: Tag): void {
-    this.note.meta.tags.push(tag);
+    if (!this.hasTag(tag.fullName)) {
+      this.note.meta.tags.push(tag);
+    }
   }
 
   public delTag(tag: Tag): void {

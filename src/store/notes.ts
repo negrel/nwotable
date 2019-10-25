@@ -46,20 +46,16 @@ export const actions: ActionTree<NoteListState, RootState> = {
     commit('SET_NOTE', payload);
   },
   getTagIndex({ state }: ActionContext<NoteListState, RootState>, tagName: string): number {
-    return state.tagList.map((element: Tag): string => element.fullName).indexOf(tagName);
+    return state.tagList.slice(0).map((element: Tag): string => element.fullName).indexOf(tagName);
   },
   async addTagToList({ commit, dispatch }: ActionContext<NoteListState, RootState>, payload: Tag): Promise<void> {
     const index = await dispatch('getTagIndex', payload.fullName);
     if (index === -1) {
       commit('ADD_TAG', payload);
 
-      // Add all the parent tag to the tag list.
-      payload.tree.forEach(async(tag: Tag): Promise<void> => {
-        const index = await dispatch('getTagIndex', tag.fullName);
-        if (index === -1) {
-          commit('ADD_TAG', tag);
-        }
-      });
+      if (payload.hasParentTag) {
+        dispatch('addTagToList', payload.parent);
+      }
     }
   }
 };

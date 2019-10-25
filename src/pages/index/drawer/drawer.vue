@@ -34,9 +34,8 @@
       </q-item>
       <q-item clickable
         active-class="active-filter"
-        :active="true"
+        :active="filter !== 'favorited' && filter !== 'all'"
       >
-        <!-- :active="filter !== 'favorited' && filter !== 'all'" -->
         <q-item-section avatar>
           <q-icon name="local_offer" />
         </q-item-section>
@@ -46,7 +45,7 @@
         <!-- <q-icon name="keyboard_arrow_down" /> -->
       </q-item>
       <tagList :tags="rootTags" class="tagList"/>
-      <q-item clickable
+      <!-- <q-item clickable
         tag="a"
         target="_blank"
         href="https://github.com/Nergel3/"
@@ -59,7 +58,7 @@
         <q-item-section>
           <q-item-label>Github</q-item-label>
         </q-item-section>
-      </q-item>
+      </q-item> -->
     </q-list>
   </div>
 </template>

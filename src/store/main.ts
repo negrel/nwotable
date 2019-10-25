@@ -19,13 +19,11 @@ export const actions: ActionTree<MainState, RootState> = {
       note.setupFromNote(element.note);
       dispatch('addNoteToList', note, { root: true });
 
-      const tags = note.tags,
-        length = tags.length;
+      const tags = note.tags;
 
-      // Block until tag is added to avoid double root tag.
-      tags.forEach((tag: Tag): void => {
-        dispatch('addTag', tag.fullName);
-      });
+      for (const tag of tags) {
+        await dispatch('addTagToList', tag, { root: true });
+      }
     });
 
     dispatch('updateFavorited', { root: true });
@@ -115,13 +113,11 @@ export const actions: ActionTree<MainState, RootState> = {
   async addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): Promise<void> {
     const note = rootState.Editor.selectedNote;
 
-    console.log(tagName);
-
-    if (!note.hasTag(tagName)) {
+    if (!note.hasTag(tagName) && tagName.length > 0) {
       const tag = new Tag(tagName);
 
-      note.addTag(tag);
       await dispatch('addTagToList', tag, { root: true });
+      note.addTag(tag);
       dispatch('updateNote');
     }
   },

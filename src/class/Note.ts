@@ -1,6 +1,5 @@
 import { marked } from './Parser';
 import { Tag } from './Tag';
-import { all } from 'q';
 
 export interface MetaData {
   created: string;

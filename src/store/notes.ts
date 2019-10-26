@@ -29,6 +29,9 @@ export const mutations: MutationTree<NoteListState> = {
   },
   ADD_TAG(state, payload: Tag): void {
     state.tagList.push(payload);
+  },
+  SET_TAG(state, tagList: Tag[]): void {
+    state.tagList = tagList;
   }
 };
 
@@ -57,6 +60,17 @@ export const actions: ActionTree<NoteListState, RootState> = {
         dispatch('addTagToList', payload.parent);
       }
     }
+  },
+  updateTagList({ rootState, commit }: ActionContext<NoteListState, RootState>): void {
+    const noteList = rootState.Notes.noteList,
+      payload: Tag[] = [];
+    noteList.forEach(async(note: Note): Promise<void> => {
+      const tags = note.allTags;
+      for (const tag of tags) {
+        payload.push(tag);
+      }
+    });
+    commit('SET_TAG', payload);
   }
 };
 

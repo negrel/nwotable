@@ -178,22 +178,9 @@ export class Note {
     this.note.meta.tags.splice(index, 1);
   }
 
-  public hasTag(tag: string): boolean {
-    const index = this.note.meta.tags.map((element: Tag): string => element.name).indexOf(tag);
+  public hasTag(tagName: string): boolean {
+    const index = this.allTags.map((element: Tag): string => element.fullName).indexOf(tagName);
     return index >= 0;
-  }
-
-  public match(tag: Tag): boolean {
-    const tags = this.allTags;
-    let result = false;
-    for (let i = 0, length = tags.length; i < length; i++) {
-      if (tags[i].fullName === tag.fullName) {
-        result = true;
-        break;
-      }
-    }
-
-    return result;
   }
 
   public async downloadPDF(): Promise<void> {

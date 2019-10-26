@@ -109,14 +109,14 @@ export default Drawer;
   & > .tagList {
     padding-left 3em
     margin-left 0px
-    background-color #00000030
+    background-color #00000010
   }
 
   & > * {
     max-width 300px
   }
 
-  & > .q-item {
+  & .q-item {
     word-break keep-all
     width 100vw
 

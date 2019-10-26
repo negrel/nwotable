@@ -14,18 +14,13 @@ export const actions: ActionTree<MainState, RootState> = {
     hotkey.setup();
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
-    noteList.forEach(async(element: any): Promise<void> => {
+    for (const element of noteList) {
       const note = new Note();
       note.setupFromNote(element.note);
-      dispatch('addNoteToList', note, { root: true });
+      await dispatch('addNoteToList', note, { root: true });
+    }
 
-      const tags = note.tags;
-
-      for (const tag of tags) {
-        await dispatch('addTagToList', tag, { root: true });
-      }
-    });
-
+    dispatch('updateTagList', { root: true });
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
 
@@ -52,6 +47,7 @@ export const actions: ActionTree<MainState, RootState> = {
       newNote.favorited = true;
     }
 
+    dispatch('updateTagList', { root: true });
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
 
@@ -84,6 +80,7 @@ export const actions: ActionTree<MainState, RootState> = {
 
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
+    dispatch('updateTagList', { root: true });
   },
   // -------------------------------------------------------------------------------
   async updateNote({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
@@ -125,7 +122,7 @@ export const actions: ActionTree<MainState, RootState> = {
     const noteList = rootState.Notes.noteList;
     let counter = 0;
     noteList.forEach((note: Note): void => {
-      if (note.match(tag)) {
+      if (note.hasTag(tag.fullName)) {
         counter++;
       }
     });

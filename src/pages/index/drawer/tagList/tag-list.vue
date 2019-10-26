@@ -1,19 +1,25 @@
 <template>
   <q-list class="text-grey-1 tag-list">
     <div v-for="tag in tags" :key="tag.fullName">
-      <q-item clickable active-class="active-filter">
-        <!-- <q-item-section avatar /> -->
+      <q-item clickable
+        active-class="active-filter"
+        :active="filter === tag.fullName"
+        @click="setFilter(tag.fullName)"
+      >
         <q-item-section>
           <q-item-label>
-            <q-icon name="keyboard_arrow_down" :class="{ 'transparent': childrenOf(tag).length === 0 }" />
-            {{ tag.name }}
+            <q-icon name="keyboard_arrow_right"
+              :class="{ 'transparent': childrenOf(tag).length === 0, 'rotate-90': showChildren }"
+              @click="showChildren = !showChildren"
+            />
+              {{ tag.name }}
           </q-item-label>
           <q-item-label class="text-grey-5 text-right float-right" caption>
             <!-- {{ counter(tag) }} -->
           </q-item-label>
         </q-item-section>
       </q-item>
-      <tagList :tags="childrenOf(tag)" v-if="childrenOf(tag).length > 0" />
+      <tagList :tags="childrenOf(tag)" v-if="showChildren" />
     </div>
   </q-list>
 </template>
@@ -24,6 +30,9 @@ export default {
   props: {
     tags: Array
   },
+  data: () => ({
+    showChildren: true
+  }),
   methods: {
     childrenOf(tag) {
       return this.allTags.filter(
@@ -33,11 +42,17 @@ export default {
     async counter(tag) {
       const res = await this.$store.dispatch('tagMatchCounter', tag);
       return res;
+    },
+    setFilter(tagName) {
+      this.$store.dispatch('setFilter', tagName);
     }
   },
   computed: {
     allTags() {
       return this.$store.state.Notes.tagList;
+    },
+    filter() {
+      return this.$store.state.Filters.filter;
     }
   }
 };

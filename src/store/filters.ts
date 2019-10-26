@@ -1,6 +1,8 @@
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
+import { Tag } from 'src/class/Tag';
+
 export interface FilterState {
   filtredList: number[];
   filter: string;
@@ -48,6 +50,19 @@ export const actions: ActionTree<FilterState, RootState> = {
 
     commit('SET_LIST', payload);
   },
+  filterByTag({ commit, rootState, state }: ActionContext<FilterState, RootState>): void {
+    const noteList = rootState.Notes.noteList,
+      length = noteList.length,
+      tagName = state.filter,
+      payload = [];
+
+    for (let i = 0; i < length; i++) {
+      if (noteList[i].hasTag(tagName)) {
+        payload.push(i);
+      }
+    }
+    commit('SET_LIST', payload);
+  },
   updateFavorited({ rootState, commit }: ActionContext<FilterState, RootState>): void {
     const favorited = rootState.Notes.noteList.filter((el): boolean => el.favorited).length;
 
@@ -62,7 +77,7 @@ export const actions: ActionTree<FilterState, RootState> = {
         dispatch('filterByFav');
         break;
       default:
-        dispatch('filterByAll');
+        dispatch('filterByTag');
         break;
     }
   },

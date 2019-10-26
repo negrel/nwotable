@@ -39,6 +39,8 @@ export class Note {
       metaRegex = /^(-|<){3,}(.|\n)*(-|>){3,}/,
       metadata = content.match(metaRegex);
 
+    console.log(metadata);
+
     const theNote = {
       title: '',
       content: '',
@@ -231,12 +233,13 @@ export class Note {
   }
 
   private editMetaData(meta: string, value: any): string {
-    const regex = new RegExp(`/${meta}\s.*\n/`);
+    // const regex = new RegExp(`/${meta}\s.*\n/`);
 
-    if (typeof value !== 'string') {
-      value += '';
-    }
+    // if (typeof value !== 'string') {
+    //   value += '';
+    // }
 
-    return this.note.content.replace(regex, value);
+    // return this.note.content.replace(regex, value);
+    return this.note.content;
   }
 }

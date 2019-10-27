@@ -41,13 +41,20 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Tags</q-item-label>
-          <!-- <q-item-label class="text-grey-5 text-right" caption>
-            {{ tagCount }}
-          </q-item-label> -->
+          <q-item-label class="text-grey-1 text-right" caption>
+            <q-icon name="keyboard_arrow_down"
+              :class="{ 'rotate-90': !showTagList }"
+              @click="showTagList = !showTagList"
+              v-if="rootTags.length > 0"
+            />
+          </q-item-label>
         </q-item-section>
-        <!-- <q-icon name="keyboard_arrow_down" /> -->
       </q-item>
-      <tagList :tags="rootTags" class="tagList"/>
+      <tagList
+        :tags="rootTags"
+        class="tagList"
+        v-if="showTagList && rootTags.length > 0"
+      />
       <!-- <q-item clickable
         tag="a"
         target="_blank"
@@ -74,13 +81,11 @@ import { State } from 'vuex-class';
 import { Tag } from 'src/class/Tag';
 import { Note } from 'src/class/Note';
 
-import tagList from './tagList/tag-list.vue';
-import showMoreBtn from './tagList/show-more-btn.vue';
+import tagList from './tag-list.vue';
 
 @Component({
   components: {
-    tagList,
-    showMoreBtn
+    tagList
   }
 })
 class Drawer extends Vue {
@@ -88,6 +93,13 @@ class Drawer extends Vue {
   @State(state => state.Notes.noteList) noteList: Note[]
   @State(state => state.Filters.favorited) favCount: number
   @State(state => state.Filters.filter) filter: string
+
+  showTagList: boolean
+
+  constructor() {
+    super();
+    this.showTagList = false;
+  }
 
   dispatchFilter(filter: string): void {
     this.$store.dispatch('setFilter', filter);

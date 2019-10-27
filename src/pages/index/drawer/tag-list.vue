@@ -1,6 +1,6 @@
 <template>
   <q-list class="text-grey-1 tag-list">
-    <div v-for="tag in tags" :key="tag.fullName">
+    <div v-for="[key, tag] in Object.entries(tags)" :key="tag.fullName">
       <q-item clickable
         active-class="active-filter"
         :active="filter === tag.fullName"
@@ -9,18 +9,18 @@
         <q-item-section>
           <q-item-label>
             <q-icon name="keyboard_arrow_right"
-              :class="{ 'transparent': childrenOf(tag).length === 0, 'rotate-90': showChildren }"
-              @click="showChildren = !showChildren"
+              :class="{ 'rotate-90': showChildren[key] }"
+              @click="toggleChildren(key)"
+              v-if="childrenOf(tag).length > 0"
             />
               {{ tag.name }}
           </q-item-label>
           <q-item-label class="text-grey-5 text-right float-right" caption>
-            <!-- {{ counter(tag) }} -->
-            1
+            {{ counter(tag.fullName) }}
           </q-item-label>
         </q-item-section>
       </q-item>
-      <tagList :tags="childrenOf(tag)" v-if="showChildren" />
+      <tagList :tags="childrenOf(tag)" v-if="showChildren[key]" />
     </div>
   </q-list>
 </template>
@@ -32,17 +32,33 @@ export default {
     tags: Array
   },
   data: () => ({
-    showChildren: true
+    showChildren: []
   }),
+  mounted() {
+    for (let i = 0, length = this.tags.length; i < length; i++) {
+      this.showChildren[i] = false;
+    }
+  },
   methods: {
     childrenOf(tag) {
       return this.allTags.filter(
         el => el.hasParentTag && el.parent.fullName === tag.fullName
       );
     },
-    async counter(tagName) {
-      const res = await this.$store.dispatch('tagMatchCounter', tagName);
-      return res;
+    toggleChildren(key) {
+      this.showChildren[key] = !this.showChildren[key];
+      // Replacing the entire array to detect change.
+      this.showChildren = [...this.showChildren];
+    },
+    counter(tagName) {
+      const noteList = this.$store.state.Notes.noteList;
+      let counter = 0;
+      noteList.forEach((note) => {
+        if (note.match(tagName)) {
+          counter++;
+        }
+      });
+      return counter;
     },
     setFilter(tagName) {
       this.$store.dispatch('setFilter', tagName);
@@ -60,10 +76,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.transparent {
-  color rgba(0, 0, 0, 0)
-}
-
 .tag-list {
   height fit-content
   overflow hidden

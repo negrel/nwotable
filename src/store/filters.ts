@@ -1,8 +1,6 @@
 import { MutationTree, ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
-import { Tag } from 'src/class/Tag';
-
 export interface FilterState {
   filtredList: number[];
   filter: string;

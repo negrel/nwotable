@@ -18,7 +18,7 @@
               <q-item-label>{{ tag.fullName }}</q-item-label>
               <q-item-label class="text-grey-5 float-right" caption>
                 <q-btn icon="clear"
-                  @click="selectedNote.delTag(tag)"
+                  @click="delTag(tag)"
                   size="xs"
                   round
                   flat
@@ -66,6 +66,10 @@ export default {
         tagField.value = '';
       }
     },
+    delTag(tag) {
+      this.selectedNote.delTag(tag);
+      this.$store.dispatch('updateTagList');
+    },
     close() {
       this.$emit('close');
     }
@@ -76,6 +80,7 @@ export default {
   watch: {
     active(newVal) {
       if (newVal) {
+        // Async to let the time to the component to be mounted
         setTimeout(() => {
           document.querySelector('#tagPrompt input[type=text]').focus();
         }, 0);

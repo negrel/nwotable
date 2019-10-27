@@ -117,17 +117,6 @@ export const actions: ActionTree<MainState, RootState> = {
       note.addTag(tag);
       dispatch('updateNote');
     }
-  },
-  tagMatchCounter({ rootState }: ActionContext<MainState, RootState>, tagName: string): number {
-    const noteList = rootState.Notes.noteList;
-    let counter = 0;
-    noteList.forEach((note: Note): void => {
-      if (note.hasTag(tagName)) {
-        counter++;
-      }
-    });
-    console.log(counter);
-    return counter;
   }
 };
 

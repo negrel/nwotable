@@ -176,11 +176,18 @@ export class Note {
   }
 
   public delTag(tag: Tag): void {
-    const index = this.note.meta.tags.indexOf(tag);
-    this.note.meta.tags.splice(index, 1);
+    if (this.hasTag(tag.fullName)) {
+      const index = this.note.meta.tags.indexOf(tag);
+      this.note.meta.tags.splice(index, 1);
+    }
   }
 
   public hasTag(tagName: string): boolean {
+    const index = this.tags.map((element: Tag): string => element.fullName).indexOf(tagName);
+    return index >= 0;
+  }
+
+  public match(tagName: string): boolean {
     const index = this.allTags.map((element: Tag): string => element.fullName).indexOf(tagName);
     return index >= 0;
   }

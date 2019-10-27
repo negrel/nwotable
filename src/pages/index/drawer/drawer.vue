@@ -55,7 +55,7 @@
         class="tagList"
         v-if="showTagList && rootTags.length > 0"
       />
-      <!-- <q-item clickable
+      <q-item clickable
         tag="a"
         target="_blank"
         href="https://github.com/Nergel3/"
@@ -68,7 +68,7 @@
         <q-item-section>
           <q-item-label>Github</q-item-label>
         </q-item-section>
-      </q-item> -->
+      </q-item>
     </q-list>
   </div>
 </template>

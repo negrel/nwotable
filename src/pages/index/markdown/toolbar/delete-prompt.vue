@@ -4,10 +4,10 @@
       <span> You are about to delete this note, are you sure ?</span>
       <br />
       <div class="float-right">
-        <button class="btn-toolbar" title="Cancel" @click="close">
+        <button class="btn" title="Cancel" @click="close">
           Cancel
         </button>
-        <button class="btn-toolbar" title="Okay" @click="deleteNote">
+        <button class="btn" title="Okay" @click="deleteNote">
           I'm sure.
         </button>
       </div>

@@ -36,10 +36,15 @@
           </q-item-label>
         </q-item>
       </q-list>
-      <text-field placeholder="Enter a tag name..."
-        aria-label="tag-field"
-        @keypress="addTag"
-      />
+      <div id="tagField">
+        <text-field placeholder="Enter a tag name..."
+          aria-label="tag-field"
+          @keypress="addTagEnter"
+        />
+        <button @click="addTag" class="btn bg-primary text-grey-1">
+          <q-icon name="add"/>
+        </button>
+      </div>
     </card>
   </q-dialog>
 </template>
@@ -59,12 +64,15 @@ export default {
     textField
   },
   methods: {
-    addTag(event) {
-      if (event.key === 'Enter' && event.srcElement) {
-        const tagField = event.srcElement;
-        this.$store.dispatch('addTag', tagField.value);
-        tagField.value = '';
+    addTagEnter(event) {
+      if (event.key === 'Enter') {
+        this.addTag();
       }
+    },
+    addTag() {
+      const tagField = document.querySelector('#tagPrompt input[type=text]');
+      this.$store.dispatch('addTag', tagField.value);
+      tagField.value = '';
     },
     delTag(tag) {
       this.selectedNote.delTag(tag);
@@ -94,6 +102,14 @@ export default {
 h5 {
   margin-top 0px
   margin-bottom .5em
+}
+
+#tagField {
+  display flex
+
+  & button {
+    margin-left 1em
+  }
 }
 
 .q-item {

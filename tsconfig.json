@@ -16,7 +16,6 @@
     "quasar.conf.js",
     "dist",
     "src-ssr",
-    "src-pwa",
-    "src/assets/*.js"
+    "src-pwa"
   ]
 }

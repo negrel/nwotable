@@ -10,7 +10,7 @@
       <div class="float-right">
         <button title="Markdown"
           @click="selectedNote.downloadMD()"
-          class="btn-toolbar"
+          class="btn"
         >
           <img src="statics/markdown.png"
             title="Markdown"
@@ -20,7 +20,7 @@
         </button>
         <button title="HTML"
           @click="selectedNote.downloadHTML()"
-          class="btn-toolbar"
+          class="btn"
         >
           <q-icon name="code" />
           HTML

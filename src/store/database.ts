@@ -77,7 +77,7 @@ export const actions: ActionTree<DatabaseState, RootState> = {
 
           const noteObjectStore = db.createObjectStore('notes', { keyPath: 'note.meta.created' });
 
-          noteObjectStore.createIndex('content', 'note.content', { unique: true });
+          noteObjectStore.createIndex('content', 'note.content', { unique: false });
 
           const attachmentObjectStore = db.createObjectStore('attachment', { keyPath: 'name' });
 

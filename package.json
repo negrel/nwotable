@@ -1,7 +1,7 @@
 {
   "name": "nwotable",
-  "version": "0.3.0",
-  "description": "A note app based on quasar, vue.js and markdown.",
+  "version": "1.0.0",
+  "description": "A note app based on Quasar, Vue.js and markdown.",
   "productName": "Nwotable",
   "author": "Alexandre Negrel",
   "private": true,

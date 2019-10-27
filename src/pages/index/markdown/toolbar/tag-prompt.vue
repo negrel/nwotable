@@ -77,6 +77,7 @@ export default {
     delTag(tag) {
       this.selectedNote.delTag(tag);
       this.$store.dispatch('updateTagList');
+      this.$store.dispatch('updateNote');
     },
     close() {
       this.$emit('close');

@@ -123,7 +123,6 @@ export default Drawer;
   flex 10
   display inline-block
   max-width 300px
-  overflow-x none
   overflow-y auto
 
   & > .tagList {
@@ -171,7 +170,7 @@ export default Drawer;
 }
 
 #github {
-  position fixed
+  position relative
   bottom 0
   left 0
 }

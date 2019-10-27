@@ -7,10 +7,10 @@
         title="Add"
       />
     </q-toolbar>
-    <q-bar id="dateBar" @click="dateSort = !dateSort">
-      <div>Date</div>
+    <q-bar id="dateBar" @click="titleSort = !titleSort">
+      <div>Title</div>
       <q-space />
-      <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': dateSort }" />
+      <q-icon name="keyboard_arrow_up" :class="{ 'rotate-180': titleSort }" />
     </q-bar>
     <div v-if="indexList.length !== 0">
       <q-list>
@@ -58,11 +58,11 @@ import toolbarButton from 'src/components/toolbar-button.vue';
   }
 })
 class Main extends Vue {
-  dateSort: boolean
+  titleSort: boolean
 
   constructor() {
     super();
-    this.dateSort = true;
+    this.titleSort = true;
   }
 
   mounted() {
@@ -109,7 +109,19 @@ class Main extends Vue {
       }
     });
 
-    if (this.dateSort) {
+    pinned.sort((a, b) => {
+      if (this.noteList[a].title < this.noteList[b].title) return -1;
+      if (this.noteList[a].title > this.noteList[b].title) return 1;
+      return 0;
+    });
+
+    other.sort((a, b) => {
+      if (this.noteList[a].title < this.noteList[b].title) return -1;
+      if (this.noteList[a].title > this.noteList[b].title) return 1;
+      return 0;
+    });
+
+    if (this.titleSort) {
       return [...pinned, ...other];
     } else {
       return [...pinned.reverse(), ...other.reverse()];
@@ -121,7 +133,7 @@ class Main extends Vue {
   }
 
   @Watch('indexList')
-  onInedxListChange() {
+  onIndexListChange() {
     if (this.indexList.length === 0) {
       const noNote = new Note();
       noNote.setupFromNote({

@@ -41,6 +41,9 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>Tags</q-item-label>
+          <!-- <q-item-label class="text-grey-5 text-right" caption>
+            {{ tagCount }}
+          </q-item-label> -->
         </q-item-section>
         <!-- <q-icon name="keyboard_arrow_down" /> -->
       </q-item>
@@ -69,6 +72,7 @@ import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 
 import { Tag } from 'src/class/Tag';
+import { Note } from 'src/class/Note';
 
 import tagList from './tagList/tag-list.vue';
 import showMoreBtn from './tagList/show-more-btn.vue';
@@ -81,7 +85,7 @@ import showMoreBtn from './tagList/show-more-btn.vue';
 })
 class Drawer extends Vue {
   @State(state => state.Notes.tagList) tags: Tag[]
-  @State(state => state.Notes.noteList.length) noteCount: number
+  @State(state => state.Notes.noteList) noteList: Note[]
   @State(state => state.Filters.favorited) favCount: number
   @State(state => state.Filters.filter) filter: string
 
@@ -91,6 +95,10 @@ class Drawer extends Vue {
 
   get rootTags(): Tag[] {
     return this.tags.filter((tag: Tag): boolean => !tag.hasParentTag);
+  }
+
+  get noteCount(): number {
+    return this.noteList.length;
   }
 };
 
@@ -107,12 +115,11 @@ export default Drawer;
   overflow-y auto
 
   & > .tagList {
-    padding-left 3em
+    padding-left 4em
     margin-left 0px
-    background-color #00000010
   }
 
-  & > * {
+  & * {
     max-width 300px
   }
 

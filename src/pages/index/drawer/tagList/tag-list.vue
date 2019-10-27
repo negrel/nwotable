@@ -16,6 +16,7 @@
           </q-item-label>
           <q-item-label class="text-grey-5 text-right float-right" caption>
             <!-- {{ counter(tag) }} -->
+            1
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -39,8 +40,8 @@ export default {
         el => el.hasParentTag && el.parent.fullName === tag.fullName
       );
     },
-    async counter(tag) {
-      const res = await this.$store.dispatch('tagMatchCounter', tag);
+    async counter(tagName) {
+      const res = await this.$store.dispatch('tagMatchCounter', tagName);
       return res;
     },
     setFilter(tagName) {
@@ -69,9 +70,13 @@ export default {
   padding-left 0px
   margin-left 1em
 
-  & .q-item__label {
-    max-width fit-content
-    text-overflow ellipsis
+  & .q-item {
+    width inherit
+
+    &__label {
+      max-width fit-content
+      text-overflow ellipsis
+    }
   }
 }
 </style>

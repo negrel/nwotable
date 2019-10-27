@@ -1,6 +1,7 @@
 <template>
   <q-dialog v-model="active"
     @hide="close"
+    id="tagPrompt"
   >
     <card>
       <h5>
@@ -71,7 +72,16 @@ export default {
   },
   computed: mapState({
     selectedNote: state => state.Editor.selectedNote
-  })
+  }),
+  watch: {
+    active(newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          document.querySelector('#tagPrompt input[type=text]').focus();
+        }, 0);
+      }
+    }
+  }
 };
 </script>
 

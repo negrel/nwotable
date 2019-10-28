@@ -1,6 +1,9 @@
 <template>
   <div class="text-field">
     <input type="text"
+      ref="inputField"
+      :value="value"
+      @input="input"
       @change="change"
       :placeholder="placeholder"
       :aria-label="ariaLabel"
@@ -14,11 +17,16 @@
 export default {
   props: {
     placeholder: String,
-    ariaLabel: String
+    ariaLabel: String,
+    value: String
   },
   methods: {
     change(newVal) {
       this.$emit('change', newVal);
+    },
+    input() {
+      const val = this.$refs.inputField.value;
+      this.$emit('input', val);
     },
     keyPress(event) {
       this.$emit('keypress', event);

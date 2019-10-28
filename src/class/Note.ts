@@ -1,6 +1,8 @@
 import { marked } from './Parser';
 import { Tag } from './Tag';
 
+// const FuzzySet = require('fuzzyset.js');
+
 export interface MetaData {
   created: string;
   modified: Date;
@@ -187,9 +189,16 @@ export class Note {
     return index >= 0;
   }
 
-  public match(tagName: string): boolean {
+  public matchTag(tagName: string): boolean {
     const index = this.allTags.map((element: Tag): string => element.fullName).indexOf(tagName);
     return index >= 0;
+  }
+
+  public match(search: string): boolean {
+    const res = this.plainNote.match(search);
+    if (res) {
+      return res.length > 0;
+    } else return false;
   }
 
   public async downloadPDF(): Promise<void> {

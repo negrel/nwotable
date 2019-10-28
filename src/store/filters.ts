@@ -61,22 +61,35 @@ export const actions: ActionTree<FilterState, RootState> = {
     }
     commit('SET_LIST', payload);
   },
+  filterBySearch({ commit, rootState, state }: ActionContext<FilterState, RootState>): void {
+    const noteList = rootState.Notes.noteList,
+      length = noteList.length,
+      search = state.filter.replace('search:', ''),
+      payload = [];
+
+    for (let i = 0; i < length; i++) {
+      if (noteList[i].match(search)) {
+        payload.push(i);
+      }
+    }
+    commit('SET_LIST', payload);
+  },
   updateFavorited({ rootState, commit }: ActionContext<FilterState, RootState>): void {
     const favorited = rootState.Notes.noteList.filter((el): boolean => el.favorited).length;
 
     commit('SET_FAV', favorited);
   },
   updateFiltred({ dispatch, state }: ActionContext<FilterState, RootState>): void {
-    switch (state.filter) {
-      case 'all':
-        dispatch('filterByAll');
-        break;
-      case 'favorited':
-        dispatch('filterByFav');
-        break;
-      default:
-        dispatch('filterByTag');
-        break;
+    const filter = state.filter;
+
+    if (filter === 'all') {
+      dispatch('filterByAll');
+    } else if (filter === 'favorited') {
+      dispatch('filterByFav');
+    } else if (filter.match(/search:*/)) {
+      dispatch('filterBySearch');
+    } else {
+      dispatch('filterByTag');
     }
   },
   setFilterAndUpdate({ commit, dispatch }: ActionContext<FilterState, RootState>, filter: string): void {

@@ -56,7 +56,7 @@ export default {
       const noteList = this.$store.state.Notes.noteList;
       let counter = 0;
       noteList.forEach((note) => {
-        if (note.match(tagName)) {
+        if (note.matchTag(tagName)) {
           counter++;
         }
       });

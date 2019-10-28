@@ -3,7 +3,7 @@
     class="search-field"
     placeholder="Search..."
     aria-label="search-field"
-    @change="fuzzySearch"
+    v-model="search"
   >
     <div class="float-right">
       <q-icon name="search" />
@@ -15,8 +15,9 @@
 import textField from 'src/components/text-field.vue';
 
 import { Note } from 'src/class/Note';
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
+import { debounce } from 'quasar';
 
 @Component({
   components: {
@@ -24,10 +25,35 @@ import { State } from 'vuex-class';
   }
 })
 class SearchBar extends Vue {
-  @State(state => state.NoteList.noteList) noteList: Note[];
+  @State(state => state.Notes.noteList) noteList: Note[];
+  @State(state => state.Filters.filtredList) filtredList: number[];
+  search: string;
+  fuzzy: [][];
+
+  constructor() {
+    super();
+    this.search = '';
+  }
+
+  mounted() {
+    setTimeout(() => {
+      console.log(this.filtredNote);
+    }, 500);
+  }
+
+  get filtredNote() {
+    const sample = [];
+    for (let i = 0, length = this.filtredList.length; i < length; i++) {
+      sample.push(this.noteList[this.filtredList[i]]);
+    }
+    return sample;
+  }
+
+  @Watch('search')
+  onSearchChange = debounce(this.fuzzySearch, 500);
 
   fuzzySearch(val: string) {
-    console.log('searching: ', val);
+    this.$store.dispatch('setFilter', 'search:' + val);
   }
 };
 

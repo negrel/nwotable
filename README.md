@@ -13,15 +13,14 @@ The app is still in development so some features may not work.
 
 Missing features :
 * Mobile support
-* **Tags** support (filter)
 * Metadata detection
 * Fuzzy search
-* API for changelog 
+* API for changelog
+* Help menu for Emoji, markdown syntax, etc.
 * Auto delete unused attachment at the starting of the app.
 * Rename imported attachment
 * Live preview (split mode).
 * Export as a PDF
-* Help menu for Emoji, markdown syntax, etc.
 
 ### :stars: Show Your Support
 Please give a :star: if this project helped you!

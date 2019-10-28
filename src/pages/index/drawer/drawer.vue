@@ -34,7 +34,7 @@
       </q-item>
       <q-item clickable
         active-class="active-filter"
-        :active="filter !== 'favorited' && filter !== 'all'"
+        :active="filter !== 'favorited' && filter !== 'all' && !filter.startsWith('search:')"
       >
         <q-item-section avatar>
           <q-icon name="local_offer" />

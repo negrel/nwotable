@@ -1,48 +1,40 @@
 <template>
-  <q-dialog v-model="active"
-    @hide="close"
-    id="tagPrompt"
-  >
+  <q-dialog v-model="active" @hide="close" id="tagPrompt">
     <card>
-      <h5>
-        Add a tag to the note.
-      </h5>
+      <h5>Add a tag to the note.</h5>
       <q-list>
         <div v-if="selectedNote.tags.length">
-          <q-item v-for="tag in selectedNote.tags"
+          <q-item
+            v-for="tag in selectedNote.tags"
             :key="tag.fullName"
             clickable
             class="bg-white text-secondary q-pl-md q-pr-sm"
           >
-            <q-item-section class="full-width">
-              <q-item-label>{{ tag.fullName }}</q-item-label>
-              <q-item-label class="text-grey-5 float-right" caption>
-                <q-btn icon="clear"
-                  @click="delTag(tag)"
-                  size="xs"
-                  round
-                  flat
-                />
-              </q-item-label>
+            <q-item-section>
+              <span :title="tag.fullName">{{ tag.fullName }}</span>
+              <q-btn
+                icon="clear"
+                @click="delTag(tag)"
+                size="xs"
+                round
+                flat
+                class="text-grey-5 float-right"
+              />
             </q-item-section>
           </q-item>
         </div>
-        <q-item
-          class="bg-white text-secondary q-pl-md q-pr-sm"
-          v-else
-        >
-          <q-item-label>
-            No tags on this note
-          </q-item-label>
+        <q-item class="bg-white text-secondary q-pl-md q-pr-sm" v-else>
+          <q-item-label>No tags on this note</q-item-label>
         </q-item>
       </q-list>
       <div id="tagField">
-        <text-field placeholder="Enter a tag name..."
+        <text-field
+          placeholder="Enter a tag name..."
           aria-label="tag-field"
           @keypress="addTagEnter"
         />
         <button @click="addTag" class="btn bg-primary text-grey-1">
-          <q-icon name="add"/>
+          <q-icon name="add" />
         </button>
       </div>
     </card>
@@ -101,30 +93,40 @@ export default {
 
 <style lang="stylus" scoped>
 h5 {
-  margin-top 0px
-  margin-bottom .5em
+  margin-top: 0px;
+  margin-bottom: 0.5em;
 }
 
 #tagField {
-  display flex
+  display: flex;
 
   & button {
-    margin-left 1em
+    margin-left: 1em;
   }
 }
 
 .q-item {
-  min-width fit-content
+  width 100%
+  overflow hidden
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  & span {
+    max-width 93%
+    overflow hidden
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .q-item:first-child {
-  border-top-right-radius 1em
-  border-top-left-radius 1em
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
 }
 
 .q-item:last-child {
-  border-bottom-right-radius 1em
-  border-bottom-left-radius 1em
-  margin-bottom 1em
+  border-bottom-right-radius: 1em;
+  border-bottom-left-radius: 1em;
+  margin-bottom: 1em;
 }
 </style>

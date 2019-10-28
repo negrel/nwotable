@@ -20,7 +20,9 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <tagList :tags="childrenOf(tag)" v-if="showChildren[key]" />
+      <keep-alive>
+        <tagList :tags="childrenOf(tag)" v-if="showChildren[key]" />
+      </keep-alive>
     </div>
   </q-list>
 </template>
@@ -34,9 +36,9 @@ export default {
   data: () => ({
     showChildren: []
   }),
-  mounted() {
+  created() {
     for (let i = 0, length = this.tags.length; i < length; i++) {
-      this.showChildren[i] = false;
+      this.showChildren[i] = true;
     }
   },
   methods: {
@@ -81,13 +83,15 @@ export default {
   overflow hidden
   padding-left 0px
   margin-left 1em
+  min-width 50px
 
   & .q-item {
     width inherit
 
     &__label {
-      max-width fit-content
+      width fit-content
       text-overflow ellipsis
+      margin-right 0px
     }
   }
 }

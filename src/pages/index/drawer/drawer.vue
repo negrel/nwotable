@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <q-list class="text-grey-1 drawer-list">
+  <div class="drawer-list">
+    <q-list class="text-grey-1 filter-list">
       <q-item-label header>Menu</q-item-label>
       <q-item clickable
         @click="dispatchFilter('all')"
@@ -50,25 +50,29 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <tagList
-        :tags="rootTags"
-        class="tagList"
-        v-if="showTagList && rootTags.length > 0"
-      />
+      <keep-alive>
+        <tagList
+          :tags="rootTags"
+          class="tagList"
+          v-if="showTagList && rootTags.length > 0"
+        />
+      </keep-alive>
+    </q-list>
+    <q-list class="text-grey-1">
       <q-item clickable
-        tag="a"
-        target="_blank"
-        href="https://github.com/Nergel3/"
-        id="github"
-        rel="noopener"
-      >
-        <q-item-section avatar>
-          <q-icon name="code" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Github</q-item-label>
-        </q-item-section>
-      </q-item>
+          tag="a"
+          target="_blank"
+          href="https://github.com/Nergel3/"
+          id="github"
+          rel="noopener"
+        >
+          <q-item-section avatar>
+            <q-icon name="code" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Github</q-item-label>
+          </q-item-section>
+        </q-item>
     </q-list>
   </div>
 </template>
@@ -98,7 +102,7 @@ class Drawer extends Vue {
 
   constructor() {
     super();
-    this.showTagList = false;
+    this.showTagList = true;
   }
 
   dispatchFilter(filter: string): void {
@@ -120,23 +124,32 @@ export default Drawer;
 <style lang="stylus">
 .drawer-list {
   height 100vh
-  flex 10
-  display inline-block
-  max-width 300px
-  overflow-y auto
 
-  & > .tagList {
-    padding-left 4em
-    margin-left 0px
-  }
-
-  & * {
+  & > .filter-list {
+    flex 10
+    display inline-block
+    overflow-y auto
+    max-height calc(100vh - 2.5em)
     max-width 300px
+
+    & > .tagList {
+      overflow auto
+      padding-left 4em
+      margin-left 0px
+
+      & .q-item {
+        min-width 50px
+      }
+    }
+
+    & * {
+      max-width 300px
+    }
   }
 
   & .q-item {
     word-break keep-all
-    width 100vw
+    min-width 300px
 
     & .q-item__section--side {
       min-width 3em
@@ -151,26 +164,26 @@ export default Drawer;
     color: inherit
     background-color: #00000050!important
   }
-}
 
-.q-item__label--header {
-  padding 1em .7em
-}
-
-& .q-focus-helper {
-  background transparent!important
-
-  & * {
-    background transparent!important
+  .q-item__label--header {
+    padding 1em .7em
   }
 
-  &::after, &::before {
+  & .q-focus-helper {
     background transparent!important
+
+    & * {
+      background transparent!important
+    }
+
+    &::after, &::before {
+      background transparent!important
+    }
   }
 }
 
 #github {
-  position relative
+  position absolute
   bottom 0
   left 0
 }

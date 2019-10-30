@@ -1,6 +1,6 @@
 <template>
   <div id="toolbar">
-    <q-toolbar class="text-primary bg-grey-3">
+    <q-toolbar class="bg-grey-3">
       <toolbarButtonGroup>
         <toolbarButton :icons="['edit']"
           title="Edit"
@@ -12,13 +12,17 @@
           @click="changeEditMode"
           v-else
         />
-        <toolbarButton :icons="['attach_file']" title="Attachment" @click="importFile(fileLocal)" />
+        <toolbarButton :icons="['attach_file']"
+          title="Attachment"
+          @click="showAttachPrompt = !showAttachPrompt"
+        />
         <toolbarButton :icons="['local_offer']"
           title="Tag"
           :active="showTagPrompt"
           @click="showTagPrompt = !showTagPrompt"
         />
       </toolbarButtonGroup>
+      <attachPrompt :active="showAttachPrompt" @close="showAttachPrompt = false" />
       <tagPrompt :active="showTagPrompt" @close="showTagPrompt = false" />
       <toolbarButtonGroup>
         <toolbarButton :icons="['star_border', 'star']"
@@ -47,7 +51,7 @@
         />
         <toolbarButton :icons="['cloud_upload']"
           title="Import"
-          @click="importFile(noteLocal)"
+          @click="importNote(noteLocal)"
         />
       </toolbarButtonGroup>
       <downloadPrompt :active="showDownloadPrompt" @close="showDownloadPrompt = false" />
@@ -60,13 +64,12 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
-// @ prefix doesn't work
 import { Note, MetaData, NoteType } from 'src/class/Note';
-import { Attachment } from 'src/class/Attachment';
 
 import toolbarButtonGroup from 'src/components/toolbar-button-group.vue';
 import toolbarButton from 'src/components/toolbar-button.vue';
 import tagPrompt from './tag-prompt.vue';
+import attachPrompt from './attach-prompt.vue';
 import deletePrompt from './delete-prompt.vue';
 import downloadPrompt from './download-prompt.vue';
 import helpSnippet from './help-snippet.vue';
@@ -76,6 +79,7 @@ import helpSnippet from './help-snippet.vue';
     toolbarButtonGroup,
     toolbarButton,
     tagPrompt,
+    attachPrompt,
     deletePrompt,
     downloadPrompt,
     helpSnippet
@@ -85,12 +89,14 @@ class Toolbar extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.Editor.editMode) editMode: boolean;
   showTagPrompt: boolean;
+  showAttachPrompt: boolean;
   showDeletePrompt: boolean;
   showDownloadPrompt: boolean;
 
   constructor() {
     super();
     this.showTagPrompt = false;
+    this.showAttachPrompt = false;
     this.showDeletePrompt = false;
     this.showDownloadPrompt = false;
   }
@@ -117,7 +123,7 @@ class Toolbar extends Vue {
     this.$store.dispatch('updateNote');
   }
 
-  importFile(func: Function): void {
+  importNote(func: Function): void {
     let input = document.createElement('input');
     input.type = 'file';
     input.multiple = true;
@@ -130,22 +136,11 @@ class Toolbar extends Vue {
       const files = input.files as any;
       if (files) {
         for (let i = 0, length = files.length; i < length; i++) {
-          func(files[i]);
+          this.$store.dispatch('addNote', files[i]);
         }
       }
     });
     input.remove();
-  }
-
-  // eslint-disable-next-line
-  async noteLocal(note: File): Promise<void> {
-    console.log(note);
-    this.$store.dispatch('addNote', note);
-  }
-
-  fileLocal(file: File): void {
-    this.$store.dispatch('saveAttachmentToDb', file);
-    this.$store.dispatch('addAttachment', new Attachment(file));
   }
 }
 export default Toolbar;

@@ -1,6 +1,7 @@
 <template>
   <q-dialog v-model="active" @hide="close">
     <card>
+      <h5 class="q-mb-md q-mt-none">Warning !</h5>
       <span> You are about to delete this note, are you sure ?</span>
       <br />
       <div class="float-right">

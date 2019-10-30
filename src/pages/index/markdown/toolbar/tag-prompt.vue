@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="active" @hide="close" id="tagPrompt">
     <card>
-      <h5>Add a tag to the note.</h5>
+      <h5 class="q-mb-md q-mt-none">Add a tag to the note.</h5>
       <q-list>
         <div v-if="selectedNote.tags.length">
           <q-item
@@ -92,11 +92,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h5 {
-  margin-top: 0px;
-  margin-bottom: 0.5em;
-}
-
 #tagField {
   display: flex;
 

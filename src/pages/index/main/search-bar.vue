@@ -35,12 +35,6 @@ class SearchBar extends Vue {
     this.search = '';
   }
 
-  mounted() {
-    setTimeout(() => {
-      console.log(this.filtredNote);
-    }, 500);
-  }
-
   get filtredNote() {
     const sample = [];
     for (let i = 0, length = this.filtredList.length; i < length; i++) {

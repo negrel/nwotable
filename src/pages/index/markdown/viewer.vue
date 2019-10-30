@@ -24,6 +24,7 @@ export default Viewer;
 
 // See markd.styl for markdown css rules
 #viewer {
+  padding-top 1em
   padding-left 1em
   height 100%
   overflow-y auto

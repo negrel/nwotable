@@ -2,7 +2,7 @@ import Store from '../store/store';
 
 const showdown = require('showdown'),
   highlight = require('showdown-highlight');
-const parser = new showdown.Converter({
+export const parser = new showdown.Converter({
   extensions: [highlight]
 });
 parser.setOption('parseImgDimensions', true);

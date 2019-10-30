@@ -51,9 +51,8 @@
         />
       </toolbarButtonGroup>
       <downloadPrompt :active="showDownloadPrompt" @close="showDownloadPrompt = false" />
+      <helpSnippet />
     </q-toolbar>
-
-    <!-- NOTE Tags prompt  -->
   </div>
 </template>
 
@@ -70,6 +69,7 @@ import toolbarButton from 'src/components/toolbar-button.vue';
 import tagPrompt from './tag-prompt.vue';
 import deletePrompt from './delete-prompt.vue';
 import downloadPrompt from './download-prompt.vue';
+import helpSnippet from './help-snippet.vue';
 
 @Component({
   components: {
@@ -77,7 +77,8 @@ import downloadPrompt from './download-prompt.vue';
     toolbarButton,
     tagPrompt,
     deletePrompt,
-    downloadPrompt
+    downloadPrompt,
+    helpSnippet
   }
 })
 class Toolbar extends Vue {

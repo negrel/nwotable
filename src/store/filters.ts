@@ -55,7 +55,7 @@ export const actions: ActionTree<FilterState, RootState> = {
       payload = [];
 
     for (let i = 0; i < length; i++) {
-      if (noteList[i].match(tagName)) {
+      if (noteList[i].matchTag(tagName)) {
         payload.push(i);
       }
     }

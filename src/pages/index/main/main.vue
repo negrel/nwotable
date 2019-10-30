@@ -121,6 +121,8 @@ class Main extends Vue {
       return 0;
     });
 
+    console.log([...pinned, ...other]);
+
     if (this.titleSort) {
       return [...pinned, ...other];
     } else {

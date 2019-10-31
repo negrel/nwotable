@@ -2,29 +2,31 @@
   <q-dialog v-model="active" @hide="close">
     <card>
       <h5 class="q-my-sm">Add an attachment.</h5>
-      <span>List of all imported attachments.</span>
-      <q-list>
+      <span>List of all imported attachments :</span>
+      <q-list class="q-mt-md">
         <div v-if="attachmentList.length">
           <q-item
             v-for="attachment in attachmentList"
             :key="attachment.fileName"
             clickable
-            class="bg-white text-secondary q-pl-md q-pr-sm"
+            class="bg-white text-secondary attach-item q-pl-md q-pr-sm"
           >
             <q-item-label>
               <label class="text-grey-5">@attachment/</label>
               <label :title="attachment.fileName">{{ attachment.fileName }}</label>
-              <label class="text-grey-5 q-ml-lg" v-if="inUse(attachment.fileName)">used here.</label>
             </q-item-label>
             <q-item-section>
-              <q-btn
-                icon="clear"
-                @click="delTag(attachment)"
-                size="xs"
-                round
-                flat
-                class="text-grey-5 float-right"
-              />
+              <div class="float-right">
+                <label class="text-grey-5" v-if="inUse(attachment.fileName)">used here</label>
+                <q-btn
+                  icon="clear"
+                  @click="delTag(attachment)"
+                  size="xs"
+                  round
+                  flat
+                  class="text-grey-5 q-ml-sm"
+                />
+              </div>
             </q-item-section>
           </q-item>
         </div>
@@ -108,6 +110,14 @@ export default {
     overflow hidden
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    & *:hover {
+      cursor pointer
+    }
+
+    & .q-item__section {
+      flex-direction row
+    }
 
     & span {
       max-width 93%

@@ -10,6 +10,7 @@
             :key="attachment.fileName"
             clickable
             class="bg-white text-secondary attach-item q-pl-md q-pr-sm"
+            @click="copy(attachment.fileName)"
           >
             <q-item-label>
               <label class="text-grey-5">@attachment/</label>
@@ -91,6 +92,18 @@ export default {
         }
       });
       input.remove();
+    },
+    copy(attachName) {
+      // NOTE add popup 'copied'
+      const el = document.createElement('textarea');
+      el.value = `![${attachName}](@attachment/${attachName})`;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
     }
   },
   computed: mapState({

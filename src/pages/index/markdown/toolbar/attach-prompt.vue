@@ -117,6 +117,7 @@ export default {
       this.copiedPopUp = true;
       setTimeout(() => {
         this.copiedPopUp = false;
+        this.close();
       }, 1000);
     }
   },

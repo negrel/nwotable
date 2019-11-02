@@ -100,13 +100,12 @@ export class Note {
   }
 
   public set title(note: string) {
-    // console.log(note);
-    let title = note.trim()
-      // Removing html markup
-      .replace(/<\/?\w+(\s+\w+\=\".*\"){0,}>/, '')
+    // Removing html markup
+    let title = note.replace(/<\/?[^>]+(>|$)/g, '')
+      .trim()
       .split('\n')[0]
       .substring(0, 60);
-    // console.log(title);
+
     if (title.length === 0) {
       title = 'No title...';
     }

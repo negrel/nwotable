@@ -8,7 +8,7 @@
         <button class="btn" title="Cancel" @click="close">
           Cancel
         </button>
-        <button class="btn" title="Okay" @click="deleteNote">
+        <button class="btn" id="delete-btn" title="Okay" @click="deleteNote">
           I'm sure.
         </button>
       </div>
@@ -39,7 +39,22 @@ export default {
   },
   computed: mapState({
     selectedNote: state => state.Editor.selectedNote
-  })
+  }),
+  watch: {
+    active(newVal) {
+      const checkEnter = (event) => {
+        if (event.key === 'Enter') {
+          this.deleteNote();
+        }
+      };
+
+      if (newVal) {
+        document.addEventListener('keypress', checkEnter);
+      } else {
+        document.removeEventListener('keypress', checkEnter);
+      }
+    }
+  }
 };
 </script>
 

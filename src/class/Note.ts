@@ -92,7 +92,7 @@ export class Note {
     this.note.content = newPlainNote;
     this.editMetaData('modified', new Date());
     // Using the setter to detect the title
-    this.title = newPlainNote;
+    this.title = this.markdown;
   }
 
   public get title(): string {
@@ -100,12 +100,13 @@ export class Note {
   }
 
   public set title(note: string) {
+    // console.log(note);
     let title = note.trim()
-      // Removing markdown syntax
-      .replace(/[#]+/, '')
+      // Removing html markup
+      .replace(/<\/?\w+(\s+\w+\=\".*\"){0,}>/, '')
       .split('\n')[0]
       .substring(0, 60);
-
+    // console.log(title);
     if (title.length === 0) {
       title = 'No title...';
     }

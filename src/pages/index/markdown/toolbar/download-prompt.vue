@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="active" @hide="close">
+  <q-dialog :value="active" @hide="close">
     <card>
       <h5>
         Download

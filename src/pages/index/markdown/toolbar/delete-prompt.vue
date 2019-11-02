@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="active" @hide="close">
+  <q-dialog :value="active" @hide="close">
     <card>
       <h5 class="q-mb-md q-mt-none">Warning !</h5>
       <span> You are about to delete this note, are you sure ?</span>
@@ -33,7 +33,7 @@ export default {
       this.$store.dispatch('deleteNote', this.selectedNote);
       this.close();
     },
-    close() {
+    close(ev) {
       this.$emit('close');
     }
   },

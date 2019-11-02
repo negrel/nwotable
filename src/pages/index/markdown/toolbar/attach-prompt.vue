@@ -1,53 +1,60 @@
 <template>
-  <q-dialog v-model="active" @hide="close">
-    <card>
-      <h5 class="q-my-sm">Add an attachment.</h5>
-      <span>List of all imported attachments :</span>
-      <q-list class="q-mt-md">
-        <div v-if="attachmentList.length">
-          <q-item
-            v-for="attachment in attachmentList"
-            :key="attachment.fileName"
-            clickable
-            class="bg-white text-secondary attach-item q-pl-md q-pr-sm"
-            @click="copy(attachment.fileName)"
-          >
-            <q-item-label>
-              <label class="text-grey-5">@attachment/</label>
-              <label :title="attachment.fileName">{{ attachment.fileName }}</label>
-            </q-item-label>
-            <q-item-section>
-              <div class="float-right">
-                <label class="text-grey-5" v-if="inUse(attachment.fileName)">used here</label>
-                <q-btn
-                  icon="clear"
-                  @click="delTag(attachment)"
-                  size="xs"
-                  round
-                  flat
-                  class="text-grey-5 q-ml-sm"
-                />
-              </div>
-            </q-item-section>
+  <div>
+    <q-dialog :value="active" @hide="close">
+      <card>
+        <h5 class="q-my-sm">Add an attachment.</h5>
+        <span>List of all imported attachments :</span>
+        <q-list class="q-mt-md">
+          <div v-if="attachmentList.length">
+            <q-item
+              v-for="attachment in attachmentList"
+              :key="attachment.fileName"
+              clickable
+              class="bg-white text-secondary attach-item q-pl-md q-pr-sm"
+              @click="copy(attachment.fileName)"
+            >
+              <q-item-label>
+                <label class="text-grey-5">@attachment/</label>
+                <label :title="attachment.fileName">{{ attachment.fileName }}</label>
+              </q-item-label>
+              <q-item-section>
+                <div class="float-right">
+                  <label class="text-grey-5" v-if="inUse(attachment.fileName)">used here</label>
+                  <!-- <q-btn
+                    icon="clear"
+                    @click="delTag(attachment)"
+                    size="xs"
+                    round
+                    flat
+                    class="text-grey-5 q-ml-sm"
+                  /> -->
+                </div>
+              </q-item-section>
+            </q-item>
+          </div>
+          <q-item class="bg-white text-secondary q-pl-md q-pr-sm" v-else>
+            <q-item-label>No attachment imported in this app.</q-item-label>
           </q-item>
+        </q-list>
+        <div class="float-right">
+          <button class="btn" title="Cancel" @click="close">
+            Cancel
+          </button>
+          <button class="btn"
+            title="Import picture"
+            @click="importAttach"
+          >
+            Add a picture.
+          </button>
         </div>
-        <q-item class="bg-white text-secondary q-pl-md q-pr-sm" v-else>
-          <q-item-label>No attachment imported in this app.</q-item-label>
-        </q-item>
-      </q-list>
-      <div class="float-right">
-        <button class="btn" title="Cancel" @click="close">
-          Cancel
-        </button>
-        <button class="btn"
-          title="Import picture"
-          @click="importAttach"
-        >
-          Add a picture.
-        </button>
-      </div>
-    </card>
-  </q-dialog>
+      </card>
+    </q-dialog>
+    <q-dialog v-model="copiedPopUp" position="top">
+      <card>
+        copied to clipboard !
+      </card>
+    </q-dialog>
+  </div>
 </template>
 
 <script>
@@ -64,12 +71,15 @@ export default {
   props: {
     active: Boolean
   },
+  data: () => ({
+    copiedPopUp: false
+  }),
   methods: {
     close() {
       this.$emit('close');
     },
     inUse(attachName) {
-      const regex = new RegExp(`!\\[\\w+\\]\\(@attachment\\/${attachName}\\)`);
+      const regex = new RegExp(`!\\[\.*\\]\\(@attachment\\/${attachName}\\)`);
       return regex.test(this.selectedNote.plainNote);
     },
     importAttach() {
@@ -104,6 +114,10 @@ export default {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
+      this.copiedPopUp = true;
+      setTimeout(() => {
+        this.copiedPopUp = false;
+      }, 1000);
     }
   },
   computed: mapState({

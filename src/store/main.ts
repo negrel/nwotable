@@ -84,8 +84,8 @@ export const actions: ActionTree<MainState, RootState> = {
   },
   // -------------------------------------------------------------------------------
   async updateNote({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
-    const theNote = rootState.Editor.selectedNote;
-    const index = await dispatch('getNoteIndex', theNote, { root: true });
+    const theNote = rootState.Editor.selectedNote,
+      index = await dispatch('getNoteIndex', theNote, { root: true });
 
     dispatch('updateFavorited', { root: true });
 

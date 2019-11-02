@@ -17,6 +17,7 @@ import { Note } from 'src/class/Note';
 
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
+import { debounce } from 'quasar';
 
 @Component({
   components: {
@@ -28,6 +29,11 @@ import { State } from 'vuex-class';
 class Viewer extends Vue {
   @State(state => state.Editor.selectedNote) selectedNote: Note;
   @State(state => state.Editor.editMode) editMode: boolean;
+
+  @Watch('selectedNote.plainNote')
+  onSelectedNoteChange = debounce(() => {
+    this.$store.dispatch('updateNote');
+  }, 5000);
 };
 
 export default Viewer;

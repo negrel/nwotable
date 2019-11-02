@@ -25,7 +25,7 @@ export const mutations: MutationTree<NoteListState> = {
     state.noteList.splice(index, 1);
   },
   SET_NOTE(state, { index, theNote }: { index: number; theNote: Note}): void {
-    state.noteList[index] = theNote;
+    state.noteList[index].plainNote = theNote.plainNote;
   },
   ADD_TAG(state, payload: Tag): void {
     state.tagList.push(payload);

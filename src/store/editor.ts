@@ -25,12 +25,12 @@ export const actions: ActionTree<EditorState, RootState> = {
   setSelectedNote({ commit }: ActionContext<EditorState, RootState>, selectedNote: Note): void {
     commit('SET_SELECTED_NOTE', selectedNote);
   },
-  setEditMode({ commit, dispatch, rootState }: ActionContext<EditorState, RootState>, bool: boolean): void {
+  async setEditMode({ commit, dispatch, rootState }: ActionContext<EditorState, RootState>, bool: boolean): Promise<void> {
     if (rootState.Notes.noteList.length > 0) {
-      commit('SET_EDIT_MODE', bool);
       if (!bool) {
-        dispatch('updateNote', { root: true });
+        await dispatch('updateNote', { root: true });
       }
+      commit('SET_EDIT_MODE', bool);
     }
   },
   async selectNextNote({ dispatch, rootState, state }: ActionContext<EditorState, RootState>): Promise<void> {

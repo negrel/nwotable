@@ -15,7 +15,7 @@
     }"
     id="editor"
     v-model="plainNote"
-    @input="save"
+    @input="input"
     ref="mdEditor"
   >
   </codemirror>
@@ -24,8 +24,6 @@
 <script>
 import Vue from 'vue';
 import { Prop, Component, Watch } from 'vue-property-decorator';
-
-import { debounce } from 'quasar';
 
 import { codemirror } from 'vue-codemirror-lite';
 require('codemirror/mode/markdown/markdown');
@@ -48,12 +46,13 @@ export default {
   created() {
     // Cloning prop to avoid mutating prop
     this.plainNote = this.value.substring(0);
-    this.save = debounce(this.save, 500);
   },
   methods: {
-    save() {
+    input() {
       this.$emit('input', this.plainNote);
-      this.$store.dispatch('updateNote');
+    },
+    save() {
+      this.$store.dispatch('updateNote', { root: true });
     },
     viewMode() {
       this.$store.dispatch('setEditMode', false);

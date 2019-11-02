@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="active" @hide="close">
+  <q-dialog :value="active" @hide="close">
     <card>
       <div id="emoji-list" v-html="list" contenteditable="false">
       </div>

@@ -48,6 +48,9 @@ export default {
 
 <style lang="stylus" scoped>
 .md-help {
-  border-left-radius 0px
+  border-top-left-radius 0px!important
+  border-bottom-left-radius 0px!important
+  border-bottom-right-radius 5px!important
+  border-top-right-radius 5px!important
 }
 </style>

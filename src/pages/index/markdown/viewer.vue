@@ -26,6 +26,7 @@ export default Viewer;
 #viewer {
   padding-top 1em
   padding-left 1em
+  padding-bottom 1em
   height 100%
   overflow-y auto
   text-user-select()
@@ -35,7 +36,7 @@ export default Viewer;
   }
 
   ::selection {
-    background-color #ef6c0026
+    background-color #ef6c0025
   }
 }
 </style>

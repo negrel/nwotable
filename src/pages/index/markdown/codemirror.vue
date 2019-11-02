@@ -84,7 +84,7 @@ export default {
   border none
   resize none
   height 96vh
-  font-size 1em
+  font-size 1.1em
   font-weight 300
   overflow hidden
 

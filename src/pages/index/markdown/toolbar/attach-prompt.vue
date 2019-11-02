@@ -118,7 +118,7 @@ export default {
       setTimeout(() => {
         this.copiedPopUp = false;
         this.close();
-      }, 1000);
+      }, 500);
     }
   },
   computed: mapState({

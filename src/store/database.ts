@@ -82,10 +82,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
           const attachmentObjectStore = db.createObjectStore('attachment', { keyPath: 'name' });
 
           attachmentObjectStore.createIndex('name', 'name', { unique: true });
-
-          attachmentObjectStore.transaction.oncomplete = (): void => {
-            console.log('Indexed DB ready.');
-          };
         };
       }
     });

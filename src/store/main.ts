@@ -5,6 +5,7 @@ import { ActionTree, ActionContext, Module } from 'vuex';
 import { RootState } from './store';
 
 import * as hotkey from 'src/assets/hotkey.js';
+import firstImpression from 'src/assets/firstImpression.js';
 
 // eslint-disable-next-line
 export interface MainState {}
@@ -13,6 +14,19 @@ export const actions: ActionTree<MainState, RootState> = {
   async init({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
     hotkey.setup();
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
+
+    if (firstImpression()) {
+      const tuto = fetch('/api/tutorial')
+        .then((res: any): Promise<void> => res.json());
+      console.log(tuto);
+    }
+
+    if (noteList.length === 0 && attachmentList.length === 0) {
+      fetch('/api/01 - Markdown basics.md')
+        .then((res): void => {
+          console.log(res);
+        });
+    }
 
     for (const element of noteList) {
       const note = new Note();

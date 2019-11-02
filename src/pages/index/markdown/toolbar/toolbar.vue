@@ -51,7 +51,7 @@
         />
         <toolbarButton :icons="['cloud_upload']"
           title="Import"
-          @click="importNote(noteLocal)"
+          @click="importNote"
         />
       </toolbarButtonGroup>
       <downloadPrompt :active="showDownloadPrompt" @close="showDownloadPrompt = false" />
@@ -123,7 +123,7 @@ class Toolbar extends Vue {
     this.$store.dispatch('updateNote');
   }
 
-  importNote(func: Function): void {
+  importNote(): void {
     let input = document.createElement('input');
     input.type = 'file';
     input.multiple = true;

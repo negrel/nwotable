@@ -9,7 +9,7 @@
       </span>
       <div class="float-right">
         <button title="Markdown"
-          @click="selectedNote.downloadMD()"
+          @click="download('md')"
           class="btn"
         >
           <img src="statics/markdown.png"
@@ -19,7 +19,7 @@
           Markdown
         </button>
         <button title="HTML"
-          @click="selectedNote.downloadHTML()"
+          @click="download('html')"
           class="btn"
         >
           <q-icon name="code" />
@@ -43,6 +43,14 @@ export default {
     active: Boolean
   },
   methods: {
+    download(ext) {
+      if (ext === 'html') {
+        this.selectedNote.downloadHTML();
+      } else if (ext === 'md') {
+        this.selectedNote.downloadMD();
+      }
+      this.close();
+    },
     close() {
       this.$emit('close');
     }

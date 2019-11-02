@@ -1,16 +1,16 @@
 import Store from '../store/store';
 
-const showdown = require('showdown'),
-  highlight = require('showdown-highlight');
+const showdown = require('showdown');
 export const parser = new showdown.Converter({
-  extensions: [highlight]
+  // extensions: [highlight]
 });
 parser.setOption('parseImgDimensions', true);
 parser.setOption('tables', true);
 parser.setOption('emoji', true);
+parser.setOption('simplifiedAutoLink', true);
 parser.setOption('metadata', true);
 parser.setOption('openLinksInNewWindow', true);
-parser.setOption('completeHTMLDocument', true);
+parser.setOption('completeHTMLDocument', false);
 
 // Detect link to other note and image attachment
 // const noteRegex = /\[([^\[]+)\]\(@note\/.*\w+\)/,
@@ -55,7 +55,7 @@ export function marked(input: string): string {
   let html = parser.makeHtml(input);
 
   html = imgAttachment(html);
-  html = noteAttachment(html);
+  // html = noteAttachment(html);
 
   return html;
 }

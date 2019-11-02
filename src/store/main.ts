@@ -18,9 +18,9 @@ export const actions: ActionTree<MainState, RootState> = {
       const note = new Note();
       note.setupFromNote(element.note);
       await dispatch('addNoteToList', note, { root: true });
+      dispatch('updateTagList', { root: true });
     }
 
-    dispatch('updateTagList', { root: true });
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
 

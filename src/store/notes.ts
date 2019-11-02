@@ -25,7 +25,7 @@ export const mutations: MutationTree<NoteListState> = {
     state.noteList.splice(index, 1);
   },
   SET_NOTE(state, { index, theNote }: { index: number; theNote: Note}): void {
-    state.noteList[index].plainNote = theNote.plainNote;
+    state.noteList[index] = theNote;
   },
   ADD_TAG(state, payload: Tag): void {
     state.tagList.push(payload);
@@ -64,12 +64,16 @@ export const actions: ActionTree<NoteListState, RootState> = {
   updateTagList({ rootState, commit }: ActionContext<NoteListState, RootState>): void {
     const noteList = rootState.Notes.noteList,
       payload: Tag[] = [];
-    noteList.forEach(async(note: Note): Promise<void> => {
+
+    for (const note of noteList) {
       const tags = note.allTags;
       for (const tag of tags) {
-        payload.push(tag);
+        const index = payload.map((el): string => el.fullName).indexOf(tag.fullName);
+        if (index === -1) {
+          payload.push(tag);
+        }
       }
-    });
+    }
     commit('SET_TAG', payload);
   }
 };

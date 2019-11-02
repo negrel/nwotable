@@ -42,6 +42,6 @@ export default Viewer;
 <style lang="stylus" scoped>
 .hack-font {
   font-family hack
-  font-size 1.3em
+  font-size 1.4em
 }
 </style>

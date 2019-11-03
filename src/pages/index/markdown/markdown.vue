@@ -38,9 +38,3 @@ class Viewer extends Vue {
 
 export default Viewer;
 </script>
-
-<style lang="stylus" scoped>
-.hack-font {
-  font-family hack
-}
-</style>

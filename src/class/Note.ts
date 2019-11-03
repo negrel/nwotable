@@ -37,7 +37,7 @@ export class Note {
 
   // Setup the object from a File object 'import'
   public setupFromText(content: string): void {
-    const metaSearchRegex = /^(-|<){3,}(.|\n)*(-|>){3,}$/m,
+    const metaSearchRegex = /^(-|<){3,}[^-]*(-|>){3,}$/m,
       metaSearch = content.match(metaSearchRegex);
 
     // Remove metadata from imported note
@@ -72,6 +72,7 @@ export class Note {
   // Setup the object from a note
   public setupFromNote(note: NoteType): void {
     this.plainNote = note.content;
+    this.note.meta.created = note.meta.created;
     this.addTags(note.meta.tags.map((tag: any): string => tag.fullName));
   }
 
@@ -156,13 +157,6 @@ export class Note {
     this.note.meta.modified = new Date();
   }
 
-  public downloadMD(): void {
-    const fileName = this.note.title + '.md',
-      file = new File(this.note.content.split(''), fileName);
-
-    this.download(file);
-  }
-
   public addTag(tag: Tag): void {
     if (!this.hasTag(tag.fullName)) {
       this.note.meta.tags.push(tag);
@@ -197,6 +191,24 @@ export class Note {
     if (res) {
       return res.length > 0;
     } else return false;
+  }
+
+  private metaDataHeader(): string {
+    return `
+    ---
+    tags: ${this.tags.map((tag: Tag): string => tag.fullName)};
+    favorited: ${this.favorited};
+    pinned: ${this.pinned};
+    ---
+    `;
+  }
+
+  public downloadMD(): void {
+    const content = this.metaDataHeader() + this.note.content;
+    const fileName = this.note.title + '.md',
+      file = new File(content.split(''), fileName);
+
+    this.download(file);
   }
 
   public async downloadPDF(): Promise<void> {

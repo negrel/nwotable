@@ -50,7 +50,8 @@ export const actions: ActionTree<EditorState, RootState> = {
       index = await dispatch('getFiltredIndex', noteIndex, { root: true }) - 1,
       noteList = rootState.Notes.noteList,
       filtredList = rootState.Filters.filtredList;
-    if (index === -1) {
+
+    if (index < 0) {
       const lastIndex = filtredList.length - 1;
       dispatch('setSelectedNote', noteList[filtredList[lastIndex]]);
     } else {

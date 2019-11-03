@@ -95,7 +95,6 @@ export const actions: ActionTree<DatabaseState, RootState> = {
   updateNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     if (state.iDb) {
       const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
-
       store.put(theNote);
     }
   },

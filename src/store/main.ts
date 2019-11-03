@@ -80,21 +80,20 @@ export const actions: ActionTree<MainState, RootState> = {
     dispatch('setEditMode', false, { root: true });
     const index = await dispatch('getNoteIndex', theNote, { root: true });
 
-    // Then delete the note and update the drawer
+    // Select the previous note in the list or the next if don't exist
+    const filtredList = rootState.Filters.filtredList;
 
+    if (filtredList.length > 1) {
+      dispatch('selectPreviousNote', { root: true });
+    }
+
+    // Then delete the note and update the drawer
     dispatch('deleteNoteFromList', index);
     dispatch('deleteNoteFromDb', theNote, { root: true });
 
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
     dispatch('updateTagList', { root: true });
-
-    // Select the previous note in the list or the next if don't exist
-    const filtredList = rootState.Filters.filtredList;
-
-    if (filtredList.length > 0) {
-      dispatch('selectPreviousNote', { root: true });
-    }
   },
   // -------------------------------------------------------------------------------
   async updateNote({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {

@@ -72,7 +72,8 @@ export class Note {
   // Setup the object from a note
   public setupFromNote(note: NoteType): void {
     this.plainNote = note.content;
-    this.note.meta.created = note.meta.created;
+    note.meta.tags = [];
+    this.note.meta = note.meta;
     this.addTags(note.meta.tags.map((tag: any): string => tag.fullName));
   }
 

@@ -31,7 +31,7 @@ Supported features :
  * Production : [Nwotable](https://nwotable.herokuapp.com)
  * Beta (update at each github push & no tutorial, changelog): [Nwotable (Beta)](https://nwotable.netlify.com) 
 
-![screenshot](https://github.com/Nergel3/Nwotable/raw/master/resources/home.png)
+![screenshot](https://github.com/Nergel3/Nwotable/raw/master/resources/home.jpg)
 
 ### :ballot_box_with_check: TODO
 The app is still in development so some features may not work.

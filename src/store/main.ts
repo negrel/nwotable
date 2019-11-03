@@ -12,6 +12,9 @@ export interface MainState {}
 
 export const actions: ActionTree<MainState, RootState> = {
   async init({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      alert('Nwotable doesn\'t work on mobile for now');
+    }
     hotkey.setup();
     // dispatch('emptyNoteList', { root: true });
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });

@@ -44,12 +44,12 @@ function imgAttachment(html: string): string {
   return html;
 }
 
-function noteAttachment(html: string): string {
-  // const res = html.match(noteRegex);
-  // console.log(res);
+// function noteAttachment(html: string): string {
+//   // const res = html.match(noteRegex);
+//   // console.log(res);
 
-  return html;
-}
+//   return html;
+// }
 
 export function marked(input: string): string {
   let html = parser.makeHtml(input);

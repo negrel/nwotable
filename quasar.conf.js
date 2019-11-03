@@ -105,8 +105,8 @@ module.exports = function(ctx) {
         description: 'A note app based on quasar, vue.js and markdown.',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        background_color: '#20272c',
+        theme_color: '#20272c',
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',

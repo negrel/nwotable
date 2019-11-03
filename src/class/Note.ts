@@ -41,7 +41,7 @@ export class Note {
       metaSearch = content.match(metaSearchRegex);
 
     // Remove metadata from imported note
-    this.plainNote = content.replace(metaSearchRegex, '').replace('\n', '');
+    this.plainNote = content.replace(metaSearchRegex, '').replace(/\s/, '');
 
     // Processing metadata to apply it to object
     if (metaSearch) {
@@ -194,13 +194,14 @@ export class Note {
   }
 
   private metaDataHeader(): string {
-    return `
-    ---
-    tags: ${this.tags.map((tag: Tag): string => tag.fullName)};
-    favorited: ${this.favorited};
-    pinned: ${this.pinned};
-    ---
-    `;
+    const metadata =
+`---
+tags: '${this.tags.map((tag: Tag): string => tag.fullName).join('\', \'')}';
+favorited: ${this.favorited};
+pinned: ${this.pinned};
+---
+`;
+    return metadata;
   }
 
   public downloadMD(): void {
@@ -259,7 +260,6 @@ export class Note {
   }
 
   private editMetaData(key: string, value: string): void {
-    console.log(`CHANGING : ${key} from ${(this.note.meta as any)[key]} to ${value}`);
     switch (key) {
       case 'tags':
         const tags = value.match(/'[^,]+'/g);
@@ -268,11 +268,11 @@ export class Note {
         }
         break;
       case 'favorited':
-        const fav = value !== 'false';
+        const fav = value.trim() !== 'false';
         this.note.meta.favorited = fav;
         break;
       case 'pinned':
-        const pinned = value !== 'false';
+        const pinned = value.trim() !== 'false';
         this.note.meta.pinned = pinned;
         break;
     };

@@ -131,25 +131,6 @@ class Main extends Vue {
   addNewNote() {
     this.$store.dispatch('addNote');
   }
-
-  @Watch('indexList')
-  onIndexListChange() {
-    if (this.indexList.length === 0) {
-      const noNote = new Note();
-      noNote.setupFromNote({
-        title: '',
-        content: '# You have no note saved... :slightly_frowning_face:',
-        meta: {
-          created: new Date().toString(),
-          modified: new Date(),
-          favorited: false,
-          pinned: false,
-          tags: []
-        }
-      });
-      this.$store.dispatch('setSelectedNote', noNote, { root: true });
-    }
-  }
 };
 
 export default Main;

@@ -61,7 +61,7 @@ export default {
 }
 
 #markdown {
-  min-width 335px
+  min-width 340px
   flex 1
 }
 </style>

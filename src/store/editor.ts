@@ -1,4 +1,4 @@
-import { Note } from '../class/Note';
+import { Note } from 'src/class/Note';
 import { Module, ActionContext, MutationTree, ActionTree } from 'vuex';
 import { RootState } from './store';
 
@@ -50,13 +50,17 @@ export const actions: ActionTree<EditorState, RootState> = {
       index = await dispatch('getFiltredIndex', noteIndex, { root: true }) - 1,
       noteList = rootState.Notes.noteList,
       filtredList = rootState.Filters.filtredList;
-
     if (index === -1) {
       const lastIndex = filtredList.length - 1;
       dispatch('setSelectedNote', noteList[filtredList[lastIndex]]);
     } else {
       dispatch('setSelectedNote', noteList[filtredList[index]]);
     }
+  },
+  emptyNoteList({ dispatch }: ActionContext<EditorState, RootState>): void {
+    const note = new Note();
+    note.plainNote = '# You have no note saved... :slightly_frowning_face:';
+    dispatch('setSelectedNote', note);
   }
 };
 

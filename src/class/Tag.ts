@@ -1,10 +1,11 @@
 export class Tag {
-  private _fullName: string;
+  public fullName: string;
   private _hasParentTag: boolean;
   private _parent: string;
 
   public constructor(name: string) {
-    const splitted = name.split('/');
+    name = name.replace(/(,|'|")/g, '');
+    const splitted = name.replace(/(,|'|")/g, '').split('/');
 
     if (splitted.length > 1) {
       this._hasParentTag = true;
@@ -13,19 +14,11 @@ export class Tag {
       this._hasParentTag = false;
     }
 
-    this._fullName = name;
-  }
-
-  public get fullName(): string {
-    return this._fullName;
-  }
-
-  public set fullName(fullName: string) {
-    this._fullName = fullName;
+    this.fullName = name;
   }
 
   public get name(): string {
-    const splitted = this._fullName.split('/');
+    const splitted = this.fullName.split('/');
     return splitted[splitted.length - 1];
   }
 

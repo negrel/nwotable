@@ -91,8 +91,11 @@ export const actions: ActionTree<FilterState, RootState> = {
     } else {
       dispatch('filterByTag');
     }
+    if (state.filtredList.length === 0) {
+      dispatch('emptyNoteList', { root: true });
+    }
   },
-  setFilterAndUpdate({ commit, dispatch }: ActionContext<FilterState, RootState>, filter: string): void {
+  setFilterAndUpdate({ commit, dispatch, state }: ActionContext<FilterState, RootState>, filter: string): void {
     commit('SET_FILTER', filter);
     dispatch('updateFiltred');
   },

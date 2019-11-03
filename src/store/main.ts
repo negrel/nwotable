@@ -13,42 +13,48 @@ export interface MainState {}
 export const actions: ActionTree<MainState, RootState> = {
   async init({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
     hotkey.setup();
+    // dispatch('emptyNoteList', { root: true });
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
-    if (firstImpression()) {
-      const tuto = fetch('/api/tutorial')
-        .then((res: any): Promise<void> => res.json());
-      console.log(tuto);
+    // Tutorial notes if first coming to the app.
+    if (firstImpression() && noteList.length === 0) {
+      const tutorial = await fetch('/api/v1/tutorial')
+        .then((res): Promise<string[]> => res.json());
+
+      tutorial.forEach((content: string): void => {
+        const note = new Note();
+        note.setupFromText(content);
+        dispatch('addNoteToList', note, { root: true });
+        dispatch('addNoteToDb', note, { root: true });
+      });
+    } else {
+      for (const element of noteList) {
+        const note = new Note();
+        note.setupFromNote(element.note);
+        await dispatch('addNoteToList', note, { root: true });
+        // dispatch('updateTagList', { root: true });
+      }
+
+      attachmentList.forEach((element: File): void => {
+        dispatch('addAttachment', new Attachment(element), { root: true });
+      });
     }
 
-    if (noteList.length === 0 && attachmentList.length === 0) {
-      fetch('/api/01 - Markdown basics.md')
-        .then((res): void => {
-          console.log(res);
-        });
-    }
-
-    for (const element of noteList) {
-      const note = new Note();
-      note.setupFromNote(element.note);
-      await dispatch('addNoteToList', note, { root: true });
-      dispatch('updateTagList', { root: true });
-    }
-
+    dispatch('updateTagList', { root: true });
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
 
-    attachmentList.forEach((element: File): void => {
-      dispatch('addAttachment', new Attachment(element), { root: true });
-    });
-    dispatch('setSelectedNote', rootState.Notes.noteList[0], { root: true });
+    if (rootState.Notes.noteList.length > 0) {
+      dispatch('setSelectedNote', rootState.Notes.noteList[0], { root: true });
+    }
   },
   // -------------------------------------------------------------------------------
   async addNote({ dispatch, rootState }: ActionContext<MainState, RootState>, note?: NoteType | File): Promise<void> {
     const newNote = new Note();
 
     if (note instanceof File) {
-      await newNote.setupFromFile(note);
+      const content = await (note as any).text();
+      newNote.setupFromText(content);
     } else if (note) {
       newNote.setupFromNote(note);
     }
@@ -74,19 +80,6 @@ export const actions: ActionTree<MainState, RootState> = {
     dispatch('setEditMode', false, { root: true });
     const index = await dispatch('getNoteIndex', theNote, { root: true });
 
-    // Select the previous note in the list or the next if don't exist
-    const filtredIndex = await dispatch('getFiltredIndex', index, { root: true }),
-      filtredList = rootState.Filters.filtredList,
-      noteList = rootState.Notes.noteList;
-
-    if (filtredList.length > 0) {
-      if (filtredIndex - 1 >= 0) {
-        dispatch('setSelectedNote', noteList[filtredList[filtredIndex - 1]], { root: true });
-      } else {
-        dispatch('setSelectedNote', noteList[filtredList[filtredIndex + 1]], { root: true });
-      }
-    }
-
     // Then delete the note and update the drawer
 
     dispatch('deleteNoteFromList', index);
@@ -95,16 +88,25 @@ export const actions: ActionTree<MainState, RootState> = {
     dispatch('updateFavorited', { root: true });
     dispatch('updateFiltred', { root: true });
     dispatch('updateTagList', { root: true });
+
+    // Select the previous note in the list or the next if don't exist
+    const filtredList = rootState.Filters.filtredList;
+
+    if (filtredList.length > 0) {
+      dispatch('selectPreviousNote', { root: true });
+    }
   },
   // -------------------------------------------------------------------------------
   async updateNote({ dispatch, rootState }: ActionContext<MainState, RootState>): Promise<void> {
     const theNote = rootState.Editor.selectedNote,
       index = await dispatch('getNoteIndex', theNote, { root: true });
 
-    dispatch('updateFavorited', { root: true });
+    if (index !== -1) {
+      dispatch('updateFavorited', { root: true });
 
-    dispatch('updateNoteToList', { index, theNote }, { root: true });
-    dispatch('updateNoteToDb', theNote, { root: true });
+      dispatch('updateNoteToList', { index, theNote }, { root: true });
+      dispatch('updateNoteToDb', theNote, { root: true });
+    }
   },
   async setFilter({ dispatch, rootState }, filter: string): Promise<void> {
     dispatch('setFilterAndUpdate', filter, { root: true });

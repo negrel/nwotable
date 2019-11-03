@@ -1,5 +1,4 @@
 export const emojiList = `
-
 |Github Emoji|Code|
 |:---:|:---:|
 |:showdown:|\`:showdown:\`|
@@ -1078,8 +1077,6 @@ export const emojiList = `
 |:thermometer:|\`:thermometer:\`|
 |:thinking:|\`:thinking:\`|
 |:thought_balloon:|\`:thought_balloon:\`|
-|:-1:|\`:-1:\`|
-|:+1:|\`:+1:\`|
 |:ticket:|\`:ticket:\`|
 |:tickets:|\`:tickets:\`|
 |:tiger:|\`:tiger:\`|

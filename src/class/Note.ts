@@ -21,7 +21,7 @@ export class Note {
   private note: NoteType;
 
   // Create a default note
-  public constructor(note?: NoteType) {
+  public constructor() {
     this.note = {
       title: 'New note.',
       content: '# Your title \nYour stuff here.',
@@ -36,46 +36,43 @@ export class Note {
   }
 
   // Setup the object from a File object 'import'
-  public async setupFromFile(note: File): Promise<void> {
-    const content = await (note as any).text(),
-      metaRegex = /^(-|<){3,}(.|\n)*(-|>){3,}/,
-      metadata = content.match(metaRegex);
+  public setupFromText(content: string): void {
+    const metaSearchRegex = /^(-|<){3,}(.|\n)*(-|>){3,}$/m,
+      metaSearch = content.match(metaSearchRegex);
 
-    console.log(metadata);
+    // Remove metadata from imported note
+    this.plainNote = content.replace(metaSearchRegex, '').replace('\n', '');
 
-    const theNote = {
-      title: '',
-      content: '',
-      meta: {
-        created: new Date().getTime().toString(),
-        modified: new Date(note.lastModified),
-        pinned: false,
-        favorited: false,
-        tags: []
+    // Processing metadata to apply it to object
+    if (metaSearch) {
+      const raw = metaSearch[0],
+        metaRegex = /^\w+:\s?.*$/gm,
+        metadata = raw.match(metaRegex);
+
+      if (metadata) {
+        metadata.forEach((meta): void => {
+          const keyRegex = /^\w+/gm,
+            propRegex = /:.*;$/gm,
+            key = meta.match(keyRegex),
+            rawProp = meta.match(propRegex);
+          let prop = '';
+
+          if (rawProp) {
+            prop = rawProp[0].replace(/(^:|;$)/gm, '');
+          }
+
+          if (key) {
+            this.editMetaData(key[0], prop);
+          }
+        });
       }
-    };
-    this.note = theNote;
-    this.plainNote = content.replace(metaRegex, '').trim();
+    }
   }
 
   // Setup the object from a note
   public setupFromNote(note: NoteType): void {
-    const tags = [];
-    for (let i = 0, length = note.meta.tags.length; i < length; i++) {
-      tags.push(new Tag((note.meta.tags[i] as any)._fullName));
-    }
-
-    this.note = {
-      title: note.title || 'New note.',
-      content: note.content || '# Your title',
-      meta: {
-        created: note.meta.created || new Date().getTime().toString(),
-        modified: note.meta.modified || new Date(),
-        tags,
-        favorited: note.meta.favorited || false,
-        pinned: note.meta.pinned || false
-      }
-    };
+    this.plainNote = note.content;
+    this.addTags(note.meta.tags.map((tag: any): string => tag.fullName));
   }
 
   public get data(): NoteType {
@@ -90,7 +87,6 @@ export class Note {
     this.modified();
 
     this.note.content = newPlainNote;
-    this.editMetaData('modified', new Date());
     // Using the setter to detect the title
     this.title = this.markdown;
   }
@@ -156,10 +152,6 @@ export class Note {
     return allTags;
   }
 
-  public clone(): Note {
-    return new Note(this.note);
-  }
-
   public modified(): void {
     this.note.meta.modified = new Date();
   }
@@ -175,6 +167,12 @@ export class Note {
     if (!this.hasTag(tag.fullName)) {
       this.note.meta.tags.push(tag);
     }
+  }
+
+  public addTags(tags: string[]): void {
+    tags.forEach((tag: string): void => {
+      this.addTag(new Tag(tag));
+    });
   }
 
   public delTag(tag: Tag): void {
@@ -248,14 +246,23 @@ export class Note {
     this.download(file);
   }
 
-  private editMetaData(meta: string, value: any): string {
-    // const regex = new RegExp(`/${meta}\s.*\n/`);
-
-    // if (typeof value !== 'string') {
-    //   value += '';
-    // }
-
-    // return this.note.content.replace(regex, value);
-    return this.note.content;
+  private editMetaData(key: string, value: string): void {
+    console.log(`CHANGING : ${key} from ${(this.note.meta as any)[key]} to ${value}`);
+    switch (key) {
+      case 'tags':
+        const tags = value.match(/'[^,]+'/g);
+        if (tags) {
+          this.addTags(tags);
+        }
+        break;
+      case 'favorited':
+        const fav = value !== 'false';
+        this.note.meta.favorited = fav;
+        break;
+      case 'pinned':
+        const pinned = value !== 'false';
+        this.note.meta.pinned = pinned;
+        break;
+    };
   }
 }

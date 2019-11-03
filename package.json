@@ -17,6 +17,7 @@
     "@types/dompurify": "0.0.33",
     "@types/fuzzyset.js": "0.0.2",
     "@types/showdown": "1.9.3",
+    "axios": "0.19.0",
     "babel-eslint": "^10.0.3",
     "fuzzyset.js": "0.0.8",
     "hotkeys-js": "3.7.2",

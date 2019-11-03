@@ -1,32 +1,78 @@
 # <img alt="nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwotable.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
 
-Nwotable is a web application inspired by the crazy work of [Fabio Spampinato](https://github.com/fabiospampinato) and his [app](https://github.com/notable/notable).
+#### Introduction
+Nwotable is a **PWA** (*basically it means that the app will work offline*) to write markdown (Github Flavored). It currently only support desktop browser but I'm working to make it work on mobile too.
+The design is strongly inspired by the [app](https://github.com/notable/notable) of [Fabio Spampinato](https://github.com/fabiospampinato) and if you are looking for a desktop markdown editor you should take a look at his work.
 
-### Official App and Beta
- * Official website : [Nwotable](https://nwotable.herokuapp.com)
- * Beta (update at each github push): [Nwotable (Beta)](https://nwotable.netlify.com) 
+Nwotable v1.0.0 is build with the following awesome technologies :
+* Progressive Web App
+* [Vue.js](https://vuejs.org/) with [Quasar Framework](https://quasar.dev/) and [Vuex](https://vuex.vuejs.org/)
+* [CodeMirror](https://codemirror.net/index.html) for the editor (mobile support)
+* [Showdown](https://github.com/showdownjs/showdown) to parse the markdown.
+* [IndexedDb API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
+* [Webpack](https://webpack.js.org/)
 
-![screenshot](https://github.com/Nergel3/Nwotable/raw/master/resources/home.jpg)
+
+### Features
+Supported features :
+* Markdown editor (Github Flavored)
+* Indefinitely nestable tags
+* export or download as : 
+	* HTML
+	* Markdown
+* Filter by :
+	* Tag
+	* Search
+	* Favorite
+* Import local attachment (**images only** *.jpg, .ext, .png*)
+* Metadata header
+
+### "Production Release" & Beta
+ * Production : [Nwotable](https://nwotable.herokuapp.com)
+ * Beta (update at each github push & no tutorial, changelog): [Nwotable (Beta)](https://nwotable.netlify.com) 
+
+![screenshot](https://github.com/Nergel3/Nwotable/raw/master/resources/home.png)
 
 ### :ballot_box_with_check: TODO
 The app is still in development so some features may not work.
 
 Missing features :
 * Mobile support
-* Metadata detection
 * Fuzzy search
-* API for changelog
-* Help menu for Emoji, markdown syntax, etc.
 * Auto delete unused attachment at the starting of the app.
 * Rename imported attachment
 * Live preview (split mode).
 * Export as a PDF
+* Google Drive & Dropbox support
+* Code syntax highlighting (rendered markdown, **no showdow-highlight**)
 
 ### :stars: Show Your Support
 Please give a :star: if this project helped you!
 
 ### Contributing
-If you want to contribute to Nwotable to add a feature or improve the code contact me: [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com) or make a pull request.
+If you want to contribute to Nwotable to add a feature or improve the code contact me at [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com), open an [issue](https://github.com/Nergel3/Nwotable/issues) or make a pull request.
+
+#### Set up the dev env.
+Clone this repositorie :
+```bash
+git clone https://github.com/Nergel3/Nwotable.git
+```
+
+Install the dependencies :
+```bash
+cd Nwotable
+npm install
+```
+
+Start the dev server (with hot reload) :
+```bash
+npm run dev:pwa
+```
+
+Build the app for production :
+```bash
+npm run build:pwa
+```
 
 #### :scroll: License
-MIT © Alexandre Negrel
+AGPL-v3 © Alexandre Negrel

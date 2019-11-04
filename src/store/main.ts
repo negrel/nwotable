@@ -38,7 +38,7 @@ export const actions: ActionTree<MainState, RootState> = {
       }
 
       attachmentList.forEach((element: File): void => {
-        dispatch('addAttachment', new Attachment(element), { root: true });
+        dispatch('addAttachmentToList', new Attachment(element), { root: true });
       });
     }
 
@@ -78,9 +78,8 @@ export const actions: ActionTree<MainState, RootState> = {
     dispatch('setEditMode', true, { root: true });
   },
   // -------------------------------------------------------------------------------
-  async deleteNote({ dispatch, rootState }: ActionContext<MainState, RootState>, theNote: Note): Promise<void> {
+  deleteNote({ dispatch, rootState }: ActionContext<MainState, RootState>, theNote: Note): void {
     dispatch('setEditMode', false, { root: true });
-    const index = await dispatch('getNoteIndex', theNote, { root: true });
 
     // Select the previous note in the list or the next if don't exist
     const filtredList = rootState.Filters.filtredList;
@@ -90,7 +89,7 @@ export const actions: ActionTree<MainState, RootState> = {
     }
 
     // Then delete the note and update the drawer
-    dispatch('deleteNoteFromList', index);
+    dispatch('deleteNoteFromList', theNote, { root: true });
     dispatch('deleteNoteFromDb', theNote, { root: true });
 
     dispatch('updateFavorited', { root: true });
@@ -109,6 +108,7 @@ export const actions: ActionTree<MainState, RootState> = {
       dispatch('updateNoteToDb', theNote, { root: true });
     }
   },
+  // -------------------------------------------------------------------------------
   async setFilter({ dispatch, rootState }, filter: string): Promise<void> {
     dispatch('setFilterAndUpdate', filter, { root: true });
 
@@ -124,11 +124,13 @@ export const actions: ActionTree<MainState, RootState> = {
       dispatch('setSelectedNote', noteList[filtredList[0]], { root: true });
     }
   },
+  // -------------------------------------------------------------------------------
   addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): void {
     const note = rootState.Editor.selectedNote;
     dispatch('addTagToNote', { tagName, note });
   },
-  async addTagToNote({ dispatch, rootState }: ActionContext<MainState, RootState>, { tagName, note }: { tagName: string; note: Note }): Promise<void> {
+  // -------------------------------------------------------------------------------
+  async addTagToNote({ dispatch }: ActionContext<MainState, RootState>, { tagName, note }: { tagName: string; note: Note }): Promise<void> {
     if (!note.hasTag(tagName) && tagName.length > 0) {
       const tag = new Tag(tagName);
 
@@ -136,6 +138,16 @@ export const actions: ActionTree<MainState, RootState> = {
       note.addTag(tag);
       dispatch('updateNote');
     }
+  },
+  // -------------------------------------------------------------------------------
+  addAttachment({ dispatch }: ActionContext<MainState, RootState>, attachment: File): void {
+    dispatch('saveAttachmentToDb', attachment);
+    dispatch('addAttachmentToList', new Attachment(attachment));
+  },
+  // -------------------------------------------------------------------------------
+  delAttachment({ dispatch }: ActionContext<MainState, RootState>, attachment: Attachment): void {
+    dispatch('deleteAttachmentFromDb', attachment.name);
+    dispatch('deleteAttachmentFromList', attachment);
   }
 };
 

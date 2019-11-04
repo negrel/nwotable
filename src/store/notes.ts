@@ -42,14 +42,15 @@ export const actions: ActionTree<NoteListState, RootState> = {
   addNoteToList({ commit }: ActionContext<NoteListState, RootState>, newNote: NoteType): void {
     commit('ADD_NOTE', newNote);
   },
-  deleteNoteFromList({ commit }: ActionContext<NoteListState, RootState>, index: number): void {
+  async deleteNoteFromList({ commit, dispatch }: ActionContext<NoteListState, RootState>, note: Note): Promise<void> {
+    const index = await dispatch('getNoteIndex', note);
     commit('DELETE_NOTE', index);
   },
   updateNoteToList({ commit }: ActionContext<NoteListState, RootState>, payload: { index: number; theNote: Note }): void {
     commit('SET_NOTE', payload);
   },
   getTagIndex({ state }: ActionContext<NoteListState, RootState>, tagName: string): number {
-    return state.tagList.slice(0).map((element: Tag): string => element.fullName).indexOf(tagName);
+    return state.tagList.map((element: Tag): string => element.fullName).indexOf(tagName);
   },
   async addTagToList({ commit, dispatch }: ActionContext<NoteListState, RootState>, payload: Tag): Promise<void> {
     const index = await dispatch('getTagIndex', payload.fullName);
@@ -61,7 +62,7 @@ export const actions: ActionTree<NoteListState, RootState> = {
       }
     }
   },
-  updateTagList({ rootState, commit, dispatch }: ActionContext<NoteListState, RootState>): void {
+  updateTagList({ rootState, commit }: ActionContext<NoteListState, RootState>): void {
     const noteList = rootState.Notes.noteList,
       payload: Tag[] = [];
 

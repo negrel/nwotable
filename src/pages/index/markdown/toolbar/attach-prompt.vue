@@ -8,28 +8,43 @@
           <div v-if="attachmentList.length">
             <q-item
               v-for="attachment in attachmentList"
-              :key="attachment.fileName"
+              :key="attachment.name"
               clickable
               class="bg-white text-secondary attach-item q-pl-md q-pr-sm"
-              @click="copy(attachment.fileName)"
             >
-              <q-item-label>
+              <q-item-label @click="copy(attachment.name)">
                 <label class="text-grey-5">@attachment/</label>
-                <label :title="attachment.fileName">{{ attachment.fileName }}</label>
+                <label :title="attachment.name">{{ attachment.name }}</label>
               </q-item-label>
               <q-item-section>
                 <div class="float-right">
-                  <label class="text-grey-5" v-if="inUse(attachment.fileName)">used here</label>
-                  <!-- <q-btn
+                  <label class="text-grey-5" v-if="inUse(attachment.name)">used here</label>
+                  <q-btn
                     icon="clear"
-                    @click="delTag(attachment)"
+                    @click="delAttachPopUp = true"
                     size="xs"
                     round
                     flat
                     class="text-grey-5 q-ml-sm"
-                  /> -->
+                  />
                 </div>
               </q-item-section>
+              <!-- Delete attach prompt -->
+              <q-dialog v-model="delAttachPopUp">
+                <card>
+                <h5 class="q-mb-md q-mt-none">Warning !</h5>
+                <span> You are about to delete this attachment, are you sure ?</span>
+                <br />
+                <div class="float-right">
+                  <button class="btn" title="Cancel" @click="delAttachPopUp = false">
+                    Cancel
+                  </button>
+                  <button class="btn" id="delete-btn" title="Okay" @click="delAttach(attachment)">
+                    I'm sure.
+                  </button>
+                </div>
+                </card>
+              </q-dialog>
             </q-item>
           </div>
           <q-item class="bg-white text-secondary q-pl-md q-pr-sm" v-else>
@@ -49,6 +64,7 @@
         </div>
       </card>
     </q-dialog>
+    <!-- Copied popup -->
     <q-dialog v-model="copiedPopUp" position="top">
       <card>
         copied to clipboard !
@@ -62,8 +78,6 @@ import { mapState } from 'vuex';
 
 import card from 'src/components/card.vue';
 
-import { Attachment } from 'src/class/Attachment';
-
 export default {
   components: {
     card
@@ -72,7 +86,8 @@ export default {
     active: Boolean
   },
   data: () => ({
-    copiedPopUp: false
+    copiedPopUp: false,
+    delAttachPopUp: false
   }),
   methods: {
     close() {
@@ -96,12 +111,18 @@ export default {
         if (files) {
           for (let i = 0, length = files.length; i < length; i++) {
             const file = files[i];
-            this.$store.dispatch('saveAttachmentToDb', file);
-            this.$store.dispatch('addAttachment', new Attachment(file));
+            this.$store.dispatch('addAttachment', file);
           }
         }
       });
       input.remove();
+    },
+    async delAttach(attachment) {
+      await this.$store.dispatch('delAttachment', attachment);
+      this.delAttachPopUp = false;
+      if (this.attachmentList.length === 0) {
+        this.close();
+      }
     },
     copy(attachName) {
       // NOTE add popup 'copied'

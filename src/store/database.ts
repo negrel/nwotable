@@ -88,8 +88,9 @@ export const actions: ActionTree<DatabaseState, RootState> = {
   },
   addNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
     if (state.iDb) {
-      const store = state.iDb.transaction('notes', 'readwrite').objectStore('notes');
-      store.add(theNote);
+      state.iDb.transaction('notes', 'readwrite')
+        .objectStore('notes')
+        .add(theNote);
     }
   },
   updateNoteToDb({ state }: ActionContext<DatabaseState, RootState>, theNote: Note): void {
@@ -107,16 +108,16 @@ export const actions: ActionTree<DatabaseState, RootState> = {
   },
   saveAttachmentToDb({ state }: ActionContext<DatabaseState, RootState>, file: File): void {
     if (state.iDb) {
-      const store = state.iDb.transaction('attachment', 'readwrite').objectStore('attachment');
-
-      store.add(file);
+      state.iDb.transaction('attachment', 'readwrite')
+        .objectStore('attachment')
+        .add(file);
     }
   },
-  deleteAttachmentFromDb({ state }: ActionContext<DatabaseState, RootState>, file: File): void {
+  deleteAttachmentFromDb({ state }: ActionContext<DatabaseState, RootState>, attachName: string): void {
     if (state.iDb) {
       state.iDb.transaction('attachment', 'readwrite')
         .objectStore('attachment')
-        .delete(file.name);
+        .delete(attachName);
     }
   }
 };

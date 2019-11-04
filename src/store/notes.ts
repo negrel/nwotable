@@ -61,7 +61,7 @@ export const actions: ActionTree<NoteListState, RootState> = {
       }
     }
   },
-  updateTagList({ rootState, commit }: ActionContext<NoteListState, RootState>): void {
+  updateTagList({ rootState, commit, dispatch }: ActionContext<NoteListState, RootState>): void {
     const noteList = rootState.Notes.noteList,
       payload: Tag[] = [];
 

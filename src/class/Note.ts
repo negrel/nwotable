@@ -72,9 +72,8 @@ export class Note {
   // Setup the object from a note
   public setupFromNote(note: NoteType): void {
     this.plainNote = note.content;
-    note.meta.tags = [];
     this.note.meta = note.meta;
-    this.addTags(note.meta.tags.map((tag: any): string => tag.fullName));
+    this.setTags(note.meta.tags.map((tag: Tag): string => tag.fullName));
   }
 
   public get data(): NoteType {
@@ -160,14 +159,13 @@ export class Note {
 
   public addTag(tag: Tag): void {
     if (!this.hasTag(tag.fullName)) {
-      this.note.meta.tags.push(tag);
+      this.note.meta.tags.push(new Tag(tag.fullName));
     }
   }
 
-  public addTags(tags: string[]): void {
-    tags.forEach((tag: string): void => {
-      this.addTag(new Tag(tag));
-    });
+  public setTags(tagsName: string[]): void {
+    const tags = tagsName.map((tagName: string): Tag => new Tag(tagName));
+    this.note.meta.tags = tags;
   }
 
   public delTag(tag: Tag): void {
@@ -265,7 +263,7 @@ pinned: ${this.pinned};
       case 'tags':
         const tags = value.match(/'[^,]+'/g);
         if (tags) {
-          this.addTags(tags);
+          this.setTags(tags);
         }
         break;
       case 'favorited':

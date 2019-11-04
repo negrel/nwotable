@@ -64,6 +64,7 @@ export default {
     addTag() {
       const tagField = document.querySelector('#tagPrompt input[type=text]');
       this.$store.dispatch('addTag', tagField.value);
+      console.log('YAYAYA');
       tagField.value = '';
     },
     delTag(tag) {

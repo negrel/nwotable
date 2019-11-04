@@ -50,7 +50,7 @@ Missing features :
 Please give a :star: if this project helped you!
 
 ### Contributing
-If you want to contribute to Nwotable to add a feature or improve the code contact me at [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com), open an [issue](https://github.com/Nergel3/Nwotable/issues) or make a pull request.
+If you want to contribute to Nwotable to add a feature or improve the code contact me at [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com), open an [issue](https://github.com/Nergel3/Nwotable/issues) or make a [pull request](https://github.com/Nergel3/Nwotable/pulls).
 
 #### Set up the dev env.
 Clone this repositorie :

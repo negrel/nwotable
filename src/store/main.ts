@@ -35,7 +35,7 @@ export const actions: ActionTree<MainState, RootState> = {
         const note = new Note();
         note.setupFromNote(element.note);
         await dispatch('addNoteToList', note, { root: true });
-        // dispatch('updateTagList', { root: true });
+        dispatch('updateTagList', { root: true });
       }
 
       attachmentList.forEach((element: File): void => {
@@ -125,9 +125,11 @@ export const actions: ActionTree<MainState, RootState> = {
       dispatch('setSelectedNote', noteList[filtredList[0]], { root: true });
     }
   },
-  async addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): Promise<void> {
+  addTag({ dispatch, rootState }: ActionContext<MainState, RootState>, tagName: string): void {
     const note = rootState.Editor.selectedNote;
-
+    dispatch('addTagToNote', { tagName, note });
+  },
+  async addTagToNote({ dispatch, rootState }: ActionContext<MainState, RootState>, { tagName, note }: { tagName: string; note: Note }): Promise<void> {
     if (!note.hasTag(tagName) && tagName.length > 0) {
       const tag = new Tag(tagName);
 

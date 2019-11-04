@@ -43,15 +43,13 @@ export default {
   watch: {
     active(newVal) {
       const checkEnter = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && this.active) {
           this.deleteNote();
         }
       };
 
       if (newVal) {
         document.addEventListener('keypress', checkEnter);
-      } else {
-        document.removeEventListener('keypress', checkEnter);
       }
     }
   }

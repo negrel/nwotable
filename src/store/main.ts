@@ -35,7 +35,6 @@ export const actions: ActionTree<MainState, RootState> = {
         const note = new Note();
         note.setupFromNote(element.note);
         await dispatch('addNoteToList', note, { root: true });
-        dispatch('updateTagList', { root: true });
       }
 
       attachmentList.forEach((element: File): void => {

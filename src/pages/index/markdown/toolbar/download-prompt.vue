@@ -7,23 +7,31 @@
       <span>
         Choose a format :
       </span>
+      <br/>
+      <radioButton v-model="dlExt" val="md" label="Markdown (*.md)"/>
+      <radioButton v-model="dlExt" val="html" label="HTML file (*.html)" class="float-right"/>
+      <div>
+        <radioButton v-model="dlMeta" val="with"
+          label="with metadata header."
+          :disable="dlExt !== 'md'"
+        />
+        <br/>
+        <radioButton v-model="dlMeta" val="without"
+          label="without header"
+          :disable="dlExt !== 'md'"
+        />
+      </div>
+      <br/>
       <div class="float-right">
-        <button title="Markdown"
-          @click="download('md')"
-          class="btn"
-        >
-          <img src="statics/markdown.png"
-            title="Markdown"
-            style="width: 1.2rem;"
-          />
-          Markdown
+        <button class="btn" title="Cancel">
+          Cancel
         </button>
-        <button title="HTML"
-          @click="download('html')"
-          class="btn"
+        <button
+          class="btn bg-apple-blue text-grey-2"
+          title="Download"
+          @click="download"
         >
-          <q-icon name="code" />
-          HTML
+          Download
         </button>
       </div>
     </card>
@@ -33,21 +41,30 @@
 <script>
 import { mapState } from 'vuex';
 
+import radioButton from 'src/components/radio-button';
 import card from 'src/components/card';
 
 export default {
   components: {
-    card
+    card,
+    radioButton
   },
   props: {
     active: Boolean
   },
+  data: () => ({
+    dlExt: 'md',
+    dlMeta: 'with'
+  }),
   methods: {
-    download(ext) {
+    download() {
+      const ext = this.dlExt;
+
       if (ext === 'html') {
         this.selectedNote.downloadHTML();
       } else if (ext === 'md') {
-        this.selectedNote.downloadMD();
+        const withMeta = this.dlMeta === 'with';
+        this.selectedNote.downloadMD(withMeta);
       }
       this.close();
     },

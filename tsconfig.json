@@ -16,6 +16,8 @@
     "quasar.conf.js",
     "dist",
     "src-ssr",
-    "src-pwa"
+    "src-pwa",
+    "src/assets/emoji-list.js",
+    "src/assets/firstImpression.js"
   ]
 }

@@ -192,7 +192,7 @@ export class Note {
     } else return false;
   }
 
-  private metaDataHeader(): string {
+  private get metaDataHeader(): string {
     const metadata =
 `---
 tags: '${this.tags.map((tag: Tag): string => tag.fullName).join('\', \'')}';
@@ -203,8 +203,15 @@ pinned: ${this.pinned};
     return metadata;
   }
 
-  public downloadMD(): void {
-    const content = this.metaDataHeader() + this.note.content;
+  public downloadMD(withMeta: boolean): void {
+    let content;
+
+    if (withMeta) {
+      content = this.metaDataHeader + this.plainNote;
+    } else {
+      content = this.plainNote;
+    }
+
     const fileName = this.note.title + '.md',
       file = new File(content.split(''), fileName);
 

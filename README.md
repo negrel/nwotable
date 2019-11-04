@@ -15,17 +15,17 @@ Nwotable v1.0.0 is build with the following awesome technologies :
 
 ### Features
 Supported features :
-* Markdown editor (Github Flavored)
-* Indefinitely nestable tags
+* Markdown editor (Github Flavored) // 1.0.0
+* Indefinitely nestable tags // 1.0.0
 * export or download as : 
-	* HTML
-	* Markdown
+	* HTML // 1.0.0
+	* Markdown // 1.0.0
 * Filter by :
-	* Tag
-	* Search
-	* Favorite
-* Import local attachment (**images only** *.jpg, .ext, .png*)
-* Metadata header
+	* Tag // 1.0.0
+	* Search // 1.0.0
+	* Favorite // 1.0.0
+* Import local attachment (**images only** *.jpg, .ext, .png*) // 1.0.0
+* Metadata header // 1.0.0
 
 ### "Production Release" & Beta
  * Production : [Nwotable](https://nwotable.herokuapp.com)

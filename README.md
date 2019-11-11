@@ -28,7 +28,7 @@ Supported features :
 * Metadata header // 1.0.0
 
 ### Release
-Coming soon !
+Check at : https://nwotable.herokuapp.com/app/
 ![app picture](https://github.com/Nergel3/Nwote/raw/master/resources/banner.png)
 
 ### :ballot_box_with_check: TODO

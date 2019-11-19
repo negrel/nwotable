@@ -1,4 +1,4 @@
-# <img alt="Nwote_logo" src="https://github.com/Nergel3/Nwote/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwote.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwote/context:javascript)
+# <img alt="Nwote_logo" src="https://github.com/Nergel3/Nwote/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com/app/) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwote.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwote/context:javascript)
 
 #### Introduction
 Nwote is a **PWA** to write markdown (Github Flavored). It currently only support desktop browser but I'm working to make it work on mobile too.

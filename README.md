@@ -1,4 +1,7 @@
-# <img alt="Nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com/app/) [![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)
+[![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)[![MadeWithVueJs.com shield](https://madewithvuejs.com/storage/repo-shields/2036-shield.svg)](https://madewithvuejs.com/p/nwotable/shield-link)
+
+# <img alt="Nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com/app/)
+
 
 #### Introduction
 Nwotable is a **PWA** to write markdown (Github Flavored). It currently only support desktop browser but I'm working to make it work on mobile too.

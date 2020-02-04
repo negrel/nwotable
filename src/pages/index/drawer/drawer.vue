@@ -62,7 +62,7 @@
       <q-item clickable
           tag="a"
           target="_blank"
-          href="https://github.com/Nergel3/"
+          href="https://github.com/negrel/"
           id="github"
           rel="noopener"
         >

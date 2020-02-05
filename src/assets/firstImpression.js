@@ -5,15 +5,13 @@
  */
 
 export default function(cookie, days) {
-  var cookieMachine, getCookie, setCookie, checkUser;
-
   /* Plain JS port of jquery.cookie plugin
    * Copyright (c) 2010 Klaus Hartl (stilbuero.de)
    * Dual licensed under the MIT and GPL licenses.
    */
 
-  cookieMachine = function(key, value, options) {
-    var expiration, result, time;
+  const cookieMachine = function(key, value, options) {
+    let expiration, time;
 
     if (arguments.length > 1 && String(value) !== '[object Object]') {
       options = options || {};
@@ -42,7 +40,7 @@ export default function(cookie, days) {
       ].join(''));
     }
 
-    result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie);
+    const result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie);
     return result ? decodeURIComponent(result[1]) : null;
   };
 
@@ -76,16 +74,16 @@ export default function(cookie, days) {
    * Functions
    */
 
-  getCookie = function() {
+  const getCookie = function() {
     return cookieMachine(cookie);
   };
 
-  setCookie = function() {
+  const setCookie = function() {
     cookieMachine(cookie, true, { expires: days });
   };
 
-  checkUser = function() {
-    var status = getCookie();
+  const checkUser = function() {
+    const status = getCookie();
 
     // Set cookie if new user
     if (!status) {

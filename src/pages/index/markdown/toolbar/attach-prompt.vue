@@ -98,7 +98,7 @@ export default {
       return regex.test(this.selectedNote.plainNote);
     },
     importAttach() {
-      let input = document.createElement('input');
+      const input = document.createElement('input');
       input.type = 'file';
       input.multiple = true;
 

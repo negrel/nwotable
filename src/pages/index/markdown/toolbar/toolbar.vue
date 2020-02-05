@@ -124,7 +124,7 @@ class Toolbar extends Vue {
   }
 
   importNote(): void {
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'file';
     input.multiple = true;
 

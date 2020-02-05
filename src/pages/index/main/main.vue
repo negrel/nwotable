@@ -66,7 +66,7 @@ class Main extends Vue {
   }
 
   mounted() {
-    let dragger = document.getElementById('dragger-viewer');
+    const dragger = document.getElementById('dragger-viewer');
     // TODO Request animation frame for better look
 
     if (dragger) {
@@ -81,15 +81,16 @@ class Main extends Vue {
   }
 
   resizeMain(event: MouseEvent) {
-    let endX = event.clientX;
-    let main = document.getElementById('main');
+    const endX = event.clientX,
+      main = document.getElementById('main');
     // 258px is the size of the drawer
-    let width = endX - 258;
+    const width = endX - 258;
     if (main) {
       main.style.width = width + 'px';
     }
   }
-  selectNote(note: NoteType) {
+
+  selectNote(note: NoteType): void {
     this.$store.dispatch('setSelectedNote', note);
   }
 

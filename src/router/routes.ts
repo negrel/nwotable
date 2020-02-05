@@ -11,7 +11,7 @@ const routes: RouteConfig[] = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => require('layouts/Error404.vue')
+    component: () => import('layouts/Error404.vue')
   });
 }
 

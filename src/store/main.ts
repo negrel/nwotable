@@ -16,7 +16,7 @@ export const actions: ActionTree<MainState, RootState> = {
       alert('Nwotable doesn\'t work on mobile for now');
     }
     hotkey.setup();
-    // dispatch('emptyNoteList', { root: true });
+
     const [noteList, attachmentList] = await dispatch('initDb', { root: true });
 
     // Tutorial notes if first coming to the app.

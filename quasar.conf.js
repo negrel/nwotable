@@ -59,12 +59,11 @@ module.exports = function(ctx) {
     supportIE: false,
 
     build: {
+      publicPath: '/app',
       scopeHoisting: true,
       // vueRouterMode: 'history',
-      // vueCompiler: true,
-      // gzip: true,
-      // analyze: true,
-      // extractCSS: false,
+      gzip: true,
+      distDir: `dist/${ctx.modeName}/app`,
       extendWebpack(cfg) {
         cfg.module.rules.push(
           {
@@ -90,7 +89,7 @@ module.exports = function(ctx) {
     animations: [],
 
     ssr: {
-      pwa: true
+      // pwa: true
     },
 
     pwa: {
@@ -98,6 +97,7 @@ module.exports = function(ctx) {
       // workboxOptions: {}, // only for NON InjectManifest
 
       /* eslint-disable @typescript-eslint/camelcase */
+      /* eslint-disable quote-props */
       manifest: {
         name: 'Nwotable',
         short_name: 'Nwotable',

@@ -9,7 +9,7 @@
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore ./ --fix",
     "dev": "quasar dev",
     "dev:pwa": "quasar dev -m pwa",
-    "build": "quasar build",
+    "build": "npm run build:pwa",
     "build:pwa": "quasar build -m pwa",
     "build:ssr": "quasar build -m ssr"
   },

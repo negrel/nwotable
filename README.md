@@ -1,6 +1,6 @@
-[![Language grade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)[![MadeWithVueJs.com shield](https://madewithvuejs.com/storage/repo-shields/2036-shield.svg)](https://madewithvuejs.com/p/nwotable/shield-link)
+[![Languagegrade: JS/TS](https://img.shields.io/lgtm/grade/javascript/g/Nergel3/Nwotable.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Nergel3/Nwotable/context:javascript)[![MadeWithVueJs.com shield](https://madewithvuejs.com/storage/repo-shields/2036-shield.svg)](https://madewithvuejs.com/p/nwotable/shield-link)
 
-# <img alt="Nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.herokuapp.com/app/)
+# <img alt="Nwotable_logo" src="https://github.com/Nergel3/Nwotable/raw/master/resources/nwote.png" width="25"> | [Nwotable](https://nwotable.negrel.dev/)
 
 
 #### Introduction
@@ -31,7 +31,7 @@ Supported features :
 * Metadata header // 1.0.0
 
 ### Release
-Check at : https://nwotable.herokuapp.com/app/
+Check at : https://nwotable.negrel.dev/
 ![app picture](https://github.com/Nergel3/Nwotable/raw/master/resources/banner.png)
 
 ### :ballot_box_with_check: TODO
@@ -48,18 +48,18 @@ Missing features :
 * Google Drive & Dropbox support (**cloud support**)
 * Code syntax highlighting (rendered markdown, **no showdow-highlight**)
 
-![app picture](https://github.com/Nergel3/Nwotable/raw/master/resources/banner2.png)
+![app picture](https://github.com/negrel/nwotable/raw/master/resources/banner2.png)
 
 ### :stars: Show Your Support
 Please give a :star: if this project helped you!
 
 ### Contributing
-If you want to contribute to Nwotable to add a feature or improve the code contact me at [alexnegrel13@gmail.com](mailto:alexnegrel13@gmail.com), open an [issue](https://github.com/Nergel3/Nwotable/issues) or make a [pull request](https://github.com/Nergel3/Nwotable/pulls).
+If you want to contribute to Nwotable to add a feature or improve the code contact me at [negrel.dev@protonmail.com](mailto:negrel.dev@protonmail.com), open an [issue](https://github.com/negrel/Nwotable/issues) or make a [pull request](https://github.com/negrel/Nwotable/pulls).
 
 #### Set up the dev env.
 Clone this repositorie :
 ```bash
-git clone https://github.com/Nergel3/Nwotable.git
+git clone https://github.com/negrel/nwotable.git
 ```
 
 Install the dependencies :

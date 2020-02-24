@@ -59,11 +59,11 @@ module.exports = function(ctx) {
     supportIE: false,
 
     build: {
-      publicPath: '/app',
+      publicPath: '/',
       scopeHoisting: true,
       // vueRouterMode: 'history',
       gzip: true,
-      distDir: `dist/${ctx.modeName}/app`,
+      distDir: `dist/${ctx.modeName}`,
       extendWebpack(cfg) {
         cfg.module.rules.push(
           {

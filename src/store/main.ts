@@ -21,20 +21,26 @@ export const actions: ActionTree<MainState, RootState> = {
 
     // Tutorial notes if first coming to the app.
     if (firstImpression() && noteList.length === 0) {
-      const tutorial = await fetch('/api/v1/tutorial')
-        .then((res): Promise<string[]> => res.json());
+      console.log('FETCHING');
+      const tutorial = await fetch('https://nwotable.herokuapp.com/api/v1/tutorial', {
+        mode: 'no-cors'
+      }).then((res): Promise<string[]> => res.json());
 
       tutorial.forEach((content: string): void => {
+        console.log(content);
         const note = new Note();
         note.setupFromText(content);
         dispatch('addNoteToList', note, { root: true });
         dispatch('addNoteToDb', note, { root: true });
       });
     } else {
+      console.log('NOT FETCHING');
       for (const element of noteList) {
+        console.log('ADDING ELEMENT');
         const note = new Note();
         note.setupFromNote(element.note);
         await dispatch('addNoteToList', note, { root: true });
+        console.log('ELEMENT ADDED');
       }
 
       attachmentList.forEach((element: File): void => {

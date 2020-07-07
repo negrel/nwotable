@@ -21,7 +21,7 @@
     "babel-eslint": "^10.0.3",
     "fuzzyset.js": "0.0.91",
     "hotkeys-js": "3.7.3",
-    "npm": "6.13.7",
+    "npm": "6.14.6",
     "quasar": "1.9.4",
     "showdown": "1.9.1",
     "vue-codemirror-lite": "1.0.4",
